@@ -1,0 +1,8 @@
+fractal_app
+by Guy Mann
+Fractal generating and zooming web app.
+
+This program will be the culmination of the php and html canvas fractal 
+generators.  I will also attempt to use a more complex data structure 
+in order to collect more data be able to use that data to create more 
+interesting colorings
