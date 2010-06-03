@@ -914,7 +914,9 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 		} else if  (algorithm  == 3) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_newton( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					//fract_array[j][k] = dwell_newton( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					pix = setColor( pix, pixcount, dwell_newton( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 4) {
