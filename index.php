@@ -119,7 +119,25 @@
 	function redraw(){
 		//this will need to check if the width in the width field is different from that of the canvas. 
 		//if they are different it should reload the page pass the propoer variables to redraw the image at the larger width on a larger canvas
-		draw();
+		var canvas = document.getElementById("theCanvas");
+		if (canvas.width != document.getElementById("width").value ) {
+			redirectURL = "http://guydmann.no-ip.org/fractal_app/index.php";
+			redirectURL += "?algorithm=" + document.getElementById("algorithm").value + "&";
+			redirectURL += "colorscheme=" + document.getElementById("colorscheme").value + "&";
+			redirectURL += "width=" + document.getElementById("width").value + "&";
+			if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
+				redirectURL += "cr=" + document.getElementById("cr").value + "&";
+				redirectURL += "ci=" + document.getElementById("ci").value + "&";
+			}
+			redirectURL += "lx=" + document.getElementById("lx").value + "&";
+			redirectURL += "rx=" + document.getElementById("rx").value + "&";
+			redirectURL += "ty=" + document.getElementById("ty").value + "&";
+			redirectURL += "by=" + document.getElementById("by").value;
+			
+			window.location = redirectURL;
+		} else {
+			draw();
+		}
 	}
 	 
 	</script> 
