@@ -121,7 +121,7 @@
 		//if they are different it should reload the page pass the propoer variables to redraw the image at the larger width on a larger canvas
 		var canvas = document.getElementById("theCanvas");
 		if (canvas.width != document.getElementById("width").value ) {
-			redirectURL = "http://guydmann.no-ip.org/fractal_app/index.php";
+			redirectURL = "http://guydmann.no-ip.org/code/fractal_app/index.php";
 			redirectURL += "?algorithm=" + document.getElementById("algorithm").value + "&";
 			redirectURL += "colorscheme=" + document.getElementById("colorscheme").value + "&";
 			redirectURL += "width=" + document.getElementById("width").value + "&";
@@ -150,7 +150,7 @@
 			This version uses Javascript to render the images to the new canvas element available in HTML5.
 			This page has been tested with Firefox 3.6, Opera 10.5 and Chrome<br><br>
 			To zoom on a section of the fractal click and drag to highlight the region.  You can reload the page or click <a href="./">here</a><br>
-			<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width+100); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
+			<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width+20); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
 			<table> 
 		<tr>
 		<td> 
@@ -191,7 +191,7 @@
 					<?php
 					if ($algorithm == 1 or $algorithm == 5 or $algorithm == 1 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
 					?>
-						<td> C(real):</td><td><input type="text" size="4" value="<?php echo $cr; ?>" name="cr" id="cr"> </td><td> C(imaginary):</td><td><input type="text" size="4" value="<?php echo $ci; ?>" name="ci" id="ci"></td>";
+						<td> C(real):</td><td><input type="text" size="4" value="<?php echo $cr; ?>" name="cr" id="cr"> </td><td> C(imaginary):</td><td><input type="text" size="4" value="<?php echo $ci; ?>" name="ci" id="ci"></td>
 					<?php
 					} else {
 					?>
@@ -199,8 +199,10 @@
 					<?php
 					}
 					?>
+				</tr> 
 				<tr> 
-				<input type="hidden" size="2" name="width" id="width" value="<?php echo $width; ?>"> 
+				<td>Width: <input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"> </td>
+				</tr>
 		</table>
 		</td> 
 		<td>
