@@ -133,8 +133,6 @@
 		redirectURL += "ty=" + document.getElementById("ty").value + "&";
 		redirectURL += "by=" + document.getElementById("by").value;
 		if (canvas.width != document.getElementById("width").value ) {
-			
-			
 			window.location = redirectURL;
 		} else {
 			document.getElementById("URL").value  = redirectURL;
@@ -171,7 +169,8 @@
 				<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
 				</select> 
 			<td></tr> 
-			<tr><td> algorithm:</td><td><select name="algorithm" id="algorithm" onchange="resetcoords();"> 
+			<tr>
+				<td> algorithm:</td><td><select name="algorithm" id="algorithm" onchange="resetcoords();"> 
 				<option <?php if ($algorithm == 0) {  print "selected ";} ?> value=0>Mandelbrot (Quadratic)</option> 
 				<option <?php if ($algorithm == 1) {  print "selected ";} ?> value=1>Julia (Quadratic)</option> 
 				<option <?php if ($algorithm == 2) {  print "selected ";} ?> value=2>Burning Ship</option> 
@@ -188,22 +187,23 @@
 				<option <?php if ($algorithm == 13) {  print "selected ";} ?> value=13>Mandelbrot Interior Coloring 2</option> 
 				<option <?php if ($algorithm == 99) {  print "selected ";} ?> value=99>Blank</option> 
 				</select> 
-				</td></tr> 
-				<tr> 
-					<td>URL:</td><td><input type="text" size="50" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>"> </td>
-				</tr>
+				</td>
+			</tr> 
+			<tr> 
+				<td>URL:</td><td><input type="text" size="50" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>"> </td>
+			</tr>
 		</table>
 		</td> 
 		<td>
 		<table> 
 			<tr>
-				<td> Left X Coord</td><td><input type="text" size="2" name="lx" id="lx" value="<?php echo $lx; ?>"> </td>
-				<td> Right X Coord</td><td><input type="text" size="2" name="rx" id="rx" value="<?php echo $rx; ?>"> </td>
+				<td> Left X Coord</td><td><input type="text" size="4" name="lx" id="lx" value="<?php echo $lx; ?>"> </td>
+				<td> Right X Coord</td><td><input type="text" size="4" name="rx" id="rx" value="<?php echo $rx; ?>"> </td>
 			</tr> 
 			<tr></tr> 
 			<tr>
-				<td> Top Y Coord</td><td><input type="text" size="2" name="ty" id="ty" value="<?php echo $ty; ?>"> </td>
-				<td> Bottom Y Coord</td><td><input type="text" size="2" name="by" id="by" value="<?php echo $by; ?>"> </td>
+				<td> Top Y Coord</td><td><input type="text" size="4" name="ty" id="ty" value="<?php echo $ty; ?>"> </td>
+				<td> Bottom Y Coord</td><td><input type="text" size="4" name="by" id="by" value="<?php echo $by; ?>"> </td>
 			<tr>
 				<td><br><br> </td>
 				<td>Width: </td><td><input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"> </td>
@@ -216,7 +216,7 @@
 				<?php
 				} else {
 				?>
-					<td><input type="hidden" size="4" value="" name="cr" id="cr"><td><td><input type="hidden" size="4" value="" name="ci" id="ci"></td>
+					<td></td><td><input type="hidden" size="4" value="" name="cr" id="cr"><td><td></td><td><input type="hidden" size="4" value="" name="ci" id="ci"></td>
 				<?php
 				}
 				?>
