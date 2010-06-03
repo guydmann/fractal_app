@@ -118,6 +118,8 @@
 	}
 	
 	function redraw(){
+		//this will need to check if the width in the width field is different from that of the canvas. 
+		//if they are different it should reload the page pass the propoer variables to redraw the image at the larger width on a larger canvas
 		draw();
 	}
 	 
