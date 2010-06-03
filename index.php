@@ -218,6 +218,7 @@
 						<option <? if ($colorscheme == 7) {  print "selected ";} ?> value=7>HSV with static modulus</option> 
 						<option <? if ($colorscheme == 8) {  print "selected ";} ?> value=8>HSV with percentage modulus</option> 
 						<option <? if ($colorscheme == 9) {  print "selected ";} ?> value=9>HSV with percentage modulus 2</option> 
+						<option <? if ($colorscheme == 10) {  print "selected ";} ?> value=10>TEST 3d HSV</option> 
 						<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
 						</select> 
 					<td></tr> 

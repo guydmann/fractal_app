@@ -18,6 +18,7 @@ function dwell_mandel ( cx, cy, precision ) {
                 dx2 = dx * dx;
                 dy2 = dy * dy;
         }
+	//alert(count + " " + dx + " " +dy);
         return [count,dx,dy];
  
 }
@@ -736,7 +737,9 @@ function setColor( pix, pix_count, fract_array, width, height, precision, color_
 			var c1 = 0;
 			var c2 = 120;
 			var h = Math.round((fract_array[0] /(precision*.03))*(c2-c1))+c1;
-			var RGB = hsvToRgb(h, 100, 100);
+			var s = Math.abs(Math.round((fract_array[1]*100 )%100));
+			var v = Math.abs(Math.round((fract_array[2]*100 )%100));
+			var RGB = hsvToRgb(h, s, v);
 			pix[(pix_count*4)]=RGB[0];	//red
 			pix[(pix_count*4)+1]=RGB[1];	//green
 			pix[(pix_count*4)+2]=RGB[2];	//blue
@@ -745,7 +748,9 @@ function setColor( pix, pix_count, fract_array, width, height, precision, color_
 			var c1 = 120;
 			var c2 = 280;
 			var h = Math.round((fract_array[0] /(precision*.05))*(c2-c1))+c1;
-			var RGB = hsvToRgb(h, 100, 100);
+			var s = Math.abs(Math.round((fract_array[1]*100 )%100));
+			var v = Math.abs(Math.round((fract_array[2]*100 )%100));
+			var RGB = hsvToRgb(h, s, v);
 			pix[(pix_count*4)]=RGB[0];	//red
 			pix[(pix_count*4)+1]=RGB[1];	//green
 			pix[(pix_count*4)+2]=RGB[2];	//blue
@@ -754,7 +759,9 @@ function setColor( pix, pix_count, fract_array, width, height, precision, color_
 			var c1 = 280;
 			var c2 = 20;
 			var h = Math.round((fract_array[0] /(precision*.1))*(c2-c1))+c1;
-			var RGB = hsvToRgb(h, 100, 100);
+			var s = Math.abs(Math.round((fract_array[1]*100 )%100));
+			var v = Math.abs(Math.round((fract_array[2]*100 )%100));
+			var RGB = hsvToRgb(h, s, v);
 			pix[(pix_count*4)]=RGB[0];	//red
 			pix[(pix_count*4)+1]=RGB[1];	//green
 			pix[(pix_count*4)+2]=RGB[2];	//blue
@@ -763,7 +770,9 @@ function setColor( pix, pix_count, fract_array, width, height, precision, color_
 			var c1 = 20;
 			var c2 = 180;
 			var h = Math.round((fract_array[0] /(precision*.2))*(c2-c1))+c1;
-			var RGB = hsvToRgb(h, 100, 100);
+			var s = Math.abs(Math.round((fract_array[1]*100 )%100));
+			var v = Math.abs(Math.round((fract_array[2]*100 )%100));
+			var RGB = hsvToRgb(h, s, v);
 			pix[(pix_count*4)]=RGB[0];	//red
 			pix[(pix_count*4)+1]=RGB[1];	//green
 			pix[(pix_count*4)+2]=RGB[2];	//blue
@@ -772,7 +781,9 @@ function setColor( pix, pix_count, fract_array, width, height, precision, color_
 			var c1 = 180;
 			var c2 = 360;
 			var h = Math.round((fract_array[0] /precision)*(c2-c1))+c1;
-			var RGB = hsvToRgb(h, 100, 100);
+			var s = Math.abs(Math.round((fract_array[1]*100 )%100));
+			var v = Math.abs(Math.round((fract_array[2]*100 )%100));
+			var RGB = hsvToRgb(h, s, v);
 			pix[(pix_count*4)]=RGB[0];	//red
 			pix[(pix_count*4)+1]=RGB[1];	//green
 			pix[(pix_count*4)+2]=RGB[2];	//blue
