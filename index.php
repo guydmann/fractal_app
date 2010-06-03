@@ -111,10 +111,10 @@
 	}
 
 	function zoom_out() {
-		document.getElementById("ty").value = document.getElementById("ty").value*1.5;
-		document.getElementById("by").value = document.getElementById("by").value*1.5;
-		document.getElementById("rx").value = document.getElementById("rx").value*1.5;
-		document.getElementById("lx").value = document.getElementById("lx").value*1.5;
+		document.getElementById("ty").value = parseFloat(document.getElementById("ty").value) + (parseFloat(document.getElementById("ty").value)-parseFloat(document.getElementById("by").value))*.5;
+		document.getElementById("by").value = parseFloat(document.getElementById("by").value) - (parseFloat(document.getElementById("ty").value)-parseFloat(document.getElementById("by").value))*.5;
+		document.getElementById("rx").value = parseFloat(document.getElementById("rx").value) + (parseFloat(document.getElementById("rx").value)-parseFloat(document.getElementById("lx").value))*.5;
+		document.getElementById("lx").value = parseFloat(document.getElementById("lx").value) - (parseFloat(document.getElementById("rx").value)-parseFloat(document.getElementById("lx").value))*.5;
 		redraw();
 	}
 
