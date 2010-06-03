@@ -5,7 +5,6 @@
 
 <?php include("../../topbar.phtml"); //this is style information for my webpage, not needed for depoloyment elsewhere ?><br>
 <?php 
-	if (!isset($_GET['algorithm']) || $_GET['algorithm'] <= "") { $algorithm = 0; } else { $algorithm = $_GET['algorithm']; }
 	if (!isset($_GET['lx']) || $_GET['lx'] <= "") { 
 		if ($algorithm == 0) {
 			$lx = -2.25;
@@ -90,7 +89,7 @@
 			$ci = null;
                 }
         } else { $ci = $_GET['ci']; }
-
+	if (!isset($_GET['algorithm']) || $_GET['algorithm'] <= "") { $algorithm = 0; } else { $algorithm = $_GET['algorithm']; }
 	if (!isset($_GET['colorscheme']) || $_GET['colorscheme'] <= "") { $colorscheme= 0; } else { $colorscheme = $_GET['colorscheme']; }
 	if (!isset($_GET['width']) || $_GET['width'] <= "") { 	
 		$width= 500;
@@ -133,7 +132,7 @@
 			This version uses Javascript to render the images to the new canvas element available in HTML5.
 			This page has been tested with Firefox 3.6, Opera 10.5 and Chrome<br><br>
 			To zoom on a section of the fractal click and drag to highlight the region.  You can reload the page or click <a href="./">here</a><br>
-			<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo $width; ?>">Fallback content, in case the browser does not support Canvas.</canvas>
+			<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width+100); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
 			<table> 
 		<tr>
 		<td> 
