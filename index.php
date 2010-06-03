@@ -101,7 +101,15 @@
 	<script type="text/javascript" src="fractal.js"></script>
 	<script type="text/javascript" src="color_lib.js"></script>
 	<script type="text/javascript" language="JavaScript"> 
-	 
+	
+	function zoom_out() {
+		document.getElementById("ty").value = document.getElementById("ty").value*1.5;
+		document.getElementById("by").value = document.getElementById("by").value*1.5;
+		document.getElementById("rx").value = document.getElementById("rx").value*1.5;
+		document.getElementById("lx").value = document.getElementById("lx").value*1.5;
+		redraw();
+	}
+
 	function resetcoords() {
 		document.getElementById("ty").value = "";
 		document.getElementById("by").value = "";
@@ -224,7 +232,8 @@
 		</table>
 		</td></tr>
 		</table>
-		<input type="submit" value="Redraw"  onclick="redraw();"></td>
+		<input type="submit" value="Zoom Out"  onclick="zoom_out();"><input type="submit" value="Reset Coords"  onclick="resetcoords();redraw();"><input type="submit" value="Redraw"  onclick="redraw();">
+		</td>
 		<td width="5%"></td>
 		</tr>
 	</table>
