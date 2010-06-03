@@ -436,372 +436,313 @@ function dwell_julia_quartic( cx, cy, precision, cr, ci ) {
 }
 
 
-
-
 /////////////////////////////////
 //
-// setColors
+// setColor
 //
-function setColors( pix, fract_array, width, height, precision, color_scheme) {
+function setColor( pix, pix_count, fract_array, width, height, precision, color_scheme) {
 //        if ( color_scheme == 1 ) {
 	var color;
-	var pix_count = 0;
 
 	if (color_scheme == 0) {
 		//simple
-	        for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-	        	        if (fract_array[k][j][0] < precision*.03) {
-					pix[(pix_count*4)]=255;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision*.05) {
-					pix[(pix_count*4)]=255;	//red
-					pix[(pix_count*4)+1]=255;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision*.1) {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=255;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision*.2) {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=255;	//green
-					pix[(pix_count*4)+2]=255;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision) {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=255;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				}
-				pix_count++;
-			}
+		if (fract_array[0] < precision*.03) {
+			pix[(pix_count*4)]=255;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision*.05) {
+			pix[(pix_count*4)]=255;	//red
+			pix[(pix_count*4)+1]=255;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision*.1) {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=255;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision*.2) {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=255;	//green
+			pix[(pix_count*4)+2]=255;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision) {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=255;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
 		}
 	} else if (color_scheme == 1) {
 		//
 		var color_count = 5;
-	        for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-				var Kval = fract_array[k][j][0];
-                		var modcolor =  (Kval % color_count)+1;
-                		if (Kval >= precision) {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-		                } else {
-						pix[(pix_count*4)]=(modcolor*27)%255;	//red
-						pix[(pix_count*4)+1]=(modcolor*52)%255;	//green
-						pix[(pix_count*4)+2]=(modcolor*94)%255;	//blue
-						pix[(pix_count*4)+3]=255;	//alpha
-				}
-				pix_count++;
-			}
-                }
+		var Kval = fract_array[0];
+		var modcolor =  (Kval % color_count)+1;
+		if (Kval >= precision) {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else {
+				pix[(pix_count*4)]=(modcolor*27)%255;	//red
+				pix[(pix_count*4)+1]=(modcolor*52)%255;	//green
+				pix[(pix_count*4)+2]=(modcolor*94)%255;	//blue
+				pix[(pix_count*4)+3]=255;	//alpha
+		}
 	} else if (color_scheme == 2) {
 		//
 		var color_count = 5;
-	        for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-				var Kval = fract_array[k][j][0];
-                		var modcolor =  (Kval % color_count)+1;
-                		if (Kval >= precision) {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-		                } else {
-						pix[(pix_count*4)]=(modcolor*187)%255;	//red
-						pix[(pix_count*4)+1]=(modcolor*90)%255;	//green
-						pix[(pix_count*4)+2]=(modcolor*69)%255;	//blue
-						pix[(pix_count*4)+3]=255;	//alpha
-				}
-				pix_count++;
-			}
-                }
+		var Kval = fract_array[0];
+		var modcolor =  (Kval % color_count)+1;
+		if (Kval >= precision) {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else {
+				pix[(pix_count*4)]=(modcolor*187)%255;	//red
+				pix[(pix_count*4)+1]=(modcolor*90)%255;	//green
+				pix[(pix_count*4)+2]=(modcolor*69)%255;	//blue
+				pix[(pix_count*4)+3]=255;	//alpha
+		}
 	} else if (color_scheme == 3) {
 		//
 		var color_count = 12;
-	        for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-				var Kval = fract_array[k][j][0];
-                		var modcolor =  (Kval % color_count)+1;
-                		if (Kval >= precision) {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-		                } else {
-						pix[(pix_count*4)]=(modcolor*27)%255;	//red
-						pix[(pix_count*4)+1]=(modcolor*52)%255;	//green
-						pix[(pix_count*4)+2]=(modcolor*94)%255;	//blue
-						pix[(pix_count*4)+3]=255;	//alpha
-				}
-				pix_count++;
-			}
-                }
+		var Kval = fract_array[0];
+		var modcolor =  (Kval % color_count)+1;
+		if (Kval >= precision) {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else {
+				pix[(pix_count*4)]=(modcolor*27)%255;	//red
+				pix[(pix_count*4)+1]=(modcolor*52)%255;	//green
+				pix[(pix_count*4)+2]=(modcolor*94)%255;	//blue
+				pix[(pix_count*4)+3]=255;	//alpha
+		}
+
 	} else if (color_scheme == 4) {
 		//
 		var color_count = 36;
-	        for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-				var Kval = fract_array[k][j][0];
-                		var modcolor =  (Kval % color_count)+1;
-                		if (Kval >= precision) {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-		                } else {
-						pix[(pix_count*4)]=(modcolor*27)%255;	//red
-						pix[(pix_count*4)+1]=(modcolor*52)%255;	//green
-						pix[(pix_count*4)+2]=(modcolor*94)%255;	//blue
-						pix[(pix_count*4)+3]=255;	//alpha
-				}
-				pix_count++;
-			}
-                }		
+		var Kval = fract_array[0];
+		var modcolor =  (Kval % color_count)+1;
+		if (Kval >= precision) {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else {
+				pix[(pix_count*4)]=(modcolor*27)%255;	//red
+				pix[(pix_count*4)+1]=(modcolor*52)%255;	//green
+				pix[(pix_count*4)+2]=(modcolor*94)%255;	//blue
+				pix[(pix_count*4)+3]=255;	//alpha
+		}
 	} else if (color_scheme == 5) {
-		for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-	        	        if (fract_array[k][j][0] < precision) {
-					var c1 = 0;
-					var c2 = 360;
-					var h = Math.round((fract_array[k][j][0] /precision)*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				}
-				
-				pix_count++;
-			}
+		if (fract_array[0] < precision) {
+			var c1 = 0;
+			var c2 = 360;
+			var h = Math.round((fract_array[0] /precision)*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
 		}
 	} else if (color_scheme == 6) {
-		for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-	        	        if (fract_array[k][j][0] < precision) {
-					var c1 = 360;
-					var c2 = 0;
-					var h = Math.round((fract_array[k][j][0] /precision)*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				}
-				
-				pix_count++;
-			}
+		if (fract_array[0] < precision) {
+			var c1 = 360;
+			var c2 = 0;
+			var h = Math.round((fract_array[0] /precision)*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
 		}
+				
 	} else if (color_scheme == 7) {
-		for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-	        	        if (fract_array[k][j][0] < precision/80) {
-					var c1 = 0;
-					var c2 = 120;
-					var h = Math.round((fract_array[k][j][0] /(precision/80))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision/20) {
-					var c1 = 120;
-					var c2 = 280;
-					var h = Math.round((fract_array[k][j][0] /(precision/20))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision/10) {
-					var c1 = 280;
-					var c2 = 20;
-					var h = Math.round((fract_array[k][j][0] /(precision/10))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision/5) {
-					var c1 = 20;
-					var c2 = 180;
-					var h = Math.round((fract_array[k][j][0] /(precision/5))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision) {
-					var c1 = 180;
-					var c2 = 360;
-					var h = Math.round((fract_array[k][j][0] /precision)*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				}
-				pix_count++;
-			}
+		if (fract_array[0] < precision/80) {
+			var c1 = 0;
+			var c2 = 120;
+			var h = Math.round((fract_array[k][j][0] /(precision/80))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision/20) {
+			var c1 = 120;
+			var c2 = 280;
+			var h = Math.round((fract_array[0] /(precision/20))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision/10) {
+			var c1 = 280;
+			var c2 = 20;
+			var h = Math.round((fract_array[0] /(precision/10))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100)
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision/5) {
+			var c1 = 20;
+			var c2 = 180;
+			var h = Math.round((fract_array[0] /(precision/5))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision) {
+			var c1 = 180;
+			var c2 = 360;
+			var h = Math.round((fract_array[0] /precision)*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
 		}
 	} else if (color_scheme == 8) {
-		for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-	        	        if (fract_array[k][j][0] < precision*.1) {
-					var c1 = 0;
-					var c2 = 120;
-					var h = Math.round((fract_array[k][j][0] /(precision*.1))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision*.3) {
-					var c1 = 120;
-					var c2 = 280;
-					var h = Math.round((fract_array[k][j][0] /(precision*.3))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision*.5) {
-					var c1 = 280;
-					var c2 = 20;
-					var h = Math.round((fract_array[k][j][0] /(precision*.5))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision*.7) {
-					var c1 = 20;
-					var c2 = 180;
-					var h = Math.round((fract_array[k][j][0] /(precision*.7))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision) {
-					var c1 = 180;
-					var c2 = 360;
-					var h = Math.round((fract_array[k][j][0] /precision)*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				}
-				pix_count++;
-			}
-		}		
-	} else if (color_scheme == 9) {
-		for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-	        	        if (fract_array[k][j][0] < precision*.03) {
-					var c1 = 0;
-					var c2 = 120;
-					var h = Math.round((fract_array[k][j][0] /(precision*.03))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision*.05) {
-					var c1 = 120;
-					var c2 = 280;
-					var h = Math.round((fract_array[k][j][0] /(precision*.05))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision*.1) {
-					var c1 = 280;
-					var c2 = 20;
-					var h = Math.round((fract_array[k][j][0] /(precision*.1))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision*.7) {
-					var c1 = 20;
-					var c2 = 180;
-					var h = Math.round((fract_array[k][j][0] /(precision*.2))*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else if (fract_array[k][j][0] < precision) {
-					var c1 = 180;
-					var c2 = 360;
-					var h = Math.round((fract_array[k][j][0] /precision)*(c2-c1))+c1;
-					var RGB = hsvToRgb(h, 100, 100)
-					pix[(pix_count*4)]=RGB[0];	//red
-					pix[(pix_count*4)+1]=RGB[1];	//green
-					pix[(pix_count*4)+2]=RGB[2];	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				} else {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				}
-				pix_count++;
-			}
-		}		
-	} else {
-	        for ( var j = 0; j < width ; j++) {
-		        for ( var k = 0; k < height ; k++) {
-	        	        if (fract_array[k][j][0]>= precision) {
-					pix[(pix_count*4)]=0;	//red
-					pix[(pix_count*4)+1]=0;	//green
-					pix[(pix_count*4)+2]=0;	//blue
-					pix[(pix_count*4)+3]=0;	//alpha 
-				} else {
-					pix[(pix_count*4)]=255;	//red
-					pix[(pix_count*4)+1]=255;	//green
-					pix[(pix_count*4)+2]=255;	//blue
-					pix[(pix_count*4)+3]=255;	//alpha
-				}
-				pix_count++;
-			}
+		if (fract_array[0] < precision*.1) {
+			var c1 = 0;
+			var c2 = 120;
+			var h = Math.round((fract_array[0] /(precision*.1))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision*.3) {
+			var c1 = 120;
+			var c2 = 280;
+			var h = Math.round((fract_array[0] /(precision*.3))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision*.5) {
+			var c1 = 280;
+			var c2 = 20;
+			var h = Math.round((fract_array[0] /(precision*.5))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision*.7) {
+			var c1 = 20;
+			var c2 = 180;
+			var h = Math.round((fract_array[0] /(precision*.7))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision) {
+			var c1 = 180;
+			var c2 = 360;
+			var h = Math.round((fract_array[0] /precision)*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
 		}
-
+	} else if (color_scheme == 9) {
+		if (fract_array[0] < precision*.03) {
+			var c1 = 0;
+			var c2 = 120;
+			var h = Math.round((fract_array[0] /(precision*.03))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision*.05) {
+			var c1 = 120;
+			var c2 = 280;
+			var h = Math.round((fract_array[0] /(precision*.05))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision*.1) {
+			var c1 = 280;
+			var c2 = 20;
+			var h = Math.round((fract_array[0] /(precision*.1))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision*.7) {
+			var c1 = 20;
+			var c2 = 180;
+			var h = Math.round((fract_array[0] /(precision*.2))*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else if (fract_array[0] < precision) {
+			var c1 = 180;
+			var c2 = 360;
+			var h = Math.round((fract_array[0] /precision)*(c2-c1))+c1;
+			var RGB = hsvToRgb(h, 100, 100);
+			pix[(pix_count*4)]=RGB[0];	//red
+			pix[(pix_count*4)+1]=RGB[1];	//green
+			pix[(pix_count*4)+2]=RGB[2];	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		} else {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		}
+	} else {
+		if (fract_array[0]>= precision) {
+			pix[(pix_count*4)]=0;	//red
+			pix[(pix_count*4)+1]=0;	//green
+			pix[(pix_count*4)+2]=0;	//blue
+			pix[(pix_count*4)+3]=0;	//alpha 
+		} else {
+			pix[(pix_count*4)]=255;	//red
+			pix[(pix_count*4)+1]=255;	//green
+			pix[(pix_count*4)+2]=255;	//blue
+			pix[(pix_count*4)+3]=255;	//alpha
+		}
 	}
 	return pix;
 }
@@ -819,10 +760,11 @@ function MultDimArray(iRows,iCols) {
 	} 
 	return(a); 
 } 
- 
-function create_fractal_array( width, height, lx, ty, rx, by, precision, algorithm, cr, ci) {
+
+function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx, by, precision, algorithm, cr, ci) {
 	var fract_array = MultDimArray(width,height);
-	
+	var pixcount = 0;
+//setColor( pix, pixcount fract_array, width, height, precision, color_scheme)	
         var x_inc = ( rx - lx ) / width;
         var y_inc = ( ty - by ) / height;
 	if  (algorithm  == 12) {
@@ -830,13 +772,13 @@ function create_fractal_array( width, height, lx, ty, rx, by, precision, algorit
 		var escapes_set = MultDimArray(width*height,2);
 		for ( var k = 0; k < height ; k++) {
 			for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = precision;
-					fractal_val_temp = dwell_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision);
-					if (fractal_val_temp >= precision) {
-						escapes_set[escape_index ][0] = j;
-						escapes_set[escape_index ][1] = k;
-						escape_index++;
-					}
+				fract_array[j][k] = precision;
+				fractal_val_temp = dwell_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision);
+				if (fractal_val_temp >= precision) {
+					escapes_set[escape_index ][0] = j;
+					escapes_set[escape_index ][1] = k;
+					escape_index++;
+				}
 			}
 		}
 		for (q = 0;  q<escape_index; q++) {
@@ -877,19 +819,25 @@ function create_fractal_array( width, height, lx, ty, rx, by, precision, algorit
 		if (algorithm  == 0) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					//fract_array[j][k] = dwell_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					pix = setColor( pix, pixcount, dwell_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 1) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_julia( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci);
+					//fract_array[j][k] = dwell_julia( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci);
+					pix = setColor( pix, pixcount, dwell_julia( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 2) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_burningship( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					//fract_array[j][k] = dwell_burningship( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					pix = setColor( pix, pixcount, dwell_burningship( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 3) {
@@ -901,55 +849,73 @@ function create_fractal_array( width, height, lx, ty, rx, by, precision, algorit
 		} else if  (algorithm  == 4) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_star( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					//fract_array[j][k] = dwell_star( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					pix = setColor( pix, pixcount, dwell_star( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 5) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_phoenix_julia( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci);
+					//fract_array[j][k] = dwell_phoenix_julia( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci);
+					pix = setColor( pix, pixcount, dwell_phoenix_julia( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 6) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_phoenix_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					//fract_array[j][k] = dwell_phoenix_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					pix = setColor( pix, pixcount, dwell_phoenix_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 7) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_mandel_cubic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					//fract_array[j][k] = dwell_mandel_cubic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					pix = setColor( pix, pixcount, dwell_mandel_cubic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 8) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_mandel_quartic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					//fract_array[j][k] = dwell_mandel_quartic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
+					pix = setColor( pix, pixcount, dwell_mandel_quartic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 9) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_julia_cubic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci );
+					//fract_array[j][k] = dwell_julia_cubic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci );
+					pix = setColor( pix, pixcount, dwell_julia_cubic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 10) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_julia_quartic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci );
+					//fract_array[j][k] = dwell_julia_quartic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci );
+					pix = setColor( pix, pixcount, dwell_julia_quartic( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else if  (algorithm  == 11) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = dwell_julia_cubic_experimental( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci );
+					//fract_array[j][k] = dwell_julia_cubic_experimental( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci );
+					pix = setColor( pix, pixcount, dwell_julia_cubic_experimental( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci ), width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		} else {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = [0,0,0];
+					//fract_array[j][k] = [0,0,0];
+					pix = setColor( pix, pixcount, fract_array[j][k] = [0,0,0], width, height, precision, color_scheme);	
+					pixcount++;
 				}
 			}
 		}
@@ -958,22 +924,28 @@ function create_fractal_array( width, height, lx, ty, rx, by, precision, algorit
 	}
 	return fract_array;
 }
- 
+
+
 function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme ) {
 
-	//generate the array that defines the colors
-	var fract_array = create_fractal_array( width, height, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
 
 
 	imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
 	pix = imgd.data;
-	//set the colors of the drawing area using the fract_array
-	pix = setColors(pix, fract_array, width, height, precision, color_scheme);
+	
+	pix = create_fractal(pix, width, height, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
+	
+//	//generate the array that defines the colors
+//	var fract_array = create_fractal_array( width, height, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
+//
+//	//set the colors of the drawing area using the fract_array
+//	pix = setColors(pix, fract_array, width, height, precision, color_scheme);
 
 	//create the image
 	draw_region.putImageData(imgd,0,0);
 	return true;
 }
+
 
 function draw(){
 	var width, height, ty, by, lx, rx, precision, algorithm, cr, ci, color_scheme;
