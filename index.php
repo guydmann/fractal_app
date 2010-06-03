@@ -93,7 +93,7 @@
 
 	if (!isset($_GET['colorscheme']) || $_GET['colorscheme'] <= "") { $colorscheme= 0; } else { $colorscheme = $_GET['colorscheme']; }
 	if (!isset($_GET['width']) || $_GET['width'] <= "") { 	
-		$width= 5000;
+		$width= 500;
 	} else { $width = $_GET['width']; }
 	
 	?>
@@ -115,6 +115,10 @@
 			var newHTML = "<td><input type=\"hidden\" size=\"4\" value=\"\" name=\"cr\" id=\"cr\"><td><td><input type=\"hidden\" size=\"4\" value=\"\" name=\"ci\" id=\"ci\"></td>";
 			document.getElementById('Julia_args').innerHTML = newHTML
 		}
+	}
+	
+	function redraw(){
+		draw();
 	}
 	 
 	</script> 
@@ -165,24 +169,32 @@
 				</select> 
 				</td></tr> 
 				<tr id="Julia_args">
-					<td><input type="hidden" size="4" value="" name="cr" id="cr"><td><td><input type="hidden" size="4" value="" name="ci" id="ci"></td>
+					<?php
+					if ($algorithm == 1 or $algorithm == 5 or $algorithm == 1 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
+					?>
+						<td> C(real):</td><td><input type="text" size="4" value="<?php echo $cr; ?>" name="cr" id="cr"> </td><td> C(imaginary):</td><td><input type="text" size="4" value="<?php echo $ci; ?>" name="ci" id="ci"></td>";
+					<?php
+					} else {
+					?>
+						<td><input type="hidden" size="4" value="" name="cr" id="cr"><td><td><input type="hidden" size="4" value="" name="ci" id="ci"></td>
+					<?php
+					}
+					?>
 				<tr> 
-				<input type="hidden" size="2" name="width" id="width"> 
+				<input type="hidden" size="2" name="width" id="width" value="<?php echo $width; ?>"> 
 		</table>
 		</td> 
 		<td>
 		<table> 
-			<tr><td> Left X Coord</td><td><input type="text" size="2" name="lx" id="lx"> </td></tr> 
-			<tr><td> Right X Coord</td><td><input type="text" size="2" name="rx" id="rx"> </td></tr> 
-			<tr><td> Top Y Coord</td><td><input type="text" size="2" name="ty" id="ty"> </td></tr> 
-			<tr><td> Bottom Y Coord</td><td><input type="text" size="2" name="by" id="by"> </td></tr> 
-			<tr><td><br><br> 
-			</td>
-			</tr> 
+			<tr><td> Left X Coord</td><td><input type="text" size="2" name="lx" id="lx" value="<?php echo $lx; ?>"> </td></tr> 
+			<tr><td> Right X Coord</td><td><input type="text" size="2" name="rx" id="rx" value="<?php echo $rx; ?>"> </td></tr> 
+			<tr><td> Top Y Coord</td><td><input type="text" size="2" name="ty" id="ty" value="<?php echo $ty; ?>"> </td></tr> 
+			<tr><td> Bottom Y Coord</td><td><input type="text" size="2" name="by" id="by" value="<?php echo $by; ?>"> </td></tr> 
+			<tr><td><br><br> </td></tr> 
 		</table>
 		</td></tr>
 		</table>
-		<input type="submit" value="Redraw"  onclick="draw();"></td>
+		<input type="submit" value="Redraw"  onclick="redraw();"></td>
 		<td width="5%"></td>
 		</tr>
 	</table>
