@@ -772,9 +772,9 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 		var escapes_set = MultDimArray(width*height,2);
 		for ( var k = 0; k < height ; k++) {
 			for ( var j = 0; j < width ; j++) {
-				fract_array[j][k] = precision;
+				fract_array[j][k][0] = precision;
 				fractal_val_temp = dwell_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision);
-				if (fractal_val_temp >= precision) {
+				if (fractal_val_temp[0] >= precision) {
 					escapes_set[escape_index ][0] = j;
 					escapes_set[escape_index ][1] = k;
 					escape_index++;
@@ -785,9 +785,15 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 			if (escapes_set[q] != "undefined") {
 				j = escapes_set[q][0];
 				k = escapes_set[q][1];
-				fract_array = dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
+				fract_array= dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
 			} else {
-			alert(escape_index + "\n");
+				alert(escape_index + "\n");
+			}
+		}
+		for ( var k = 0; k < height ; k++) {
+			for ( var j = 0; j < width ; j++) {
+				pix = setColor( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
+				pixcount++;
 			}
 		}
 	} else if  (algorithm  == 13) {
@@ -795,24 +801,26 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 		var escapes_set = MultDimArray(width*height,2);
 		for ( var k = 0; k < height ; k++) {
 			for ( var j = 0; j < width ; j++) {
-				fract_array[j][k] = precision;
+				fract_array[j][k][0] = precision;
 				fractal_val_temp = dwell_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision);
-				if (fractal_val_temp >= precision) {
-					escapes_set[escape_index ][0] = j;
-					escapes_set[escape_index ][1] = k;
+				if (fractal_val_temp[0] >= precision) {
+					escapes_set[escape_index ][0][0] = j;
+					escapes_set[escape_index ][1][0] = k;
 					escape_index++;
 				}
 			}
 		}
 		iterations = 10000 - 5000*(100/width);
 		for (q = 0;  q<iterations; q++) {
-			var rand_index = Math.floor(Math.random()*escape_index)-1  ;
-			if (escapes_set[rand_index] != "undefined") {
-				j = escapes_set[rand_index][0];
-				k = escapes_set[rand_index][1];
-				fract_array = dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
-			} else {
-			alert(rand_index + " " + escape_index + "\n");
+			var rand_index = Math.floor(Math.random()*(escape_index-1))  ;
+			j = escapes_set[rand_index][0][0];
+			k = escapes_set[rand_index][1][0];
+			fract_array = dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
+		}
+		for ( var k = 0; k < height ; k++) {
+			for ( var j = 0; j < width ; j++) {
+				pix = setColor( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
+				pixcount++;
 			}
 		}
 	} else {

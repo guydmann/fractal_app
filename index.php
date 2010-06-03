@@ -253,6 +253,12 @@
 						?>
 					</tr>
 					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>					
+					<tr>
 						<td><input type="submit" value="Open as PNG"  onclick="create_png();"></td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
