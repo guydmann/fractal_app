@@ -5,11 +5,12 @@
 
 <?php include("../../topbar.phtml"); //this is style information for my webpage, not needed for depoloyment elsewhere ?><br>
 <?php 
+	if (!isset($_GET['algorithm']) || $_GET['algorithm'] <= "") { $algorithm = 0; } else { $algorithm = $_GET['algorithm']; }
 	if (!isset($_GET['lx']) || $_GET['lx'] <= "") { 
 		if ($algorithm == 0) {
 			$lx = -2.25;
 		} elseif  ($algorithm == 1){ 
-			$lx = -2;
+			$lx = -1.75;
 		} elseif  ($algorithm == 2){ 
 			$lx = -2.25;
 		} elseif  ($algorithm == 3){ 
@@ -24,9 +25,9 @@
 		if ($algorithm == 0 || $algorithm == 12 || $algorithm ==13) {
 			$rx =  0.7;
 		} elseif  ($algorithm == 1){ 
-			$rx = 2;
+			$rx = 1.75;
 		} elseif  ($algorithm == 2){ 
-			$rx = 2;
+			$rx = 2.25;
 		} elseif  ($algorithm == 3){ 
 			$rx = 5;
 		} elseif  ($algorithm == 4){ 
@@ -89,7 +90,6 @@
 			$ci = null;
                 }
         } else { $ci = $_GET['ci']; }
-	if (!isset($_GET['algorithm']) || $_GET['algorithm'] <= "") { $algorithm = 0; } else { $algorithm = $_GET['algorithm']; }
 	if (!isset($_GET['colorscheme']) || $_GET['colorscheme'] <= "") { $colorscheme= 0; } else { $colorscheme = $_GET['colorscheme']; }
 	if (!isset($_GET['width']) || $_GET['width'] <= "") { 	
 		$width= 500;
@@ -120,22 +120,24 @@
 		//this will need to check if the width in the width field is different from that of the canvas. 
 		//if they are different it should reload the page pass the propoer variables to redraw the image at the larger width on a larger canvas
 		var canvas = document.getElementById("theCanvas");
+		redirectURL = "http://guydmann.no-ip.org/code/fractal_app/index.php";
+		redirectURL += "?algorithm=" + document.getElementById("algorithm").value + "&";
+		redirectURL += "colorscheme=" + document.getElementById("colorscheme").value + "&";
+		redirectURL += "width=" + document.getElementById("width").value + "&";
+		if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
+			redirectURL += "cr=" + document.getElementById("cr").value + "&";
+			redirectURL += "ci=" + document.getElementById("ci").value + "&";
+		}
+		redirectURL += "lx=" + document.getElementById("lx").value + "&";
+		redirectURL += "rx=" + document.getElementById("rx").value + "&";
+		redirectURL += "ty=" + document.getElementById("ty").value + "&";
+		redirectURL += "by=" + document.getElementById("by").value;
 		if (canvas.width != document.getElementById("width").value ) {
-			redirectURL = "http://guydmann.no-ip.org/code/fractal_app/index.php";
-			redirectURL += "?algorithm=" + document.getElementById("algorithm").value + "&";
-			redirectURL += "colorscheme=" + document.getElementById("colorscheme").value + "&";
-			redirectURL += "width=" + document.getElementById("width").value + "&";
-			if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
-				redirectURL += "cr=" + document.getElementById("cr").value + "&";
-				redirectURL += "ci=" + document.getElementById("ci").value + "&";
-			}
-			redirectURL += "lx=" + document.getElementById("lx").value + "&";
-			redirectURL += "rx=" + document.getElementById("rx").value + "&";
-			redirectURL += "ty=" + document.getElementById("ty").value + "&";
-			redirectURL += "by=" + document.getElementById("by").value;
+			
 			
 			window.location = redirectURL;
 		} else {
+			document.getElementById("URL").value  = redirectURL;
 			draw();
 		}
 	}
@@ -187,31 +189,38 @@
 				<option <?php if ($algorithm == 99) {  print "selected ";} ?> value=99>Blank</option> 
 				</select> 
 				</td></tr> 
-				<tr id="Julia_args">
-					<?php
-					if ($algorithm == 1 or $algorithm == 5 or $algorithm == 1 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
-					?>
-						<td> C(real):</td><td><input type="text" size="4" value="<?php echo $cr; ?>" name="cr" id="cr"> </td><td> C(imaginary):</td><td><input type="text" size="4" value="<?php echo $ci; ?>" name="ci" id="ci"></td>
-					<?php
-					} else {
-					?>
-						<td><input type="hidden" size="4" value="" name="cr" id="cr"><td><td><input type="hidden" size="4" value="" name="ci" id="ci"></td>
-					<?php
-					}
-					?>
-				</tr> 
 				<tr> 
-				<td>Width: <input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"> </td>
+					<td>URL:</td><td><input type="text" size="50" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>"> </td>
 				</tr>
 		</table>
 		</td> 
 		<td>
 		<table> 
-			<tr><td> Left X Coord</td><td><input type="text" size="2" name="lx" id="lx" value="<?php echo $lx; ?>"> </td></tr> 
-			<tr><td> Right X Coord</td><td><input type="text" size="2" name="rx" id="rx" value="<?php echo $rx; ?>"> </td></tr> 
-			<tr><td> Top Y Coord</td><td><input type="text" size="2" name="ty" id="ty" value="<?php echo $ty; ?>"> </td></tr> 
-			<tr><td> Bottom Y Coord</td><td><input type="text" size="2" name="by" id="by" value="<?php echo $by; ?>"> </td></tr> 
-			<tr><td><br><br> </td></tr> 
+			<tr>
+				<td> Left X Coord</td><td><input type="text" size="2" name="lx" id="lx" value="<?php echo $lx; ?>"> </td>
+				<td> Right X Coord</td><td><input type="text" size="2" name="rx" id="rx" value="<?php echo $rx; ?>"> </td>
+			</tr> 
+			<tr></tr> 
+			<tr>
+				<td> Top Y Coord</td><td><input type="text" size="2" name="ty" id="ty" value="<?php echo $ty; ?>"> </td>
+				<td> Bottom Y Coord</td><td><input type="text" size="2" name="by" id="by" value="<?php echo $by; ?>"> </td>
+			<tr>
+				<td><br><br> </td>
+				<td>Width: </td><td><input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"> </td>
+			</tr> 
+			<tr id="Julia_args">
+				<?php
+				if ($algorithm == 1 or $algorithm == 5 or $algorithm == 1 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
+				?>
+					<td> C(real):</td><td><input type="text" size="4" value="<?php echo $cr; ?>" name="cr" id="cr"> </td><td> C(imaginary):</td><td><input type="text" size="4" value="<?php echo $ci; ?>" name="ci" id="ci"></td>
+				<?php
+				} else {
+				?>
+					<td><input type="hidden" size="4" value="" name="cr" id="cr"><td><td><input type="hidden" size="4" value="" name="ci" id="ci"></td>
+				<?php
+				}
+				?>
+			</tr> 
 		</table>
 		</td></tr>
 		</table>

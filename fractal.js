@@ -1104,8 +1104,6 @@ function draw(){
 				}				
 				document.getElementById("ci").value = ci;
 			}
-	                //DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme );
-                        //var success = DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, 0, 0, color_scheme );
 			var success = DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme );
                 }
         }
@@ -1248,6 +1246,19 @@ function tools_rect () {
 			document.getElementById("ty").value = ty;
 			document.getElementById("by").value = by;
 			draw();
+			redirectURL = "http://guydmann.no-ip.org/code/fractal_app/index.php";
+			redirectURL += "?algorithm=" + document.getElementById("algorithm").value + "&";
+			redirectURL += "colorscheme=" + document.getElementById("colorscheme").value + "&";
+			redirectURL += "width=" + document.getElementById("width").value + "&";
+			if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
+				redirectURL += "cr=" + document.getElementById("cr").value + "&";
+				redirectURL += "ci=" + document.getElementById("ci").value + "&";
+			}
+			redirectURL += "lx=" + document.getElementById("lx").value + "&";
+			redirectURL += "rx=" + document.getElementById("rx").value + "&";
+			redirectURL += "ty=" + document.getElementById("ty").value + "&";
+			redirectURL += "by=" + document.getElementById("by").value;
+			document.getElementById("URL").value  = redirectURL;
 		}
 	}
 }
@@ -1270,9 +1281,7 @@ function init () {
   // ...
   // Attach the mousemove event handler.
 	tool = new tools_rect();
-	
-	
-	
+
 	var canvas = document.getElementById("theCanvas");
 	if (!canvas) {
 	      alert('Error: I cannot find the canvas element!');
