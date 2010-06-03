@@ -100,8 +100,16 @@
 	
 	<script type="text/javascript" src="fractal.js"></script>
 	<script type="text/javascript" src="color_lib.js"></script>
+	<script type="text/javascript" src="canvas2image.js"></script>
+	<script type="text/javascript" src="base64.js"></script>
 	<script type="text/javascript" language="JavaScript"> 
 	
+	function create_png() {
+		var oCanvas = document.getElementById("theCanvas");  
+		var strDataURI = oCanvas.toDataURL();  
+		window.open(strDataURI);
+	}
+
 	function zoom_out() {
 		document.getElementById("ty").value = document.getElementById("ty").value*1.5;
 		document.getElementById("by").value = document.getElementById("by").value*1.5;
@@ -162,7 +170,7 @@
 			<table>
 				<tr>
 				<td>
-					<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width+20); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
+					<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
 				</td>
 				<td>
 				<table> 				
@@ -243,7 +251,13 @@
 						<?php
 						}
 						?>
-					</tr> 
+					</tr>
+					<tr>
+						<td><input type="submit" value="Open as PNG"  onclick="create_png();"></td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>					
 				</table>
 				</td>
 				</tr>
