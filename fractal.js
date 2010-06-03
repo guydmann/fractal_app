@@ -795,13 +795,13 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 		var escapes_set = MultDimArray(width*height,2);
 		for ( var k = 0; k < height ; k++) {
 			for ( var j = 0; j < width ; j++) {
-					fract_array[j][k] = precision;
-					fractal_val_temp = dwell_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision);
-					if (fractal_val_temp >= precision) {
-						escapes_set[escape_index ][0] = j;
-						escapes_set[escape_index ][1] = k;
-						escape_index++;
-					}
+				fract_array[j][k] = precision;
+				fractal_val_temp = dwell_mandel( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision);
+				if (fractal_val_temp >= precision) {
+					escapes_set[escape_index ][0] = j;
+					escapes_set[escape_index ][1] = k;
+					escape_index++;
+				}
 			}
 		}
 		iterations = 10000 - 5000*(100/width);
@@ -922,26 +922,16 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 
 
 	}
-	return fract_array;
+	return pix;
 }
 
 
 function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme ) {
-
-
-
 	imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
 	pix = imgd.data;
 	
 	pix = create_fractal(pix, width, height, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
 	
-//	//generate the array that defines the colors
-//	var fract_array = create_fractal_array( width, height, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
-//
-//	//set the colors of the drawing area using the fract_array
-//	pix = setColors(pix, fract_array, width, height, precision, color_scheme);
-
-	//create the image
 	draw_region.putImageData(imgd,0,0);
 	return true;
 }
