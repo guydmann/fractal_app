@@ -165,7 +165,7 @@
 			<h2>Welcome to the Fractal Zoomer HTML5 Canvas Edition</h2>
 			This version uses Javascript to render the images to the new canvas element available in HTML5.<br>
 			This page has been tested with Firefox 3.6, Opera 10.5 and Chrome.<br>
-			The source repository can be found at <a href="http://github.com/guydmann/fractal_app">http://github.com/guydmann/fractal_app<a><br><br>
+			The source repository can be found at <a href="http://github.com/guydmann/fractal_app">http://github.com/guydmann/fractal_app</a><br><br>
 			To zoom on a section of the fractal click and drag to highlight the region.  You can reload the page or click <a href="./">here</a><br>
 			
 			<table>
