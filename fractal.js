@@ -580,7 +580,7 @@ function setColor( pix, pix_count, fract_array, width, height, precision, color_
 		if (fract_array[0] < precision/80) {
 			var c1 = 0;
 			var c2 = 120;
-			var h = Math.round((fract_array[k][j][0] /(precision/80))*(c2-c1))+c1;
+			var h = Math.round((fract_array[0] /(precision/80))*(c2-c1))+c1;
 			var RGB = hsvToRgb(h, 100, 100);
 			pix[(pix_count*4)]=RGB[0];	//red
 			pix[(pix_count*4)+1]=RGB[1];	//green
