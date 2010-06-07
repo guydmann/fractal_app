@@ -102,6 +102,7 @@
 	<script type="text/javascript" src="fractal.js"></script>
 	<script type="text/javascript" src="fractal_dwell.js"></script>
 	<script type="text/javascript" src="color_lib.js"></script>
+	<script type="text/javascript" src="tools_rec.js"></script>
 	<script type="text/javascript" src="canvas2image.js"></script>
 	<script type="text/javascript" src="base64.js"></script>
 	<script type="text/javascript" language="JavaScript"> 
@@ -292,10 +293,7 @@
 			</td>
 			</tr>
 		</table>
-		</td>
-		<td width="5%"></td>
-		</tr>
-	</table>
+
 		
 </body>
 </html>
