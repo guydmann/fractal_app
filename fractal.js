@@ -1122,14 +1122,58 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 	return pix;
 }
 
-
-function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme ) {
-	imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
+function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
+	pix_count = 0;
+	pix_tmp = imgd_tmp.data;
 	pix = imgd.data;
+	for ( var k = 0; k < height ; k++) {
+		for ( var j = 0; j < width ; j++) {
+			red = 0;
+			green = 0;
+			blue = 0;
+			alpha = 0;
+			for ( var q = 0; q < compression_factor ; q++) {
+				red += pix_tmp[(pix_count*4)+q];
+				green += pix_tmp[(pix_count*4)+q+1];
+				blue += pix_tmp[(pix_count*4)+q+2];
+				alpha += pix_tmp[(pix_count*4)+q+3];
+			}
+			red = Math.round(red /compression_factor);
+			green = Math.round(green /compression_factor);
+			blue = Math.round(blue /compression_factor);
+			alpha = Math.round(alpha /compression_factor);
+			pix[(pix_count*4)]=red;	//red
+			pix[(pix_count*4)+1]=green;	//green
+			pix[(pix_count*4)+2]=blue;	//blue
+			pix[(pix_count*4)+3]=alpha;	//alpha
+			pix_count++;
+		}
+	}
+	return imgd;
+
+}
+
+
+function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme, antialias ) {
+	if (antialias) {
+		compression_factor = 2;
+		imgd_tmp = draw_region.createImageData(parseFloat(width*compression_factor),parseFloat(height*compression_factor));
+		pix = imgd_tmp.data;
 	
-	pix = create_fractal(pix, width, height, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
+		pix = create_fractal(pix, width, height, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
 	
-	draw_region.putImageData(imgd,0,0);
+		imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
+		imgd = compress_imagedata(imgd, imgd_tmp, width, height, compression_factor);
+		draw_region.putImageData(imgd,0,0);
+	
+	} else {
+		imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
+		pix = imgd.data;
+	
+		pix = create_fractal(pix, width, height, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
+	
+		draw_region.putImageData(imgd,0,0);
+	}
 	return true;
 }
 
@@ -1264,7 +1308,13 @@ function draw(){
 				}				
 				document.getElementById("ci").value = ci;
 			}
-			var success = DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme );
+			if(document.getElementById("antialias").value.length>0) {
+				antialias = document.getElementById("antialias").value;
+			} else {
+				antialias = 0;
+				document.getElementById("antialias").value = antialias;
+			}
+			var success = DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme, antialias);
                 }
         }
 }

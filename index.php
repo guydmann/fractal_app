@@ -91,6 +91,7 @@
                 }
         } else { $ci = $_GET['ci']; }
 	if (!isset($_GET['colorscheme']) || $_GET['colorscheme'] <= "") { $colorscheme= 0; } else { $colorscheme = $_GET['colorscheme']; }
+	if (!isset($_GET['antialias']) || $_GET['antialias'] <= "") { $antialias= 0; } else { $antialias = $_GET['antialias']; }
 	if (!isset($_GET['width']) || $_GET['width'] <= "") { 	
 		$width= 500;
 	} else { $width = $_GET['width']; }
@@ -140,6 +141,12 @@
 		redirectURL += "?algorithm=" + document.getElementById("algorithm").value + "&";
 		redirectURL += "colorscheme=" + document.getElementById("colorscheme").value + "&";
 		redirectURL += "width=" + document.getElementById("width").value + "&";
+		redirectURL += "antialias=" 
+		if  (document.getElementById("antialias").checked) {
+			redirectURL += "1&";
+		} else {
+			redirectURL += "0&";
+		}
 		if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
 			redirectURL += "cr=" + document.getElementById("cr").value + "&";
 			redirectURL += "ci=" + document.getElementById("ci").value + "&";
@@ -239,8 +246,8 @@
 						<td> Top Y Coord</td><td><input type="text" size="4" name="ty" id="ty" value="<?php echo $ty; ?>"> </td>
 						<td> Bottom Y Coord</td><td><input type="text" size="4" name="by" id="by" value="<?php echo $by; ?>"> </td>
 					<tr>
-						<td>&nbsp; </td>
-						<td>&nbsp; </td>
+						<td>Anti-Aliasing</td>
+						<td><INPUT TYPE="checkbox" NAME="antialias"  id="antialias" <?php if ($antialias) {  print "CHECKED";}  ?>></td>
 						<td>Width: </td><td><input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"> </td>
 					</tr> 
 					<tr id="Julia_args">
