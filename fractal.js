@@ -180,6 +180,11 @@ function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
 	pix_tmp_count = 0;
 	pix = imgd.data;
 	pix_tmp = imgd_tmp.data;
+	
+	decinal = height/10;
+	decinal_count = 0;
+	decinal_val = decinal;
+	
 	for ( var k = 0; k < height ; k++) {
 		for ( var j = 0; j < width ; j++) {
 			red = 0;
@@ -231,7 +236,15 @@ function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
 			pix_tmp_count+= compression_factor;
 		}
 		pix_tmp_count+= compression_factor*width;
+		if (k>=decinal_val) {
+			decinal_val += decinal;
+			decinal_count++;
+			print_with_pause("sys_out", decinal_count + "0%...", false);
+		}
 	}
+	decinal_val += decinal;
+	decinal_count++;
+	print_with_pause("sys_out", decinal_count + "0%\n", false);
 	return imgd;
 
 }
