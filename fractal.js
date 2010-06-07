@@ -25,6 +25,9 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 		var fract_array = MultDimArray(width,height);
 		escape_index = 0;
 		var escapes_set = MultDimArray(width*height,2);
+		decinal = height/10;
+		decinal_count = 0;
+		decinal_val = decinal;
 		for ( var k = 0; k < height ; k++) {
 			for ( var j = 0; j < width ; j++) {
 				fract_array[j][k][0] = precision;
@@ -35,9 +38,20 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 					escape_index++;
 				}
 			}
+			if (k>=decinal_val) {
+				decinal_val += decinal;
+				decinal_count++;
+				print_with_pause("sys_out", decinal_count + "0%...", false);
+			}
 		}
+		decinal_val += decinal;
+		decinal_count++;
+		print_with_pause("sys_out", decinal_count + "0%\n", false);
 		 if  (algorithm  == 12) {
 			print_with_pause("sys_out", "Traversing all members of the escape set\n", false);
+			decinal = escape_index/10;
+			decinal_count = 0;
+			decinal_val = decinal;
 			for (q = 0;  q<escape_index; q++) {
 				if (escapes_set[q] != "undefined") {
 					j = escapes_set[q][0];
@@ -46,10 +60,21 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 				} else {
 					alert(escape_index + "\n");
 				}
+				if (q>=decinal_val) {
+					decinal_val += decinal;
+					decinal_count++;
+					print_with_pause("sys_out", decinal_count + "0%...", false);
+				}
 			}
+			decinal_val += decinal;
+			decinal_count++;
+			print_with_pause("sys_out", decinal_count + "0%\n", false);
 		} else {		
 			iterations = 10000 - 5000*(100/width);
 			print_with_pause("sys_out", "Traversing " + iterations  + " random members of the escape set\n", false);
+			decinal = iterations/10;
+			decinal_count = 0;
+			decinal_val = decinal;
 			for (q = 0;  q<iterations; q++) {
 				var rand_index = Math.floor(Math.random()*(escape_index))  ;
 				if (escapes_set[rand_index] != "undefined") {
@@ -59,35 +84,73 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 				} else {
 					alert(escape_index + "\n");
 				}
+				if (q>=decinal_val) {
+					decinal_val += decinal;
+					decinal_count++;
+					print_with_pause("sys_out", decinal_count + "0%...", false);
+				}
 			}
+			decinal_val += decinal;
+			decinal_count++;
+			print_with_pause("sys_out", decinal_count + "0%\n", false);
 		}
 		print_with_pause("sys_out", "Coloring the image\n", false);
+		decinal = height/10;
+		decinal_count = 0;
+		decinal_val = decinal;
 		for ( var k = 0; k < height ; k++) {
 			for ( var j = 0; j < width ; j++) {
 				pix = setColor( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
 				pixcount++;
 			}
+			if (k>=decinal_val) {
+				decinal_val += decinal;
+				decinal_count++;
+				print_with_pause("sys_out", decinal_count + "0%...", false);
+			}
 		}
+		decinal_val += decinal;
+		decinal_count++;
+		print_with_pause("sys_out", decinal_count + "0%\n", false);
 	}  else if  (algorithm  <12) {
 		var dwell_func_array = new Array (dwell_mandel,dwell_julia,dwell_burningship, dwell_newton, dwell_star,dwell_phoenix_julia,dwell_phoenix_mandel,dwell_mandel_cubic, dwell_mandel_quartic,dwell_julia_cubic, dwell_julia_quartic, dwell_julia_cubic_experimental);
 		julia_type = 0;
 		if (algorithm ==1 || algorithm ==5 || algorithm ==9 || algorithm == 10 || algorithm ==11) {
 			julia_type++;
 		}
+		decinal = height/10;
+		decinal_count = 0;
+		decinal_val = decinal;
 		if (julia_type == 0) {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
 					pix = setColor( pix, pixcount, dwell_func_array [algorithm]( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision ), width, height, precision, color_scheme);	
 					pixcount++;
 				}
+				if (k>=decinal_val) {
+					decinal_val += decinal;
+					decinal_count++;
+					print_with_pause("sys_out", decinal_count + "0%...", false);
+				}
 			}
+			decinal_val += decinal;
+			decinal_count++;
+			print_with_pause("sys_out", decinal_count + "0%\n", false);
 		} else {
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
 					pix = setColor( pix, pixcount, dwell_func_array [algorithm]( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci ), width, height, precision, color_scheme);	
 					pixcount++;
 				}
+				if (k>=decinal_val) {
+					decinal_val += decinal;
+					decinal_count++;
+					print_with_pause("sys_out", decinal_count + "0%...", false);
+				}
 			}
+			decinal_val += decinal;
+			decinal_count++;
+			print_with_pause("sys_out", decinal_count + "0%\n", false);
 		}
 	} else {
 		for ( var k = 0; k < height ; k++) {
@@ -95,7 +158,15 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 				pix = setColor( pix, pixcount, fract_array[j][k] = [0,0,0], width, height, precision, color_scheme);	
 				pixcount++;
 			}
+			if (k>=decinal_val) {
+				decinal_val += decinal;
+				decinal_count++;
+				print_with_pause("sys_out", decinal_count + "0%...", false);
+			}
 		}
+		decinal_val += decinal;
+		decinal_count++;
+		print_with_pause("sys_out", decinal_count + "0%\n", false);
 	}
 	return pix;
 }

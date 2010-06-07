@@ -28,5 +28,5 @@
 		document.getElementById(field).value = "";	
 	}
 	document.getElementById(field).value += message;
-	pause(1);
+	pause(5);
 }

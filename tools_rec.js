@@ -103,6 +103,12 @@ function tools_rect () {
 //				x = ev.offsetX;
 //				y = ev.offsetY;
 //			}
+
+			if (x==tool.x0 || y==tool.y0) {
+				tool.mousemove(ev); 
+				tool.started = false;
+				return;
+			}
 			if (x>tool.x0) {
 				x_temp += x;
 			} else {
@@ -134,20 +140,7 @@ function tools_rect () {
 			document.getElementById("rx").value = rx;
 			document.getElementById("ty").value = ty;
 			document.getElementById("by").value = by;
-			draw();
-			redirectURL = "http://guydmann.no-ip.org/code/fractal_app/index.php";
-			redirectURL += "?algorithm=" + document.getElementById("algorithm").value + "&";
-			redirectURL += "colorscheme=" + document.getElementById("colorscheme").value + "&";
-			redirectURL += "width=" + document.getElementById("width").value + "&";
-			if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
-				redirectURL += "cr=" + document.getElementById("cr").value + "&";
-				redirectURL += "ci=" + document.getElementById("ci").value + "&";
-			}
-			redirectURL += "lx=" + document.getElementById("lx").value + "&";
-			redirectURL += "rx=" + document.getElementById("rx").value + "&";
-			redirectURL += "ty=" + document.getElementById("ty").value + "&";
-			redirectURL += "by=" + document.getElementById("by").value;
-			document.getElementById("URL").value  = redirectURL;
+			redraw();
 		}
 	}
 }

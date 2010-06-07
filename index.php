@@ -158,12 +158,13 @@
 		redirectURL += "rx=" + document.getElementById("rx").value + "&";
 		redirectURL += "ty=" + document.getElementById("ty").value + "&";
 		redirectURL += "by=" + document.getElementById("by").value;
-		if (canvas.width != document.getElementById("width").value ) {
+		//hack to get around popups for the pause in chrome. not sure if it helps in other browsers
+		//if (canvas.width != document.getElementById("width").value ) {
 			window.location = redirectURL;
-		} else {
-			document.getElementById("URL").value  = redirectURL;
-			draw();
-		}
+		//} else {
+		//	document.getElementById("URL").value  = redirectURL;
+		//	draw();
+		//}
 	}
 	 
 	</script> 
@@ -186,7 +187,7 @@
 				<td>
 				<table> 				
 					<tr>
-						<td colspan=4><textarea name="sys_out" id="sys_out" rows="8" cols="50"></textarea></td>
+						<td colspan=4><textarea name="sys_out" id="sys_out" rows="8" cols="60"></textarea></td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
