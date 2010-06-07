@@ -16,12 +16,12 @@ function MultDimArray(iRows,iCols) {
 } 
 
 function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx, by, precision, algorithm, cr, ci) {
-	var dwell_func_array = new Array (dwell_mandel,dwell_julia,dwell_burningship, dwell_newton, dwell_star,dwell_phoenix_julia,dwell_phoenix_mandel,dwell_mandel_cubic, dwell_mandel_quartic,dwell_julia_cubic, dwell_julia_quartic, dwell_julia_cubic_experimental);
-	var fract_array = MultDimArray(width,height);
+	
 	var pixcount = 0;
         var x_inc = ( rx - lx ) / width;
         var y_inc = ( ty - by ) / height;
 	if  (algorithm  == 12 || algorithm  == 13) {
+		var fract_array = MultDimArray(width,height);
 		escape_index = 0;
 		var escapes_set = MultDimArray(width*height,2);
 		for ( var k = 0; k < height ; k++) {
@@ -67,6 +67,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 			}
 		}
 	}  else if  (algorithm  <12) {
+		var dwell_func_array = new Array (dwell_mandel,dwell_julia,dwell_burningship, dwell_newton, dwell_star,dwell_phoenix_julia,dwell_phoenix_mandel,dwell_mandel_cubic, dwell_mandel_quartic,dwell_julia_cubic, dwell_julia_quartic, dwell_julia_cubic_experimental);
 		julia_type = 0;
 		if (algorithm ==1 || algorithm ==5 || algorithm ==9 || algorithm == 10 || algorithm ==11) {
 			julia_type++;
@@ -130,22 +131,6 @@ function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
 					avg_count++;
 				}
 			}
-			
-			/*for ( var q = 0; q < compression_factor ; q++) {
-				if (j+q<width) {
-					red += pix_tmp[(pix_count*compression_factor*4)+(4*q*compression_factor)];
-					green += pix_tmp[(pix_count*compression_factor*4)+(4*q*compression_factor)+1];
-					blue += pix_tmp[(pix_count*compression_factor*4)+(4*q*compression_factor)+2];
-					alpha += pix_tmp[(pix_count*compression_factor*4)+(4*q*compression_factor)+3];
-					
-				}
-				if (k+q<height) {
-					red += pix_tmp[(pix_count*compression_factor*4)+(4*q*width*compression_factor)];
-					green += pix_tmp[(pix_count*compression_factor*4)+(4*q*width*compression_factor)+1];
-					blue += pix_tmp[(pix_count*compression_factor*4)+(4*q*width*compression_factor)+2];
-					alpha += pix_tmp[(pix_count*compression_factor*4)+(4*q*width*compression_factor)+3];
-				}
-			}*/
 			red = Math.round(red /(avg_count));
 			green = Math.round(green /(avg_count));
 			blue = Math.round(blue /(avg_count));
@@ -165,29 +150,29 @@ function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
 
 
 function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme, antialias ) {
-	document.getElementById("sys_out").value = "Beginning Fractal Generation\n";
+	print_with_pause("sys_out", "Beginning Fractal Generation\n", true);
 	if (antialias) {
 		compression_factor = 2;
 		imgd_tmp = draw_region.createImageData(parseFloat(width*compression_factor),parseFloat(height*compression_factor));
 		pix = imgd_tmp.data;
 	
-		document.getElementById("sys_out").value += "Creating Fractal at "+compression_factor+" times size\n";
+		print_with_pause("sys_out", "Creating fractal at "+(width*compression_factor)+"x"+(height*compression_factor)+"\n", false);
 		pix = create_fractal(pix, width*compression_factor, height*compression_factor, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
 	
+		
+		print_with_pause("sys_out","Compressing image to "+width+"x"+height+"\n", false);
 		imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
-		document.getElementById("sys_out").value += "Compressing image to "+width+"x"+height+"\n";
 		imgd = compress_imagedata(imgd, imgd_tmp, width, height, compression_factor);
 		draw_region.putImageData(imgd,0,0);
 	
 	} else {
+		print_with_pause("sys_out","Creating fractal at "+width+"x"+height+"\n", false);
 		imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
 		pix = imgd.data;
-	
-		document.getElementById("sys_out").value += "Creating fractal at "+width+"x"+height+"\n";
 		pix = create_fractal(pix, width, height, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
-	
 		draw_region.putImageData(imgd,0,0);
 	}
+	
 	document.getElementById("sys_out").value += "Fractal Generation Complete\n";
 	return true;
 }
