@@ -1124,6 +1124,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 
 function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
 	pix_count = 0;
+	pix_tmp_count = 0;
 	pix = imgd.data;
 	pix_tmp = imgd_tmp.data;
 	for ( var k = 0; k < height ; k++) {
@@ -1132,30 +1133,56 @@ function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
 			green = 0;
 			blue = 0;
 			alpha = 0;
-			for ( var q = 0; q < compression_factor ; q++) {
+			avg_count = 1;
+			red += pix_tmp[(pix_tmp_count*4)];
+			green += pix_tmp[(pix_tmp_count*4)+1];
+			blue += pix_tmp[(pix_tmp_count*4)+2];
+			alpha += pix_tmp[(pix_tmp_count*4)+3];
+			
+			for ( var q = 1; q < compression_factor ; q++) {
 				if (j+q<width) {
-					red += pix_tmp[(pix_count*compression_factor*4)+(4*q)];
-					green += pix_tmp[(pix_count*compression_factor*4)+(4*q)+1];
-					blue += pix_tmp[(pix_count*compression_factor*4)+(4*q)+2];
-					alpha += pix_tmp[(pix_count*compression_factor*4)+(4*q)+3];
+					red += pix_tmp[(pix_tmp_count*4)+(4*q*compression_factor)];
+					green += pix_tmp[(pix_tmp_count*4)+(4*q*compression_factor)+1];
+					blue += pix_tmp[(pix_tmp_count*4)+(4*q*compression_factor)+2];
+					alpha += pix_tmp[(pix_tmp_count*4)+(4*q*compression_factor)+3];
+					avg_count++;
 				}
-				if (j+q<height) {
-					red += pix_tmp[(pix_count*4)+(4*q*width)];
-					green += pix_tmp[(pix_count*4)+(4*q*width)+1];
-					blue += pix_tmp[(pix_count*4)+(4*q*width)+2];
-					alpha += pix_tmp[(pix_count*4)+(4*q*width)+3];
+				if (k+q<height) {
+					red += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)];
+					green += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+1];
+					blue += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+2];
+					alpha += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+3];
+					avg_count++;
 				}
 			}
-			red = Math.round(red /(compression_factor*2));
-			green = Math.round(green /(compression_factor*2));
-			blue = Math.round(blue /(compression_factor*2));
-			alpha = Math.round(alpha /(compression_factor*2));
+			
+			/*for ( var q = 0; q < compression_factor ; q++) {
+				if (j+q<width) {
+					red += pix_tmp[(pix_count*compression_factor*4)+(4*q*compression_factor)];
+					green += pix_tmp[(pix_count*compression_factor*4)+(4*q*compression_factor)+1];
+					blue += pix_tmp[(pix_count*compression_factor*4)+(4*q*compression_factor)+2];
+					alpha += pix_tmp[(pix_count*compression_factor*4)+(4*q*compression_factor)+3];
+					
+				}
+				if (k+q<height) {
+					red += pix_tmp[(pix_count*compression_factor*4)+(4*q*width*compression_factor)];
+					green += pix_tmp[(pix_count*compression_factor*4)+(4*q*width*compression_factor)+1];
+					blue += pix_tmp[(pix_count*compression_factor*4)+(4*q*width*compression_factor)+2];
+					alpha += pix_tmp[(pix_count*compression_factor*4)+(4*q*width*compression_factor)+3];
+				}
+			}*/
+			red = Math.round(red /(avg_count));
+			green = Math.round(green /(avg_count));
+			blue = Math.round(blue /(avg_count));
+			alpha = Math.round(alpha /(avg_count));
 			pix[(pix_count*4)]=red;	//red
 			pix[(pix_count*4)+1]=green;	//green
 			pix[(pix_count*4)+2]=blue;	//blue
 			pix[(pix_count*4)+3]=alpha;	//alpha
 			pix_count++;
+			pix_tmp_count+= compression_factor;
 		}
+		pix_tmp_count+= compression_factor*width;
 	}
 	return imgd;
 
@@ -1316,7 +1343,7 @@ function draw(){
 				}				
 				document.getElementById("ci").value = ci;
 			}
-			if(document.getElementById("antialias").value.length>0) {
+			if(document.getElementById("antialias").checked) {
 				antialias = document.getElementById("antialias").value;
 			} else {
 				antialias = 0;
