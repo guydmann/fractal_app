@@ -53,8 +53,8 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 			for (q = 0;  q<iterations; q++) {
 				var rand_index = Math.floor(Math.random()*(escape_index))  ;
 				if (escapes_set[rand_index] != "undefined") {
-					j = escapes_set[rand_index][0][0];
-					k = escapes_set[rand_index][1][0];
+					j = escapes_set[rand_index][0];
+					k = escapes_set[rand_index][1];
 					fract_array = dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
 				} else {
 					alert(escape_index + "\n");
