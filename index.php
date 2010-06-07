@@ -186,7 +186,7 @@
 				<td>
 				<table> 				
 					<tr>
-						<td colspan=4><textarea name="sys_out" id="sys_out" rows="6" cols="30"></textarea></td>
+						<td colspan=4><textarea name="sys_out" id="sys_out" rows="8" cols="50"></textarea></td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
