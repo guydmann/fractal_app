@@ -1124,8 +1124,8 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 
 function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
 	pix_count = 0;
-	pix_tmp = imgd_tmp.data;
 	pix = imgd.data;
+	pix_tmp = imgd_tmp.data;
 	for ( var k = 0; k < height ; k++) {
 		for ( var j = 0; j < width ; j++) {
 			red = 0;
@@ -1133,15 +1133,23 @@ function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
 			blue = 0;
 			alpha = 0;
 			for ( var q = 0; q < compression_factor ; q++) {
-				red += pix_tmp[(pix_count*4)+q];
-				green += pix_tmp[(pix_count*4)+q+1];
-				blue += pix_tmp[(pix_count*4)+q+2];
-				alpha += pix_tmp[(pix_count*4)+q+3];
+				if (j+q<width) {
+					red += pix_tmp[(pix_count*compression_factor*4)+(4*q)];
+					green += pix_tmp[(pix_count*compression_factor*4)+(4*q)+1];
+					blue += pix_tmp[(pix_count*compression_factor*4)+(4*q)+2];
+					alpha += pix_tmp[(pix_count*compression_factor*4)+(4*q)+3];
+				}
+				if (j+q<height) {
+					red += pix_tmp[(pix_count*4)+(4*q*width)];
+					green += pix_tmp[(pix_count*4)+(4*q*width)+1];
+					blue += pix_tmp[(pix_count*4)+(4*q*width)+2];
+					alpha += pix_tmp[(pix_count*4)+(4*q*width)+3];
+				}
 			}
-			red = Math.round(red /compression_factor);
-			green = Math.round(green /compression_factor);
-			blue = Math.round(blue /compression_factor);
-			alpha = Math.round(alpha /compression_factor);
+			red = Math.round(red /(compression_factor*2));
+			green = Math.round(green /(compression_factor*2));
+			blue = Math.round(blue /(compression_factor*2));
+			alpha = Math.round(alpha /(compression_factor*2));
 			pix[(pix_count*4)]=red;	//red
 			pix[(pix_count*4)+1]=green;	//green
 			pix[(pix_count*4)+2]=blue;	//blue
@@ -1160,7 +1168,7 @@ function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, alg
 		imgd_tmp = draw_region.createImageData(parseFloat(width*compression_factor),parseFloat(height*compression_factor));
 		pix = imgd_tmp.data;
 	
-		pix = create_fractal(pix, width, height, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
+		pix = create_fractal(pix, width*compression_factor, height*compression_factor, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
 	
 		imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
 		imgd = compress_imagedata(imgd, imgd_tmp, width, height, compression_factor);
