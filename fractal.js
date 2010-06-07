@@ -1190,14 +1190,17 @@ function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
 
 
 function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme, antialias ) {
+	document.getElementById("sys_out").value = "Beginning Fractal Generation\n";
 	if (antialias) {
 		compression_factor = 2;
 		imgd_tmp = draw_region.createImageData(parseFloat(width*compression_factor),parseFloat(height*compression_factor));
 		pix = imgd_tmp.data;
 	
+		document.getElementById("sys_out").value += "Creating Fractal at "+compression_factor+" times size\n";
 		pix = create_fractal(pix, width*compression_factor, height*compression_factor, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
 	
 		imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
+		document.getElementById("sys_out").value += "Compressing image to "+width+"x"+height+"\n";
 		imgd = compress_imagedata(imgd, imgd_tmp, width, height, compression_factor);
 		draw_region.putImageData(imgd,0,0);
 	
@@ -1205,10 +1208,12 @@ function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, alg
 		imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
 		pix = imgd.data;
 	
+		document.getElementById("sys_out").value += "Creating fractal at "+width+"x"+height+"\n";
 		pix = create_fractal(pix, width, height, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
 	
 		draw_region.putImageData(imgd,0,0);
 	}
+	document.getElementById("sys_out").value += "Fractal Generation Complete\n";
 	return true;
 }
 
