@@ -8,7 +8,7 @@
 	if (!isset($_GET['algorithm']) || $_GET['algorithm'] <= "") { $algorithm = 0; } else { $algorithm = $_GET['algorithm']; }
 	if (!isset($_GET['lx']) || $_GET['lx'] <= "") { 
 		if ($algorithm == 0) {
-			$lx = -2.25;
+			$lx = -2;
 		} elseif  ($algorithm == 1){ 
 			$lx = -1.75;
 		} elseif  ($algorithm == 2){ 
@@ -23,7 +23,7 @@
 	} else { $lx = $_GET['lx']; }
 	if (!isset($_GET['rx']) || $_GET['rx'] <= "") { 
 		if ($algorithm == 0 || $algorithm == 12 || $algorithm ==13) {
-			$rx =  0.7;
+			$rx =  0.5;
 		} elseif  ($algorithm == 1){ 
 			$rx = 1.75;
 		} elseif  ($algorithm == 2){ 
@@ -39,7 +39,7 @@
 
 	if (!isset($_GET['ty']) || $_GET['ty'] <= "") { 
 		if ($algorithm == 0) {
-			$ty =  1.5;
+			$ty =  1.25;
 		} elseif  ($algorithm == 1){ 
 			$ty= 1;
                 } elseif  ($algorithm == 2){
@@ -54,7 +54,7 @@
 	} else { $ty = $_GET['ty']; }
 	if (!isset($_GET['by']) || $_GET['by'] <= "") { 
 		if ($algorithm == 0) {
-			$by =  -1.5;
+			$by =  -1.25;
 		} elseif  ($algorithm == 1){ 
 			$by = -1;
                 } elseif  ($algorithm == 2){
@@ -69,7 +69,7 @@
 	} else { $by = $_GET['by']; }
 	if (!isset($_GET['cr']) || $_GET['cr'] <= "") { 
 		if ($algorithm == 1) {
-			$cr = -.7492;
+			$cr = -.84413;
 		} elseif ($algorithm == 5) {
 			$cr = -.56667;
 		} elseif ($algorithm == 9 or $algorithm == 10) {
@@ -81,7 +81,7 @@
 
         if (!isset($_GET['ci']) || $_GET['ci'] <= "") {
                 if ($algorithm == 1) {
-                        $ci =.1;
+                        $ci =.2;
 		} elseif ($algorithm == 5) {
 			$ci = .5;
 		} elseif ($algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
@@ -220,8 +220,8 @@
 						<option <?php if ($algorithm == 9) {  print "selected ";} ?> value=9>Cubic Julia</option> 
 						<option <?php if ($algorithm == 10) {  print "selected ";} ?> value=10>Quartic Julia</option> 
 						<option <?php if ($algorithm == 11) {  print "selected ";} ?> value=11>Cubic Julia Experimental</option> 
-						<option <?php if ($algorithm == 12) {  print "selected ";} ?> value=12>Mandelbrot Interior Coloring</option> 
-						<option <?php if ($algorithm == 13) {  print "selected ";} ?> value=13>Mandelbrot Interior Coloring 2</option> 
+						<option <?php if ($algorithm == 12) {  print "selected ";} ?> value=12>Buddhabrot Full Traversal</option> 
+						<option <?php if ($algorithm == 13) {  print "selected ";} ?> value=13>Buddhabrot Random Traversal</option> 
 						<option <?php if ($algorithm == 99) {  print "selected ";} ?> value=99>Blank</option> 
 						</select> 
 						</td>
