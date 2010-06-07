@@ -192,20 +192,31 @@ function compress_imagedata(imgd, imgd_tmp, width, height, compression_factor) {
 			blue += pix_tmp[(pix_tmp_count*4)+2];
 			alpha += pix_tmp[(pix_tmp_count*4)+3];
 			
-			for ( var q = 1; q < compression_factor ; q++) {
-				if (j+q<width) {
-					red += pix_tmp[(pix_tmp_count*4)+(4*q*compression_factor)];
-					green += pix_tmp[(pix_tmp_count*4)+(4*q*compression_factor)+1];
-					blue += pix_tmp[(pix_tmp_count*4)+(4*q*compression_factor)+2];
-					alpha += pix_tmp[(pix_tmp_count*4)+(4*q*compression_factor)+3];
-					avg_count++;
-				}
-				if (k+q<height) {
-					red += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)];
-					green += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+1];
-					blue += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+2];
-					alpha += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+3];
-					avg_count++;
+			for ( var q = 0; q < compression_factor ; q++) {
+				for ( var r = 0; r < compression_factor ; r++) {
+					if (r!=0 && q!=0) {
+						if (j+r<width) {
+							red += pix_tmp[(pix_tmp_count*4)+(4*r*compression_factor)];
+							green += pix_tmp[(pix_tmp_count*4)+(4*r*compression_factor)+1];
+							blue += pix_tmp[(pix_tmp_count*4)+(4*r*compression_factor)+2];
+							alpha += pix_tmp[(pix_tmp_count*4)+(4*r*compression_factor)+3];
+							avg_count++;
+						}
+						if (k+q<height) {
+							red += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)];
+							green += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+1];
+							blue += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+2];
+							alpha += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+3];
+							avg_count++;
+						}
+						if (k+q<height && j+r<width) {
+							red += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+(4*r*compression_factor)];
+							green += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+(4*r*compression_factor)+1];
+							blue += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+(4*r*compression_factor)+2];
+							alpha += pix_tmp[(pix_tmp_count*4)+(4*(q*width)*compression_factor)+(4*r*compression_factor)+3];
+							avg_count++;
+						}
+					}
 				}
 			}
 			red = Math.round(red /(avg_count));
