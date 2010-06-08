@@ -99,6 +99,7 @@
 	?>
 	<body>
 	
+	
 	<script type="text/javascript" src="fractal.js"></script>
 	<script type="text/javascript" src="fractal_dwell.js"></script>
 	<script type="text/javascript" src="color_lib.js"></script>
@@ -106,7 +107,17 @@
 	<script type="text/javascript" src="global_lib.js"></script>
 	<script type="text/javascript" src="canvas2image.js"></script>
 	<script type="text/javascript" src="base64.js"></script>
+	<script type="text/javascript" src="tabcontent.js">
+	/***********************************************
+	* Tab Content script v2.2- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+	* This notice MUST stay intact for legal use
+	* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+	***********************************************/
+
+	</script>
+	<link rel="stylesheet" type="text/css" href="tabcontent.css" />
 	<script type="text/javascript" language="JavaScript"> 
+	
 	
 	function create_png() {
 		var oCanvas = document.getElementById("theCanvas");  
@@ -128,10 +139,10 @@
 		document.getElementById("rx").value = "";
 		document.getElementById("lx").value = "";
 		if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
-			var newHTML = "<td> C(real):</td><td><input type=\"text\" size=\"4\" value=\"\" name=\"cr\" id=\"cr\"> </td>\n<td> C(imaginary):</td><td><input type=\"text\" size=\"4\" value=\"\" name=\"ci\" id=\"ci\"></td>";
+			var newHTML = "C(real):&nbsp;<input type=\"text\" size=\"4\" value=\"<?php echo $cr; ?>\" name=\"cr\" id=\"cr\">&nbsp;&nbsp;C(imaginary):&nbsp;<input type=\"text\" size=\"4\" value=\"<?php echo $ci; ?>\" name=\"ci\" id=\"ci\">";
 			document.getElementById('Julia_args').innerHTML = newHTML
 		} else {
-			var newHTML = "<td><input type=\"hidden\" size=\"4\" value=\"\" name=\"cr\" id=\"cr\"><td><td><input type=\"hidden\" size=\"4\" value=\"\" name=\"ci\" id=\"ci\"></td>";
+			var newHTML = "<input type=\"hidden\" size=\"4\" value=\"\" name=\"cr\" id=\"cr\"><input type=\"hidden\" size=\"4\" value=\"\" name=\"ci\" id=\"ci\">";
 			document.getElementById('Julia_args').innerHTML = newHTML
 		}
 	}
@@ -166,48 +177,44 @@
 		//	draw();
 		//}
 	}
-	 
+	 //; 
 	</script> 
+	
 	<body onLoad="init();">
-	<table width="100%" border="0">
-		<tr>
-			<td width="5%"></td>
-			<td width="90%" align="center">
-			<h2>Welcome to the Fractal Zoomer HTML5 Canvas Edition</h2>
-			This version uses Javascript to render the images to the new canvas element available in HTML5.<br>
-			This page has been tested with Firefox 3.6, Opera 10.5 and Chrome.<br>
-			The source repository can be found at <a href="http://github.com/guydmann/fractal_app">http://github.com/guydmann/fractal_app</a><br><br>
-			To zoom on a section of the fractal click and drag to highlight the region.  You can reload the page or click <a href="./">here</a><br>
-			
-			<table>
-				<tr>
+	<div style="padding: 3em">
+	<div style="text-align: center">
+		<h2>Welcome to the Fractal Zoomer HTML5 Canvas Edition</h2>
+		This version uses Javascript to render the images to the new canvas element available in HTML5.<br>
+		This page has been tested with Firefox 3.6, Opera 10.5 and Chrome.<br>
+		The source repository can be found at <a href="http://github.com/guydmann/fractal_app">http://github.com/guydmann/fractal_app</a><br><br>
+		To zoom on a section of the fractal click and drag to highlight the region.  You can reload the page or click <a href="./">here</a><br>
+	</div>
+	<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
+	<div style="float:right; padding: 2em">
+		<table>
+			<tr>
+				<td><input type="submit" value="Redraw"  onclick="redraw();"></td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>
-					<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
+					<input type="submit" value="Zoom Out"  onclick="zoom_out();">
 				</td>
 				<td>
-				<table> 				
-					<tr>
-						<td colspan=4><textarea name="sys_out" id="sys_out" rows="8" cols="60"></textarea></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>					
-					<tr>
-						<td><input type="submit" value="Redraw"  onclick="redraw();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>
-							<input type="submit" value="Zoom Out"  onclick="zoom_out();">
-						</td>
-						<td>
-							<input type="submit" value="Reset Coords"  onclick="resetcoords();redraw();">
-						</td>
-					</tr>
-					<tr>
-						<td> algorithm:</td>
-						<td colspan=3><select name="algorithm" id="algorithm" onchange="resetcoords();"> 
+					<input type="submit" value="Reset Coords"  onclick="resetcoords();redraw();">
+				</td>
+			</tr>
+		</table>
+		<textarea name="sys_out" id="sys_out" rows="8" cols="43"></textarea>
+		<div>
+			<ul id="controltabs" class="modernbricksmenu2">
+				<li><a href="#" rel="controltab1" class="selected">Algorithm</a></li>
+				<li><a href="#" rel="controltab2">Coloring</a></li>
+				<li><a href="#" rel="controltab3">Image</a></li>
+			</ul>
+		</div>				
+		<div style="border:1px solid gray; width:350px; margin-bottom: 1em; padding: 10px">
+			<div id="controltab1" class="tabcontent">
+				Algorithm:
+					<select name="algorithm" id="algorithm" onchange="resetcoords();"> 
 						<option <?php if ($algorithm == 0) {  print "selected ";} ?> value=0>Mandelbrot (Quadratic)</option> 
 						<option <?php if ($algorithm == 1) {  print "selected ";} ?> value=1>Julia (Quadratic)</option> 
 						<option <?php if ($algorithm == 2) {  print "selected ";} ?> value=2>Burning Ship</option> 
@@ -223,9 +230,27 @@
 						<option <?php if ($algorithm == 12) {  print "selected ";} ?> value=12>Buddhabrot Full Traversal</option> 
 						<option <?php if ($algorithm == 13) {  print "selected ";} ?> value=13>Buddhabrot Random Traversal</option> 
 						<option <?php if ($algorithm == 99) {  print "selected ";} ?> value=99>Blank</option> 
-						</select> 
-						</td>
-					</tr> 
+					</select> <br><br><br>
+					Left X Coord:&nbsp;<input type="text" size="4" name="lx" id="lx" value="<?php echo $lx; ?>">
+					Right X Coord&nbsp;<input type="text" size="4" name="rx" id="rx" value="<?php echo $rx; ?>"><br>
+					Top Y Coord:&nbsp;<input type="text" size="4" name="ty" id="ty" value="<?php echo $ty; ?>">
+					Bottom Y Coord:&nbsp;<input type="text" size="4" name="by" id="by" value="<?php echo $by; ?>"><br>
+					<div id="Julia_args">
+						<?php
+						if ($algorithm == 1 or $algorithm == 5 or $algorithm == 1 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
+						?>
+							C(real):&nbsp;<input type="text" size="4" value="<?php echo $cr; ?>" name="cr" id="cr">&nbsp;&nbsp;C(imaginary):&nbsp;<input type="text" size="4" value="<?php echo $ci; ?>" name="ci" id="ci">
+						<?php
+						} else {
+						?>
+							<input type="hidden" size="4" value="" name="cr" id="cr"><input type="hidden" size="4" value="" name="ci" id="ci">
+						<?php
+						}
+						?>
+					</div>
+			</div>
+			<div id="controltab2" class="tabcontent">
+				<table>
 					<tr>
 						<td> colorscheme:</td>
 						<td colspan=3><select name="colorscheme" id="colorscheme"> 
@@ -244,59 +269,25 @@
 						<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>TEST 3d HSV 3</option> 
 						<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
 						</select> 
-					<td></tr> 
-					<tr> 
-						<td>URL:</td><td colspan=3><input type="text" size="30" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>"> </td>
+						<td>
 					</tr>
-
-
-					<tr>
-						<td> Left X Coord</td><td><input type="text" size="4" name="lx" id="lx" value="<?php echo $lx; ?>"> </td>
-						<td> Right X Coord</td><td><input type="text" size="4" name="rx" id="rx" value="<?php echo $rx; ?>"> </td>
-					</tr> 
-					<tr></tr> 
-					<tr>
-						<td> Top Y Coord</td><td><input type="text" size="4" name="ty" id="ty" value="<?php echo $ty; ?>"> </td>
-						<td> Bottom Y Coord</td><td><input type="text" size="4" name="by" id="by" value="<?php echo $by; ?>"> </td>
-					<tr>
-						<td>Anti-Aliasing</td>
-						<td><INPUT TYPE="checkbox" NAME="antialias"  id="antialias" <?php if ($antialias) {  print "CHECKED";}  ?>></td>
-						<td>Width: </td><td><input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"> </td>
-					</tr> 
-					<tr id="Julia_args">
-						<?php
-						if ($algorithm == 1 or $algorithm == 5 or $algorithm == 1 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
-						?>
-							<td> C(real):</td><td><input type="text" size="4" value="<?php echo $cr; ?>" name="cr" id="cr"> </td><td> C(imaginary):</td><td><input type="text" size="4" value="<?php echo $ci; ?>" name="ci" id="ci"></td>
-						<?php
-						} else {
-						?>
-							<td></td><td><input type="hidden" size="4" value="" name="cr" id="cr"><td><td></td><td><input type="hidden" size="4" value="" name="ci" id="ci"></td>
-						<?php
-						}
-						?>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>					
-					<tr>
-						<td><input type="submit" value="Open as PNG"  onclick="create_png();"></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>					
 				</table>
-				</td>
-				</tr>
-			</table>
-			</td>
-			</tr>
-		</table>
-
-		
+			</div>
+			<div id="controltab3" class="tabcontent">
+				Canvas Width:&nbsp;<input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"><br>
+				Anti-Aliasing:&nbsp;<INPUT TYPE="checkbox" NAME="antialias"  id="antialias" <?php if ($antialias) {  print "CHECKED";}  ?>><br><br>
+				<input type="submit" value="Open as PNG"  onclick="create_png();"><br><br>
+				URL:&nbsp;<input type="text" size="30" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>">
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var controls=new ddtabcontent("controltabs")
+		controls.setpersist(true)
+		controls.setselectedClassTarget("link") //"link" or "linkparent"
+		controls.init()
+	</script>
+	</div>
 </body>
 </html>
 
