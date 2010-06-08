@@ -6,7 +6,7 @@
  function pause(numberMillis) { 
     var dialogScript =  
        'window.setTimeout(' + 
-       ' function () { window.close(); }, ' + numberMillis + ');'; 
+       ' function () { window.close(); }, ' + numberMillis + ');window.hide(); '; 
        
     var result =  
 // For IE5. 

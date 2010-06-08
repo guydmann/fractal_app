@@ -99,6 +99,7 @@
 	?>
 	<body>
 	
+	
 	<script type="text/javascript" src="fractal.js"></script>
 	<script type="text/javascript" src="fractal_dwell.js"></script>
 	<script type="text/javascript" src="color_lib.js"></script>
@@ -106,7 +107,17 @@
 	<script type="text/javascript" src="global_lib.js"></script>
 	<script type="text/javascript" src="canvas2image.js"></script>
 	<script type="text/javascript" src="base64.js"></script>
+	<script type="text/javascript" src="tabcontent.js">
+	/***********************************************
+	* Tab Content script v2.2- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+	* This notice MUST stay intact for legal use
+	* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+	***********************************************/
+
+	</script>
+	<link rel="stylesheet" type="text/css" href="tabcontent.css" />
 	<script type="text/javascript" language="JavaScript"> 
+	
 	
 	function create_png() {
 		var oCanvas = document.getElementById("theCanvas");  
@@ -166,45 +177,45 @@
 		//	draw();
 		//}
 	}
-	 
+	 //; 
 	</script> 
+	
 	<body onLoad="init();">
-	<table width="100%" border="0">
-		<tr>
-			<td width="5%"></td>
-			<td width="90%" align="center">
-			<h2>Welcome to the Fractal Zoomer HTML5 Canvas Edition</h2>
-			This version uses Javascript to render the images to the new canvas element available in HTML5.<br>
-			This page has been tested with Firefox 3.6, Opera 10.5 and Chrome.<br>
-			The source repository can be found at <a href="http://github.com/guydmann/fractal_app">http://github.com/guydmann/fractal_app</a><br><br>
-			To zoom on a section of the fractal click and drag to highlight the region.  You can reload the page or click <a href="./">here</a><br>
-			
-			<table>
-				<tr>
+	<div style="padding: 2em">
+	<div style="text-align: center">
+		<h2>Welcome to the Fractal Zoomer HTML5 Canvas Edition</h2>
+		This version uses Javascript to render the images to the new canvas element available in HTML5.<br>
+		This page has been tested with Firefox 3.6, Opera 10.5 and Chrome.<br>
+		The source repository can be found at <a href="http://github.com/guydmann/fractal_app">http://github.com/guydmann/fractal_app</a><br><br>
+		To zoom on a section of the fractal click and drag to highlight the region.  You can reload the page or click <a href="./">here</a><br>
+	</div>
+	<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
+	<div style="float:right; padding: 2em">
+		<table>
+			<tr>
+				<td><input type="submit" value="Redraw"  onclick="redraw();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;</td>
 				<td>
-					<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
+					<input type="submit" value="Zoom Out"  onclick="zoom_out();">
 				</td>
 				<td>
-				<table> 				
-					<tr>
-						<td colspan=4><textarea name="sys_out" id="sys_out" rows="8" cols="60"></textarea></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>					
-					<tr>
-						<td><input type="submit" value="Redraw"  onclick="redraw();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>
-							<input type="submit" value="Zoom Out"  onclick="zoom_out();">
-						</td>
-						<td>
-							<input type="submit" value="Reset Coords"  onclick="resetcoords();redraw();">
-						</td>
-					</tr>
+					<input type="submit" value="Reset Coords"  onclick="resetcoords();redraw();">
+				</td>
+			</tr>
+			<tr>
+				<td colspan=4><textarea name="sys_out" id="sys_out" rows="8" cols="60"></textarea></td>
+			</tr>
+		</table>
+		<div>
+			<ul id="controltabs" class="modernbricksmenu2">
+				<li><a href="#" rel="controltab1" class="selected">Algorithm</a></li>
+				<li><a href="#" rel="controltab2">Coloring</a></li>
+				<li><a href="#" rel="controltab3">Image</a></li>
+			</ul>
+		</div>				
+		<div style="border:1px solid gray; width:350px; margin-bottom: 1em; padding: 10px">
+			<div id="controltab1" class="tabcontent">
+				<table>
 					<tr>
 						<td> algorithm:</td>
 						<td colspan=3><select name="algorithm" id="algorithm" onchange="resetcoords();"> 
@@ -226,30 +237,6 @@
 						</select> 
 						</td>
 					</tr> 
-					<tr>
-						<td> colorscheme:</td>
-						<td colspan=3><select name="colorscheme" id="colorscheme"> 
-						<option <? if ($colorscheme == 0) {  print "selected ";} ?> value=0>Simple</option> 
-						<option <? if ($colorscheme == 1) {  print "selected ";} ?> value=1> 5 Color Cyclic 1</option> 
-						<option <? if ($colorscheme == 2) {  print "selected ";} ?> value=2>5 Color Cyclic 2</option> 
-						<option <? if ($colorscheme == 3) {  print "selected ";} ?> value=3>12 Color Cyclic 1</option> 
-						<option <? if ($colorscheme == 4) {  print "selected ";} ?> value=4>36 Color Cyclic</option> 
-						<option <? if ($colorscheme == 5) {  print "selected ";} ?> value=5>HSV 0-360</option> 
-						<option <? if ($colorscheme == 6) {  print "selected ";} ?> value=6>HSV 360-0</option> 
-						<option <? if ($colorscheme == 7) {  print "selected ";} ?> value=7>HSV with static modulus</option> 
-						<option <? if ($colorscheme == 8) {  print "selected ";} ?> value=8>HSV with percentage modulus</option> 
-						<option <? if ($colorscheme == 9) {  print "selected ";} ?> value=9>HSV with percentage modulus 2</option> 
-						<option <? if ($colorscheme == 10) {  print "selected ";} ?> value=10>TEST 3d HSV</option> 
-						<option <? if ($colorscheme == 11) {  print "selected ";} ?> value=11>TEST 3d HSV 2</option> 
-						<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>TEST 3d HSV 3</option> 
-						<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
-						</select> 
-					<td></tr> 
-					<tr> 
-						<td>URL:</td><td colspan=3><input type="text" size="30" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>"> </td>
-					</tr>
-
-
 					<tr>
 						<td> Left X Coord</td><td><input type="text" size="4" name="lx" id="lx" value="<?php echo $lx; ?>"> </td>
 						<td> Right X Coord</td><td><input type="text" size="4" name="rx" id="rx" value="<?php echo $rx; ?>"> </td>
@@ -276,27 +263,45 @@
 						}
 						?>
 					</tr>
-					<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>					
-					<tr>
-						<td><input type="submit" value="Open as PNG"  onclick="create_png();"></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>					
 				</table>
-				</td>
-				</tr>
-			</table>
-			</td>
-			</tr>
-		</table>
-
-		
+			</div>
+			<div id="controltab2" class="tabcontent">
+				<table>
+					<tr>
+						<td> colorscheme:</td>
+						<td colspan=3><select name="colorscheme" id="colorscheme"> 
+						<option <? if ($colorscheme == 0) {  print "selected ";} ?> value=0>Simple</option> 
+						<option <? if ($colorscheme == 1) {  print "selected ";} ?> value=1> 5 Color Cyclic 1</option> 
+						<option <? if ($colorscheme == 2) {  print "selected ";} ?> value=2>5 Color Cyclic 2</option> 
+						<option <? if ($colorscheme == 3) {  print "selected ";} ?> value=3>12 Color Cyclic 1</option> 
+						<option <? if ($colorscheme == 4) {  print "selected ";} ?> value=4>36 Color Cyclic</option> 
+						<option <? if ($colorscheme == 5) {  print "selected ";} ?> value=5>HSV 0-360</option> 
+						<option <? if ($colorscheme == 6) {  print "selected ";} ?> value=6>HSV 360-0</option> 
+						<option <? if ($colorscheme == 7) {  print "selected ";} ?> value=7>HSV with static modulus</option> 
+						<option <? if ($colorscheme == 8) {  print "selected ";} ?> value=8>HSV with percentage modulus</option> 
+						<option <? if ($colorscheme == 9) {  print "selected ";} ?> value=9>HSV with percentage modulus 2</option> 
+						<option <? if ($colorscheme == 10) {  print "selected ";} ?> value=10>TEST 3d HSV</option> 
+						<option <? if ($colorscheme == 11) {  print "selected ";} ?> value=11>TEST 3d HSV 2</option> 
+						<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>TEST 3d HSV 3</option> 
+						<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
+						</select> 
+						<td>
+					</tr>
+				</table>
+			</div>
+			<div id="controltab3" class="tabcontent">
+				URL:<input type="text" size="30" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>">
+				<input type="submit" value="Open as PNG"  onclick="create_png();">
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var controls=new ddtabcontent("controltabs")
+		controls.setpersist(true)
+		controls.setselectedClassTarget("link") //"link" or "linkparent"
+		controls.init()
+	</script>
+	</div>
 </body>
 </html>
 
