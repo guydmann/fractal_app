@@ -107,18 +107,17 @@
 	<script type="text/javascript" src="global_lib.js"></script>
 	<script type="text/javascript" src="canvas2image.js"></script>
 	<script type="text/javascript" src="base64.js"></script>
+	<script type="text/javascript" src="slider.js"></script>
 	<script type="text/javascript" src="tabcontent.js">
 	/***********************************************
 	* Tab Content script v2.2- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
 	* This notice MUST stay intact for legal use
 	* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
 	***********************************************/
-
 	</script>
 	<link rel="stylesheet" type="text/css" href="tabcontent.css" />
+	<!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 	<script type="text/javascript" language="JavaScript"> 
-	
-	
 	function create_png() {
 		var oCanvas = document.getElementById("theCanvas");  
 		var strDataURI = oCanvas.toDataURL();  
@@ -191,6 +190,34 @@
 	</div>
 	<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
 	<div style="float:right; padding: 2em">
+	<input name="sliderValue" id="sliderValue" type="Text" size="3"> 
+<script language="JavaScript"> 
+	var A_TPL = {
+		'b_vertical' : true,
+		'b_watch': true,
+		'n_controlWidth': 16,
+		'n_controlHeight': 120,
+		'n_sliderWidth': 15,
+		'n_sliderHeight': 16,
+		'n_pathLeft' : 1,
+		'n_pathTop' : 1,
+		'n_pathLength' : 103,
+		's_imgControl': 'img/bluev_bg.gif',
+		's_imgSlider': 'img/bluev_sl.gif',
+		'n_zIndex': 1
+	}
+	var A_INIT = {
+		's_form' : 0,
+		's_name': 'sliderValue',
+		'n_minValue' : 0,
+		'n_maxValue' : 100,
+		'n_value' : 20,
+		'n_step' : 1
+	}
+ 
+	new slider(A_INIT, A_TPL);
+</script> 
+
 		<table>
 			<tr>
 				<td><input type="submit" value="Redraw"  onclick="redraw();"></td>
