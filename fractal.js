@@ -395,7 +395,7 @@ function draw(){
 				cr = document.getElementById("cr").value;
 			} else {
 				if(algorithm ==1 || algorithm ==5 || algorithm ==9 || algorithm ==10 || algorithm ==11) {
-					cr=-.84413;
+					cr=-.844;
 				} else {
 					cr = "";
 				}				

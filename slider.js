@@ -56,6 +56,58 @@ function slider (a_init, a_tpl) {
 	this.e_slider.style.visibility = 'visible';
 }
 
+function slider_html (a_init, a_tpl) {
+
+	this.f_setValue  = f_sliderSetValue;
+	this.f_getPos    = f_sliderGetPos;
+	
+	// register in the global collection	
+	if (!window.A_SLIDERS)
+		window.A_SLIDERS = [];
+	this.n_id = window.A_SLIDERS.length;
+	window.A_SLIDERS[this.n_id] = this;
+
+	// save config parameters in the slider object
+	var s_key;
+	if (a_tpl)
+		for (s_key in a_tpl)
+			this[s_key] = a_tpl[s_key];
+	for (s_key in a_init)
+		this[s_key] = a_init[s_key];
+
+	this.n_pix2value = this.n_pathLength / (this.n_maxValue - this.n_minValue);
+	if (this.n_value == null)
+		this.n_value = this.n_minValue;
+
+	this.e_base   = get_element('sl' + this.n_id + 'base');
+	this.e_slider = get_element('sl' + this.n_id + 'slider');
+	
+	// safely hook document/window events
+	if (!window.f_savedMouseMove && document.onmousemove != f_sliderMouseMove) {
+		window.f_savedMouseMove = document.onmousemove;
+		document.onmousemove = f_sliderMouseMove;
+	}
+	if (!window.f_savedMouseUp && document.onmouseup != f_sliderMouseUp) {
+		window.f_savedMouseUp = document.onmouseup;
+		document.onmouseup = f_sliderMouseUp;
+	}
+	// preset to the value in the input box if available
+	var e_input = this.s_form == null
+		? get_element(this.s_name)
+		: document.forms[this.s_form]
+			? document.forms[this.s_form].elements[this.s_name]
+			: null;
+	this.f_setValue(e_input && e_input.value != '' ? e_input.value : null, 1);
+	this.e_slider.style.visibility = 'visible';
+	
+		// generate the control's HTML
+	var return_string = '<div style="width:' + this.n_controlWidth + 'px;height:' + this.n_controlHeight + 'px;border:0; background-image:url(' + this.s_imgControl + ')" id="sl' + this.n_id + 'base">' +
+		'<img src="' + this.s_imgSlider + '" width="' + this.n_sliderWidth + '" height="' + this.n_sliderHeight + '" border="0" style="position:relative;left:' + this.n_pathLeft + 'px;top:' + this.n_pathTop + 'px;z-index:' + this.n_zIndex + ';cursor:pointer;visibility:hidden;" name="sl' + this.n_id + 'slider" id="sl' + this.n_id + 'slider" onmousedown="return f_sliderMouseDown(' + this.n_id + ')"/></div>'
+	return return_string;
+
+}
+
+
 function f_sliderSetValue (n_value, b_noInputCheck) {
 	if (n_value == null)
 		n_value = this.n_value == null ? this.n_minValue : this.n_value;

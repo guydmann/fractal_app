@@ -69,9 +69,9 @@
 	} else { $by = $_GET['by']; }
 	if (!isset($_GET['cr']) || $_GET['cr'] <= "") { 
 		if ($algorithm == 1) {
-			$cr = -.84413;
+			$cr = -.844;
 		} elseif ($algorithm == 5) {
-			$cr = -.56667;
+			$cr = -.566;
 		} elseif ($algorithm == 9 or $algorithm == 10) {
 			$cr = .5;
 		} else {
@@ -137,14 +137,38 @@
 		document.getElementById("rx").value = "";
 		document.getElementById("lx").value = "";
 		if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
-			var newHTML = "<td> C(real):</td><td><input type=\"text\" size=\"4\" value=\"\" name=\"cr\" id=\"cr\"> </td>\n<td> C(imaginary):</td><td><input type=\"text\" size=\"4\" value=\"\" name=\"ci\" id=\"ci\"></td>";
+			var newHTML = "<table cellpadding='0' cellspacing='3'>";
+			newHTML += "<tr>";
+			newHTML += "<td>C(real):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='Text' name='cr' id='cr' style='border: 1px solid gray;width:40px; height:16px; font-size: 10px;' onchange='A_SLIDERS[0].f_setValue(this.value)'></td>";
+
+			newHTML += "<td>";
+			newHTML += "<script language='JavaScript'>";
+			newHTML += "var A_TPL1h = { 'b_vertical' : false, 'b_watch': true, 'n_controlWidth': 120, 'n_controlHeight': 16, 'n_sliderWidth': 16, 'n_sliderHeight': 15, 'n_pathLeft' : 1, 'n_pathTop' : 1,'n_pathLength' : 103, 's_imgControl': 'img/blueh_bg.gif', 's_imgSlider': 'img/blueh_sl.gif', 'n_zIndex': 1}; ";
+			newHTML += "var A_INIT1h = { 's_form' : 'sampleForm', 's_name': 'cr', 'n_minValue' : -1.5, 'n_maxValue' : 1.5, 'n_value' : -.844,'n_step' : 0.001 }; ";
+			newHTML += "new slider(A_INIT1h, A_TPL1h); <#$#script> ";
+			newHTML += "</td> ";
+			newHTML += "</tr> ";
+			newHTML += "</table>";
+			newHTML += "<table cellpadding='0' Cellspacing='3'> ";
+			newHTML += "<tr> ";
+			newHTML += "<td>C(imaginary):&nbsp;<input type='Text' name='ci' id='ci' style='border: 1px solid gray;width:40px; height:16px; font-size: 10px;' onchange='A_SLIDERS[0].f_setValue(this.value)'></td> ";
+			newHTML += "<td>";
+			newHTML += "<script language='JavaScript'> ";
+			newHTML += "var A_TPL2h = { 'b_vertical' : false, 'b_watch': true, 'n_controlWidth': 120, 'n_controlHeight': 16, 'n_sliderWidth': 16, 'n_sliderHeight': 15, 'n_pathLeft' : 1, 'n_pathTop' : 1, 'n_pathLength' : 103, 's_imgControl': 'img/blueh_bg.gif', 's_imgSlider': 'img/blueh_sl.gif', 'n_zIndex': 1 }; ";
+			newHTML += "var A_INIT2h = { 's_form' : 'sampleForm', 's_name': 'ci', 'n_minValue' : -1.5, 'n_maxValue' : 1.5, 'n_value' : .2, 'n_step' : 0.001 }; ";
+			newHTML += "new slider(A_INIT2h, A_TPL2h);<#@#script>";
+			newHTML += "</td>";
+			newHTML += "</tr>";
+			newHTML += "</table>";
+			var newHTML = newHTML.replace("#$#", "/");
+			var newHTML = newHTML.replace("#@#", "/");
 			document.getElementById('Julia_args').innerHTML = newHTML
 		} else {
-			var newHTML = "<td><input type=\"hidden\" size=\"4\" value=\"\" name=\"cr\" id=\"cr\"><td><td><input type=\"hidden\" size=\"4\" value=\"\" name=\"ci\" id=\"ci\"></td>";
+			var newHTML = "<input type=\"hidden\" size=\"4\" value=\"\" name=\"cr\" id=\"cr\"><input type=\"hidden\" size=\"4\" value=\"\" name=\"ci\" id=\"ci\">";
 			document.getElementById('Julia_args').innerHTML = newHTML
 		}
 	}
-	
+
 	function redraw(){
 		//this will need to check if the width in the width field is different from that of the canvas. 
 		//if they are different it should reload the page pass the propoer variables to redraw the image at the larger width on a larger canvas
@@ -168,16 +192,19 @@
 		redirectURL += "ty=" + document.getElementById("ty").value + "&";
 		redirectURL += "by=" + document.getElementById("by").value;
 		//hack to get around popups for the pause in chrome. not sure if it helps in other browsers
-		if (canvas.width != document.getElementById("width").value ) {
+		//if (canvas.width != document.getElementById("width").value ) {
 			window.location = redirectURL;
-		} else {
-			document.getElementById("URL").value  = redirectURL;
-			draw();
-		}
+		//} else {
+		//	document.getElementById("URL").value  = redirectURL;
+		//	draw();
+		//}
 	}
 	 
 	</script> 
 	<body onLoad="init();">
+	
+	
+
 	<div style="padding: 3em">
 	<div style="text-align: center">
 		<h2>Welcome to the Fractal Zoomer HTML5 Canvas Edition</h2>
@@ -188,44 +215,7 @@
 	</div>
 	<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
 	<div style="float:right; padding: 2em">
-	<input name="sliderValue" id="sliderValue" type="Text" size="3"> 
-<script language="JavaScript"> 
-	var A_TPL = {
-		'b_vertical' : true,
-		'b_watch': true,
-		'n_controlWidth': 16,
-		'n_controlHeight': 120,
-		'n_sliderWidth': 15,
-		'n_sliderHeight': 16,
-		'n_pathLeft' : 1,
-		'n_pathTop' : 1,
-		'n_pathLength' : 103,
-		's_imgControl': 'img/bluev_bg.gif',
-		's_imgSlider': 'img/bluev_sl.gif',
-		'n_zIndex': 1
-	}
-	var A_INIT = {
-		's_form' : 0,
-		's_name': 'sliderValue',
-		'n_minValue' : 0,
-		'n_maxValue' : 100,
-		'n_value' : 20,
-		'n_step' : 1
-	}
- 
-	new slider(A_INIT, A_TPL);
-</script> 
 
-<div style="padding: 3em">
-	<div style="text-align: center">
-		<h2>Welcome to the Fractal Zoomer HTML5 Canvas Edition</h2>
-		This version uses Javascript to render the images to the new canvas element available in HTML5.<br>
-		This page has been tested with Firefox 3.6, Opera 10.5 and Chrome.<br>
-		The source repository can be found at <a href="http://github.com/guydmann/fractal_app">http://github.com/guydmann/fractal_app</a><br><br>
-		To zoom on a section of the fractal click and drag to highlight the region.  You can reload the page or click <a href="./">here</a><br>
-	</div>
-	<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
-	<div style="float:right; padding: 2em">
 		<table>
 			<tr>
 				<td><input type="submit" value="Redraw"  onclick="redraw();"></td>
@@ -247,6 +237,7 @@
 			</ul>
 		</div>				
 		<div style="border:1px solid gray; width:350px; margin-bottom: 1em; padding: 10px">
+			<form name="sampleForm" style="margin: 0px; padding: 0px;"> 
 			<div id="controltab1" class="tabcontent">
 				Algorithm:
 					<select name="algorithm" id="algorithm" onchange="resetcoords();"> 
@@ -272,9 +263,75 @@
 					Bottom Y Coord:&nbsp;<input type="text" size="4" name="by" id="by" value="<?php echo $by; ?>"><br>
 					<div id="Julia_args">
 						<?php
-						if ($algorithm == 1 or $algorithm == 5 or $algorithm == 1 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
-						?>
-							C(real):&nbsp;<input type="text" size="4" value="<?php echo $cr; ?>" name="cr" id="cr">&nbsp;&nbsp;C(imaginary):&nbsp;<input type="text" size="4" value="<?php echo $ci; ?>" name="ci" id="ci">
+						if ($algorithm == 1 or $algorithm == 5 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
+						?>	
+							<table cellpadding="0" cellspacing="3"> 
+							<tr> 
+								<td>C(real):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="Text" name="cr" id="cr" style="border: 1px solid gray;width:40px; height:16px; font-size: 10px;" onchange="A_SLIDERS[0].f_setValue(this.value)"></td> 
+								<td> 
+								<script language="JavaScript"> 
+									var A_TPL1h = {
+										'b_vertical' : false,
+										'b_watch': true,
+										'n_controlWidth': 120,
+										'n_controlHeight': 16,
+										'n_sliderWidth': 16,
+										'n_sliderHeight': 15,
+										'n_pathLeft' : 1,
+										'n_pathTop' : 1,
+										'n_pathLength' : 103,
+										's_imgControl': 'img/blueh_bg.gif',
+										's_imgSlider': 'img/blueh_sl.gif',
+										'n_zIndex': 1
+									}
+								
+									var A_INIT1h = {
+										's_form' : 'sampleForm',
+										's_name': 'cr',
+										'n_minValue' : -1.5,
+										'n_maxValue' : 1.5,
+										'n_value' : <?php echo $cr; ?>,
+										'n_step' : 0.001
+									}
+									new slider(A_INIT1h, A_TPL1h);
+								</script> 
+								</td> 
+							</tr> 
+							</table> 
+							<table cellpadding="0" cellspacing="3"> 
+							<tr> 
+								<td>C(imaginary):&nbsp;<input type="Text" name="ci" id="ci" style="border: 1px solid gray;width:40px; height:16px; font-size: 10px;" onchange="A_SLIDERS[0].f_setValue(this.value)"></td> 
+								<td> 
+								<script language="JavaScript"> 
+									var A_TPL2h = {
+										'b_vertical' : false,
+										'b_watch': true,
+										'n_controlWidth': 120,
+										'n_controlHeight': 16,
+										'n_sliderWidth': 16,
+										'n_sliderHeight': 15,
+										'n_pathLeft' : 1,
+										'n_pathTop' : 1,
+										'n_pathLength' : 103,
+										's_imgControl': 'img/blueh_bg.gif',
+										's_imgSlider': 'img/blueh_sl.gif',
+										'n_zIndex': 1
+									}
+								
+									var A_INIT2h = {
+										's_form' : 'sampleForm',
+										's_name': 'ci',
+										'n_minValue' : -1.5,
+										'n_maxValue' : 1.5,
+										'n_value' : <?php echo $ci; ?>,
+										'n_step' : 0.001
+									}
+									new slider(A_INIT2h, A_TPL2h);
+								</script> 
+								</td> 
+							</tr> 
+							</table> 
+							
 						<?php
 						} else {
 						?>
@@ -322,6 +379,7 @@
 		controls.setselectedClassTarget("link") //"link" or "linkparent"
 		controls.init()
 	</script>
+	</form>
 	</div>
 		
 </body>
