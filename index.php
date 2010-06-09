@@ -106,6 +106,7 @@
 	<script type="text/javascript" src="global_lib.js"></script>
 	<script type="text/javascript" src="canvas2image.js"></script>
 	<script type="text/javascript" src="base64.js"></script>
+	<!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 	<script type="text/javascript" language="JavaScript"> 
 	
 	function create_png() {
