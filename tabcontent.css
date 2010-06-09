@@ -32,19 +32,19 @@ color: white;
 text-decoration: none;
 margin: 0 1px 0 0; /*Margin between each menu item*/
 padding: 5px 10px;
-background-color: black; /*Brown color theme*/ 
+background-color: grey; /*Brown color theme*/ 
 border-bottom: 1px solid white;
 }
 
 .modernbricksmenu2 a:hover{
-background-color: #D25A0B; /*Brown color theme*/ 
+background-color: #CF3822; /*Brown color theme*/ 
 color: white;
 }
 
 .modernbricksmenu2 a.selected{ /*currently selected tab*/
-background-color: #D25A0B; /*Brown color theme*/ 
+background-color: #CF3822; /*Brown color theme*/ 
 color: white;
-border-color: #D25A0B; /*Brown color theme*/ 
+border-color: #CF3822; /*Brown color theme*/ 
 }
 
 .tabcontent{

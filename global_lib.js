@@ -6,14 +6,13 @@
  function pause(numberMillis) { 
     var dialogScript =  
        'window.setTimeout(' + 
-       ' function () { window.close(); }, ' + numberMillis + ');window.hide(); '; 
-       
+       ' function () { window.close(); }, ' + numberMillis + ');'; 
     var result =  
 // For IE5. 
      window.showModalDialog( 
        'javascript:document.writeln(' + 
-        '"<script>' + dialogScript + '<' + '/script>")'); 
- 
+        '"<script>' + dialogScript + '<' + '/script>")',"","dialogTop:2400px; dialogLeft:3600px;dialogWidth:1px; dialogHeight:1px; dialogHide:yes"); 
+	
 /* For NN6, but it requires a trusted script.
      openDialog(
        'javascript:document.writeln(' +
@@ -28,5 +27,5 @@
 		document.getElementById(field).value = "";	
 	}
 	document.getElementById(field).value += message;
-	pause(5);
+	pause(1);
 }
