@@ -11,8 +11,8 @@
 // For IE5. 
      window.showModalDialog( 
        'javascript:document.writeln(' + 
-        '"<script>' + dialogScript + '<' + '/script>")',"","dialogTop:2400px; dialogLeft:3600px;dialogWidth:1px; dialogHeight:1px; dialogHide:yes"); 
-	
+        '"<script>' + dialogScript + '<' + '/script>")'); 
+
 /* For NN6, but it requires a trusted script.
      openDialog(
        'javascript:document.writeln(' +

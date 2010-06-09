@@ -2,7 +2,14 @@ fractal_app
 by Guy Mann
 Fractal generating and zooming web app.
 
-This program will be the culmination of the php and html canvas fractal 
-generators.  I will also attempt to use a more complex data structure 
-in order to collect more data be able to use that data to create more 
-interesting colorings
+This program is the culmination of my previous work with php and html canvas fractal generators. 
+So far features added are:
+resizing of the canvas
+anti-aliasing
+HSV colorschemes
+3d HSV colorschemes
+system output
+zooming out
+reseting the the coordinates
+fixed zooming bug
+openning the image as a png
