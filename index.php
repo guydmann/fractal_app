@@ -75,7 +75,7 @@
 		} elseif ($algorithm == 9 or $algorithm == 10) {
 			$cr = .5;
 		} else {
-			$cr = null;
+			$cr = -.844;
 		}
         } else { $cr = $_GET['cr']; }
 
@@ -87,7 +87,7 @@
 		} elseif ($algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
 			$ci = .5;
 		} else {
-			$ci = null;
+			$ci = .2;
                 }
         } else { $ci = $_GET['ci']; }
 	if (!isset($_GET['colorscheme']) || $_GET['colorscheme'] <= "") { $colorscheme= 0; } else { $colorscheme = $_GET['colorscheme']; }
@@ -137,15 +137,15 @@
 		document.getElementById("rx").value = "";
 		document.getElementById("lx").value = "";
 		if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
-			var newHTML = "<table cellpadding='0' cellspacing='3'>";
+			var newHTML = "<br><br><table cellpadding='0' cellspacing='3'>";
 			newHTML += "<tr>";
 			newHTML += "<td>C(real):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='Text' name='cr' id='cr' style='border: 1px solid gray;width:40px; height:16px; font-size: 10px;' onchange='A_SLIDERS[0].f_setValue(this.value)'></td>";
 
 			newHTML += "<td>";
-			newHTML += "<script language='JavaScript'>";
+			newHTML += "<script language='JavaScript'><!-- ";
 			newHTML += "var A_TPL1h = { 'b_vertical' : false, 'b_watch': true, 'n_controlWidth': 120, 'n_controlHeight': 16, 'n_sliderWidth': 16, 'n_sliderHeight': 15, 'n_pathLeft' : 1, 'n_pathTop' : 1,'n_pathLength' : 103, 's_imgControl': 'img/blueh_bg.gif', 's_imgSlider': 'img/blueh_sl.gif', 'n_zIndex': 1}; ";
 			newHTML += "var A_INIT1h = { 's_form' : 'sampleForm', 's_name': 'cr', 'n_minValue' : -1.5, 'n_maxValue' : 1.5, 'n_value' : -.844,'n_step' : 0.001 }; ";
-			newHTML += "new slider(A_INIT1h, A_TPL1h); <#$#script> ";
+			newHTML += "new slider(A_INIT1h, A_TPL1h); //--><#$#script> ";
 			newHTML += "</td> ";
 			newHTML += "</tr> ";
 			newHTML += "</table>";
@@ -153,19 +153,22 @@
 			newHTML += "<tr> ";
 			newHTML += "<td>C(imaginary):&nbsp;<input type='Text' name='ci' id='ci' style='border: 1px solid gray;width:40px; height:16px; font-size: 10px;' onchange='A_SLIDERS[0].f_setValue(this.value)'></td> ";
 			newHTML += "<td>";
-			newHTML += "<script language='JavaScript'> ";
+			newHTML += "<script language='JavaScript'><!-- ";
 			newHTML += "var A_TPL2h = { 'b_vertical' : false, 'b_watch': true, 'n_controlWidth': 120, 'n_controlHeight': 16, 'n_sliderWidth': 16, 'n_sliderHeight': 15, 'n_pathLeft' : 1, 'n_pathTop' : 1, 'n_pathLength' : 103, 's_imgControl': 'img/blueh_bg.gif', 's_imgSlider': 'img/blueh_sl.gif', 'n_zIndex': 1 }; ";
 			newHTML += "var A_INIT2h = { 's_form' : 'sampleForm', 's_name': 'ci', 'n_minValue' : -1.5, 'n_maxValue' : 1.5, 'n_value' : .2, 'n_step' : 0.001 }; ";
-			newHTML += "new slider(A_INIT2h, A_TPL2h);<#@#script>";
+			newHTML += "new slider(A_INIT2h, A_TPL2h); //--><#@#script>";
 			newHTML += "</td>";
 			newHTML += "</tr>";
 			newHTML += "</table>";
 			var newHTML = newHTML.replace("#$#", "/");
 			var newHTML = newHTML.replace("#@#", "/");
-			document.getElementById('Julia_args').innerHTML = newHTML
+		//	document.getElementById('Julia_args').innerHTML = newHTML
+			document.getElementById('Julia_args').style.display='';
 		} else {
 			var newHTML = "<input type=\"hidden\" size=\"4\" value=\"\" name=\"cr\" id=\"cr\"><input type=\"hidden\" size=\"4\" value=\"\" name=\"ci\" id=\"ci\">";
-			document.getElementById('Julia_args').innerHTML = newHTML
+		//	document.getElementById('Julia_args').innerHTML = newHTML
+			document.getElementById('Julia_args').style.display='none';
+
 		}
 	}
 
@@ -219,7 +222,7 @@
 		<table>
 			<tr>
 				<td><input type="submit" value="Redraw"  onclick="redraw();"></td>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>
 					<input type="submit" value="Zoom Out"  onclick="zoom_out();">
 				</td>
@@ -229,6 +232,7 @@
 			</tr>
 		</table>
 		<textarea name="sys_out" id="sys_out" rows="8" cols="43"></textarea>
+		<br><br><br><br>
 		<div>
 			<ul id="controltabs" class="modernbricksmenu2">
 				<li><a href="#" rel="controltab1" class="selected">Algorithm</a></li>
@@ -236,7 +240,7 @@
 				<li><a href="#" rel="controltab3">Image</a></li>
 			</ul>
 		</div>				
-		<div style="border:1px solid gray; width:350px; margin-bottom: 1em; padding: 10px">
+		<div style="border:1px solid gray; width:350px;  padding: 10px">
 			<form name="sampleForm" style="margin: 0px; padding: 0px;"> 
 			<div id="controltab1" class="tabcontent">
 				Algorithm:
@@ -261,10 +265,16 @@
 					Right X Coord&nbsp;<input type="text" size="4" name="rx" id="rx" value="<?php echo $rx; ?>"><br>
 					Top Y Coord:&nbsp;<input type="text" size="4" name="ty" id="ty" value="<?php echo $ty; ?>">
 					Bottom Y Coord:&nbsp;<input type="text" size="4" name="by" id="by" value="<?php echo $by; ?>"><br>
-					<div id="Julia_args">
-						<?php
+					<div id="Julia_args"<?php 
 						if ($algorithm == 1 or $algorithm == 5 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
+							echo "style='display:'";
+						} else {
+							echo "style='display:none'";
+						}
+						echo ">";
+						if ($algorithm ==  $algorithm ) {
 						?>	
+							<br><br>
 							<table cellpadding="0" cellspacing="3"> 
 							<tr> 
 								<td>C(real):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="Text" name="cr" id="cr" style="border: 1px solid gray;width:40px; height:16px; font-size: 10px;" onchange="A_SLIDERS[0].f_setValue(this.value)"></td> 

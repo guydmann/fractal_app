@@ -3,8 +3,9 @@
 
 .modernbricksmenu2{
 padding: 0;
+height: 8px;
 width: 250px;
-border-bottom: 1px solid #000000; /*Brown color theme*/
+
 background: transparent;
 voice-family: "\"}\"";
 voice-family: inherit;
@@ -33,7 +34,7 @@ text-decoration: none;
 margin: 0 1px 0 0; /*Margin between each menu item*/
 padding: 5px 10px;
 background-color: grey; /*Brown color theme*/ 
-border-bottom: 1px solid white;
+border-top: 1px solid white;
 }
 
 .modernbricksmenu2 a:hover{
