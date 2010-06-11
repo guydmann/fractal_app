@@ -137,38 +137,9 @@
 		document.getElementById("rx").value = "";
 		document.getElementById("lx").value = "";
 		if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
-			var newHTML = "<br><br><table cellpadding='0' cellspacing='3'>";
-			newHTML += "<tr>";
-			newHTML += "<td>C(real):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='Text' name='cr' id='cr' style='border: 1px solid gray;width:40px; height:16px; font-size: 10px;' onchange='A_SLIDERS[0].f_setValue(this.value)'></td>";
-
-			newHTML += "<td>";
-			newHTML += "<script language='JavaScript'><!-- ";
-			newHTML += "var A_TPL1h = { 'b_vertical' : false, 'b_watch': true, 'n_controlWidth': 120, 'n_controlHeight': 16, 'n_sliderWidth': 16, 'n_sliderHeight': 15, 'n_pathLeft' : 1, 'n_pathTop' : 1,'n_pathLength' : 103, 's_imgControl': 'img/blueh_bg.gif', 's_imgSlider': 'img/blueh_sl.gif', 'n_zIndex': 1}; ";
-			newHTML += "var A_INIT1h = { 's_form' : 'sampleForm', 's_name': 'cr', 'n_minValue' : -1.5, 'n_maxValue' : 1.5, 'n_value' : -.844,'n_step' : 0.001 }; ";
-			newHTML += "new slider(A_INIT1h, A_TPL1h); //--><#$#script> ";
-			newHTML += "</td> ";
-			newHTML += "</tr> ";
-			newHTML += "</table>";
-			newHTML += "<table cellpadding='0' Cellspacing='3'> ";
-			newHTML += "<tr> ";
-			newHTML += "<td>C(imaginary):&nbsp;<input type='Text' name='ci' id='ci' style='border: 1px solid gray;width:40px; height:16px; font-size: 10px;' onchange='A_SLIDERS[0].f_setValue(this.value)'></td> ";
-			newHTML += "<td>";
-			newHTML += "<script language='JavaScript'><!-- ";
-			newHTML += "var A_TPL2h = { 'b_vertical' : false, 'b_watch': true, 'n_controlWidth': 120, 'n_controlHeight': 16, 'n_sliderWidth': 16, 'n_sliderHeight': 15, 'n_pathLeft' : 1, 'n_pathTop' : 1, 'n_pathLength' : 103, 's_imgControl': 'img/blueh_bg.gif', 's_imgSlider': 'img/blueh_sl.gif', 'n_zIndex': 1 }; ";
-			newHTML += "var A_INIT2h = { 's_form' : 'sampleForm', 's_name': 'ci', 'n_minValue' : -1.5, 'n_maxValue' : 1.5, 'n_value' : .2, 'n_step' : 0.001 }; ";
-			newHTML += "new slider(A_INIT2h, A_TPL2h); //--><#@#script>";
-			newHTML += "</td>";
-			newHTML += "</tr>";
-			newHTML += "</table>";
-			var newHTML = newHTML.replace("#$#", "/");
-			var newHTML = newHTML.replace("#@#", "/");
-		//	document.getElementById('Julia_args').innerHTML = newHTML
-			document.getElementById('Julia_args').style.display='';
+			document.getElementById('Julia_args').style.display = '';
 		} else {
-			var newHTML = "<input type=\"hidden\" size=\"4\" value=\"\" name=\"cr\" id=\"cr\"><input type=\"hidden\" size=\"4\" value=\"\" name=\"ci\" id=\"ci\">";
-		//	document.getElementById('Julia_args').innerHTML = newHTML
-			document.getElementById('Julia_args').style.display='none';
-
+			document.getElementById('Julia_args').style.display = 'none';
 		}
 	}
 
@@ -195,12 +166,12 @@
 		redirectURL += "ty=" + document.getElementById("ty").value + "&";
 		redirectURL += "by=" + document.getElementById("by").value;
 		//hack to get around popups for the pause in chrome. not sure if it helps in other browsers
-		//if (canvas.width != document.getElementById("width").value ) {
+		if (canvas.width != document.getElementById("width").value ) {
 			window.location = redirectURL;
-		//} else {
-		//	document.getElementById("URL").value  = redirectURL;
-		//	draw();
-		//}
+		} else {
+			document.getElementById("URL").value  = redirectURL;
+			draw();
+		}
 	}
 	 
 	</script> 
@@ -238,9 +209,10 @@
 				<li><a href="#" rel="controltab1" class="selected">Algorithm</a></li>
 				<li><a href="#" rel="controltab2">Coloring</a></li>
 				<li><a href="#" rel="controltab3">Image</a></li>
+				<li><a href="#" rel="controltab4">Credits</a></li>
 			</ul>
 		</div>				
-		<div style="border:1px solid gray; width:350px;  padding: 10px">
+		<div style="border:1px solid gray; width:350px; margin-bottom: 1em; padding: 10px">
 			<form name="sampleForm" style="margin: 0px; padding: 0px;"> 
 			<div id="controltab1" class="tabcontent">
 				Algorithm:
@@ -260,21 +232,31 @@
 						<option <?php if ($algorithm == 12) {  print "selected ";} ?> value=12>Buddhabrot Full Traversal</option> 
 						<option <?php if ($algorithm == 13) {  print "selected ";} ?> value=13>Buddhabrot Random Traversal</option> 
 						<option <?php if ($algorithm == 99) {  print "selected ";} ?> value=99>Blank</option> 
-					</select> <br><br><br>
-					Left X Coord:&nbsp;<input type="text" size="4" name="lx" id="lx" value="<?php echo $lx; ?>">
-					Right X Coord&nbsp;<input type="text" size="4" name="rx" id="rx" value="<?php echo $rx; ?>"><br>
-					Top Y Coord:&nbsp;<input type="text" size="4" name="ty" id="ty" value="<?php echo $ty; ?>">
-					Bottom Y Coord:&nbsp;<input type="text" size="4" name="by" id="by" value="<?php echo $by; ?>"><br>
-					<div id="Julia_args"<?php 
+					</select> <br><br>
+					<table cellpadding="0" cellspacing="3"> 
+						<tr> 
+							<td>Left X:&nbsp;</td><td><input type="text" size="4" name="lx" id="lx" value="<?php echo $lx; ?>"></td>
+							<td>Right X:&nbsp;</td><td><input type="text" size="4" name="rx" id="rx" value="<?php echo $rx; ?>"></td>
+						</tr>
+						<tr>
+							<td>Top Y:&nbsp;</td><td><input type="text" size="4" name="ty" id="ty" value="<?php echo $ty; ?>"></td>
+							<td>Bottom Y:&nbsp;</td><td><input type="text" size="4" name="by" id="by" value="<?php echo $by; ?>"></td>
+						</tr>
+					</table>
+					<div id="Julia_args" 
+						<?php
 						if ($algorithm == 1 or $algorithm == 5 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
-							echo "style='display:'";
+						?>
+							style= "display: "
+						<?php
 						} else {
-							echo "style='display:none'";
+						?>
+							style= "display: none"
+						<?php
 						}
-						echo ">";
-						if ($algorithm ==  $algorithm ) {
-						?>	
-							<br><br>
+						?>
+						>
+							<br>
 							<table cellpadding="0" cellspacing="3"> 
 							<tr> 
 								<td>C(real):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="Text" name="cr" id="cr" style="border: 1px solid gray;width:40px; height:16px; font-size: 10px;" onchange="A_SLIDERS[0].f_setValue(this.value)"></td> 
@@ -341,20 +323,13 @@
 								</td> 
 							</tr> 
 							</table> 
-							
-						<?php
-						} else {
-						?>
-							<input type="hidden" size="4" value="" name="cr" id="cr"><input type="hidden" size="4" value="" name="ci" id="ci">
-						<?php
-						}
-						?>
+						
 					</div>
 			</div>
 			<div id="controltab2" class="tabcontent">
 				<table>
 					<tr>
-						<td> colorscheme:</td>
+						<td>Color Scheme:&nbsp;</td>
 						<td colspan=3><select name="colorscheme" id="colorscheme"> 
 						<option <? if ($colorscheme == 0) {  print "selected ";} ?> value=0>Simple</option> 
 						<option <? if ($colorscheme == 1) {  print "selected ";} ?> value=1> 5 Color Cyclic 1</option> 
@@ -380,6 +355,10 @@
 				Anti-Aliasing:&nbsp;<INPUT TYPE="checkbox" NAME="antialias"  id="antialias" <?php if ($antialias) {  print "CHECKED";}  ?>><br><br>
 				<input type="submit" value="Open as PNG"  onclick="create_png();"><br><br>
 				URL:&nbsp;<input type="text" size="30" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>">
+			</div>
+			<div id="controltab4" class="tabcontent">
+				Coding: Guy Mann<br><br>
+				special thanks to Yeiguer Contrera, BoingBoing and Cai
 			</div>
 		</div>
 	</div>
