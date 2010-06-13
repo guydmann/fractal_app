@@ -294,7 +294,7 @@ function createColorFunction( color_scheme) {
 			"return pix;";
 	} else if (color_scheme == 8) {
 		var color_func_txt = ""+
-			"'if (fract_array[0] < precision*.1) {"+
+			"if (fract_array[0] < precision*.1) {"+
 				"var c1 = 0;"+
 				"var c2 = 120;"+
 				"var h = Math.round((fract_array[0] /(precision*.1))*(c2-c1))+c1;"+
@@ -303,6 +303,7 @@ function createColorFunction( color_scheme) {
 				"pix[(pix_count*4)+1]=RGB[1];"+	//green
 				"pix[(pix_count*4)+2]=RGB[2];"+	//blue
 				"pix[(pix_count*4)+3]=255;"+	//alpha
+				
 			"} else if (fract_array[0] < precision*.3) {"+
 				"var c1 = 120;"+
 				"var c2 = 280;"+
@@ -312,6 +313,7 @@ function createColorFunction( color_scheme) {
 				"pix[(pix_count*4)+1]=RGB[1];"+	//green
 				"pix[(pix_count*4)+2]=RGB[2];"+	//blue
 				"pix[(pix_count*4)+3]=255;"+	//alpha
+				
 			"} else if (fract_array[0] < precision*.5) {"+
 				"var c1 = 280;"+
 				"var c2 = 20;"+

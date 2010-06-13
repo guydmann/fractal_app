@@ -104,6 +104,7 @@
 	<script type="text/javascript" src="color_lib.js"></script>
 	<script type="text/javascript" src="tools_rec.js"></script>
 	<script type="text/javascript" src="global_lib.js"></script>
+	<script type="text/javascript" src="canvas_lib.js"></script>
 	<script type="text/javascript" src="canvas2image.js"></script>
 	<script type="text/javascript" src="base64.js"></script>
 	<script type="text/javascript" src="slider.js"></script>
@@ -121,7 +122,6 @@
 		var oCanvas = document.getElementById("theCanvas");  
 		var strDataURI = oCanvas.toDataURL();  
 		window.open(strDataURI);
-		break;
 	}
 
 	function zoom_out() {
@@ -233,7 +233,7 @@
 						<option <?php if ($algorithm == 12) {  print "selected ";} ?> value=12>Buddhabrot Full Traversal</option> 
 						<option <?php if ($algorithm == 13) {  print "selected ";} ?> value=13>Buddhabrot Random Traversal</option> 
 						<option <?php if ($algorithm == 14) {  print "selected ";} ?> value=14>Buddhabrot Random Traversal Julia</option> 
-						<option <?php if ($algorithm == 15) {  print "selected ";} ?> value=15>Buddhabrot Random Traversal Julia full set</option> 
+						<option <?php if ($algorithm == 15) {  print "selected ";} ?> value=15>Buddhabrot Random Traversal Julia experimental </option> 
 						<option <?php if ($algorithm == 16) {  print "selected ";} ?> value=16>Buddhabrot Random Traversal with inverse</option> 
 						<option <?php if ($algorithm == 99) {  print "selected ";} ?> value=99>Blank</option> 
 					</select> <br><br>
@@ -331,28 +331,24 @@
 					</div>
 			</div>
 			<div id="controltab2" class="tabcontent">
-				<table>
-					<tr>
-						<td>Color Scheme:&nbsp;</td>
-						<td colspan=3><select name="colorscheme" id="colorscheme"> 
-						<option <? if ($colorscheme == 0) {  print "selected ";} ?> value=0>Simple</option> 
-						<option <? if ($colorscheme == 1) {  print "selected ";} ?> value=1> 5 Color Cyclic 1</option> 
-						<option <? if ($colorscheme == 2) {  print "selected ";} ?> value=2>5 Color Cyclic 2</option> 
-						<option <? if ($colorscheme == 3) {  print "selected ";} ?> value=3>12 Color Cyclic 1</option> 
-						<option <? if ($colorscheme == 4) {  print "selected ";} ?> value=4>36 Color Cyclic</option> 
-						<option <? if ($colorscheme == 5) {  print "selected ";} ?> value=5>HSV 0-360</option> 
-						<option <? if ($colorscheme == 6) {  print "selected ";} ?> value=6>HSV 360-0</option> 
-						<option <? if ($colorscheme == 7) {  print "selected ";} ?> value=7>HSV with static modulus</option> 
-						<option <? if ($colorscheme == 8) {  print "selected ";} ?> value=8>HSV with percentage modulus</option> 
-						<option <? if ($colorscheme == 9) {  print "selected ";} ?> value=9>HSV with percentage modulus 2</option> 
-						<option <? if ($colorscheme == 10) {  print "selected ";} ?> value=10>TEST 3d HSV</option> 
-						<option <? if ($colorscheme == 11) {  print "selected ";} ?> value=11>TEST 3d HSV 2</option> 
-						<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>TEST 3d HSV 3</option> 
-						<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
-						</select> 
-						<td>
-					</tr>
-				</table>
+				Color Scheme:&nbsp;
+				<select name="colorscheme" id="colorscheme"> 
+					<option <? if ($colorscheme == 0) {  print "selected ";} ?> value=0>Simple</option> 
+					<option <? if ($colorscheme == 1) {  print "selected ";} ?> value=1> 5 Color Cyclic 1</option> 
+					<option <? if ($colorscheme == 2) {  print "selected ";} ?> value=2>5 Color Cyclic 2</option> 
+					<option <? if ($colorscheme == 3) {  print "selected ";} ?> value=3>12 Color Cyclic 1</option> 
+					<option <? if ($colorscheme == 4) {  print "selected ";} ?> value=4>36 Color Cyclic</option> 
+					<option <? if ($colorscheme == 5) {  print "selected ";} ?> value=5>HSV 0-360</option> 
+					<option <? if ($colorscheme == 6) {  print "selected ";} ?> value=6>HSV 360-0</option> 
+					<option <? if ($colorscheme == 7) {  print "selected ";} ?> value=7>HSV with static modulus</option> 
+					<option <? if ($colorscheme == 8) {  print "selected ";} ?> value=8>HSV with percentage modulus</option> 
+					<option <? if ($colorscheme == 9) {  print "selected ";} ?> value=9>HSV with percentage modulus 2</option> 
+					<option <? if ($colorscheme == 10) {  print "selected ";} ?> value=10>TEST 3d HSV</option> 
+					<option <? if ($colorscheme == 11) {  print "selected ";} ?> value=11>TEST 3d HSV 2</option> 
+					<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>TEST 3d HSV 3</option> 
+					<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
+				</select> 
+				<input type="button" value="Recolor"  onclick="recolor();">
 			</div>
 			<div id="controltab3" class="tabcontent">
 				Canvas Width:&nbsp;<input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"><br>
