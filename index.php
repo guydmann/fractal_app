@@ -18,7 +18,7 @@
 		} elseif  ($algorithm == 4){ 
 			$lx = -2;
 		} else {
-			$lx = -2.25;
+			$lx = -1.5;
 		}
 	} else { $lx = $_GET['lx']; }
 	if (!isset($_GET['rx']) || $_GET['rx'] <= "") { 
@@ -33,7 +33,7 @@
 		} elseif  ($algorithm == 4){ 
 			$rx = 2;
 		} else {
-			$rx =  2.25;
+			$rx =  1;
 		}
 	} else { $rx = $_GET['rx']; }
 
@@ -49,7 +49,7 @@
                 } elseif  ($algorithm == 4){
                         $ty = 2;
 		} else {
-			$ty =  1.5;
+			$ty =  1.25;
 		}
 	} else { $ty = $_GET['ty']; }
 	if (!isset($_GET['by']) || $_GET['by'] <= "") { 
@@ -64,7 +64,7 @@
                 } elseif  ($algorithm == 4){
                         $by = -2;
 		} else {
-			$by =  -1.5;
+			$by =  -1.25;
 		}
 	} else { $by = $_GET['by']; }
 	if (!isset($_GET['cr']) || $_GET['cr'] <= "") { 
@@ -360,7 +360,7 @@
 			</div>
 			<div id="controltab4" class="tabcontent">
 				Coding: Guy Mann<br><br>
-				special thanks to Yeiguer Contrera, BoingBoing and Cai
+				special thanks to Yeiguer Contreras, BoingBoing and Cai
 			</div>
 		</div>
 	</div>
