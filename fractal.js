@@ -21,7 +21,6 @@ function MultDimArray(iRows,iCols) {
 
 
 function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx, by, precision, algorithm, cr, ci) {
-	//var setColor_func_array = new Array (setColor, createColorFunction(color_scheme) );
 	print_with_pause("sys_out", "Creating color function\n", false);
 	var setColor_func_array = new Array ( createColorFunction(color_scheme) );
 	
