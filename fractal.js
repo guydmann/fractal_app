@@ -21,6 +21,10 @@ function MultDimArray(iRows,iCols) {
 
 
 function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx, by, precision, algorithm, cr, ci) {
+	//var setColor_func_array = new Array (setColor, createColorFunction(color_scheme) );
+	print_with_pause("sys_out", "Creating color function\n", false);
+	var setColor_func_array = new Array ( createColorFunction(color_scheme) );
+	
 	var pixcount = 0;
         var x_inc = ( rx - lx ) / width;
         var y_inc = ( ty - by ) / height;
@@ -53,7 +57,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 		decinal_val += decinal;
 		decinal_count++;
 		print_with_pause("sys_out", decinal_count + "0%\n", false);
-		if  (algorithm  == 12 || algorithm  == 13 || algorithm  == 14) {
+		if  (algorithm  == 12 || algorithm  == 13 || algorithm  == 14 || algorithm == 15) {
 			 if  (algorithm  == 12) {
 				//Buddhabrot full traversal
 				print_with_pause("sys_out", "Traversing all members of the escape set\n", false);
@@ -103,7 +107,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 				decinal_count++;
 				print_with_pause("sys_out", decinal_count + "0%\n", false);
 			} else if (algorithm ==14){		
-				//Buddhabrot random
+				//Buddhabrot Julia random
 				iterations = 10000+ 5000*(width/100);
 				print_with_pause("sys_out", "Traversing " + iterations  + " random members of the escape set\n", false);
 				decinal = iterations/10;
@@ -114,7 +118,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 //					if (escapes_set[rand_index] != "undefined") {
 						j = escapes_set[rand_index][0];
 						k = escapes_set[rand_index][1];
-						fract_array = dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
+						fract_array = dwell_buddha_julia( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty, cr, ci);
 //					} else {
 //						alert(escape_index + "\n");
 //					}
@@ -127,6 +131,42 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 				decinal_val += decinal;
 				decinal_count++;
 				print_with_pause("sys_out", decinal_count + "0%\n", false);
+			} else if (algorithm ==15){		
+				//Buddhabrot Julia random with centered cr, ci traversal
+				iterations = 50000+ 10000*(width/100);
+				//cr_int = (rx - lx)/20;
+				//ci_int = (ty - by)/20;
+				cr_temp = (rx - lx)/2 + lx;
+				ci_temp = (ty - by)/2 + by;
+				//for (var cr_temp  = lx;  cr_temp<=rx; cr_temp=cr_temp+ cr_int ) {
+				//	for (var ci_temp  = by;  ci_temp <=ty; ci_temp =ci_temp + ci_int ) {
+				
+				
+						print_with_pause("sys_out", "Traversing " + iterations  + " random members of the escape set with cr, ci of (" + cr_temp + ", " + ci_temp + ")\n", false);
+						decinal = iterations/10;
+						decinal_count = 0;
+						decinal_val = decinal;
+						for (q = 0;  q<iterations; q++) {
+							var rand_index = Math.floor(Math.random()*(escape_index))  ;
+
+		//					if (escapes_set[rand_index] != "undefined") {
+								j = escapes_set[rand_index][0];
+								k = escapes_set[rand_index][1];
+								fract_array = dwell_buddha_julia( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty, cr_temp, ci_temp);
+		//					} else {
+		//						alert(escape_index + "\n");
+		//					}
+							if (q>=decinal_val) {
+								decinal_val += decinal;
+								decinal_count++;
+								print_with_pause("sys_out", decinal_count + "0%...", false);
+							}
+						}
+						decinal_val += decinal;
+						decinal_count++;
+						print_with_pause("sys_out", decinal_count + "0%\n", false);
+				//	}
+				//}
 			}
 			print_with_pause("sys_out", "Coloring the image\n", false);
 			decinal = height/10;
@@ -134,7 +174,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 			decinal_val = decinal;
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					pix = setColor( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
+					pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
 					pixcount++;
 				}
 				if (k>=decinal_val) {
@@ -144,7 +184,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 				}
 			}
 		} else {		
-			//Buddhabrot random version 2
+			//Buddhabrot random  with inverse
 			iterations = 10000+ 5000*(width/100);
 			print_with_pause("sys_out", "Traversing " + iterations  + " random members of the escape set\n", false);
 			decinal = iterations/10;
@@ -176,9 +216,9 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
 					if (escapes_array[j][k][0]==0) {
-						pix = setColor( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
+						pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
 					} else {
-						pix = setColor( pix, pixcount, [precision,0,0], width, height, precision, color_scheme);	
+						pix = setColor_func_array[0]( pix, pixcount, [precision,0,0], width, height, precision, color_scheme);	
 					}
 					pixcount++;
 				}
@@ -220,7 +260,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 		//Mandelbrot type fractals
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					pix = setColor( pix, pixcount, dwell_func_array [algorithm]( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision ), width, height, precision, color_scheme);	
+					pix = setColor_func_array[0]( pix, pixcount, dwell_func_array [algorithm]( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision ), width, height, precision, color_scheme);	
 					pixcount++;
 				}
 				if (k>=decinal_val) {
@@ -236,7 +276,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 		//Julia type fractals	
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					pix = setColor( pix, pixcount, dwell_func_array [algorithm]( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci ), width, height, precision, color_scheme);	
+					pix = setColor_func_array[0]( pix, pixcount, dwell_func_array [algorithm]( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci ), width, height, precision, color_scheme);	
 					pixcount++;
 				}
 				if (k>=decinal_val) {
@@ -257,7 +297,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 		decinal_val = decinal;
 		for ( var k = 0; k < height ; k++) {
 			for ( var j = 0; j < width ; j++) {
-				pix = setColor( pix, pixcount, fract_array[j][k] = [0,0,0], width, height, precision, color_scheme);	
+				pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k] = [0,0,0], width, height, precision, color_scheme);	
 				pixcount++;
 			}
 			if (k>=decinal_val) {

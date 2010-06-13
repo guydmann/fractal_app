@@ -121,6 +121,7 @@
 		var oCanvas = document.getElementById("theCanvas");  
 		var strDataURI = oCanvas.toDataURL();  
 		window.open(strDataURI);
+		break;
 	}
 
 	function zoom_out() {
@@ -136,7 +137,7 @@
 		document.getElementById("by").value = "";
 		document.getElementById("rx").value = "";
 		document.getElementById("lx").value = "";
-		if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11) {
+		if (document.getElementById("algorithm").value ==1 || document.getElementById("algorithm").value ==5 || document.getElementById("algorithm").value ==9 || document.getElementById("algorithm").value ==10 || document.getElementById("algorithm").value ==11 || document.getElementById("algorithm").value ==14) {
 			document.getElementById('Julia_args').style.display = '';
 		} else {
 			document.getElementById('Julia_args').style.display = 'none';
@@ -202,7 +203,7 @@
 				</td>
 			</tr>
 		</table>
-		<textarea name="sys_out" id="sys_out" rows="8" cols="43"></textarea>
+		<textarea name="sys_out" id="sys_out" rows="8" cols="60"></textarea>
 		<br><br><br><br>
 		<div>
 			<ul id="controltabs" class="modernbricksmenu2">
@@ -231,8 +232,9 @@
 						<option <?php if ($algorithm == 11) {  print "selected ";} ?> value=11>Cubic Julia Experimental</option> 
 						<option <?php if ($algorithm == 12) {  print "selected ";} ?> value=12>Buddhabrot Full Traversal</option> 
 						<option <?php if ($algorithm == 13) {  print "selected ";} ?> value=13>Buddhabrot Random Traversal</option> 
-						<option <?php if ($algorithm == 14) {  print "selected ";} ?> value=14>Buddhabrot Random Traversal 2</option> 
-						<option <?php if ($algorithm == 15) {  print "selected ";} ?> value=15>Buddhabrot Random Traversal 3</option> 
+						<option <?php if ($algorithm == 14) {  print "selected ";} ?> value=14>Buddhabrot Random Traversal Julia</option> 
+						<option <?php if ($algorithm == 15) {  print "selected ";} ?> value=15>Buddhabrot Random Traversal Julia full set</option> 
+						<option <?php if ($algorithm == 16) {  print "selected ";} ?> value=16>Buddhabrot Random Traversal with inverse</option> 
 						<option <?php if ($algorithm == 99) {  print "selected ";} ?> value=99>Blank</option> 
 					</select> <br><br>
 					<table cellpadding="0" cellspacing="3"> 
@@ -247,7 +249,7 @@
 					</table>
 					<div id="Julia_args" 
 						<?php
-						if ($algorithm == 1 or $algorithm == 5 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11) {
+						if ($algorithm == 1 or $algorithm == 5 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11 or $algorithm == 14) {
 						?>
 							style= "display: "
 						<?php
@@ -355,7 +357,7 @@
 			<div id="controltab3" class="tabcontent">
 				Canvas Width:&nbsp;<input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"><br>
 				Anti-Aliasing:&nbsp;<INPUT TYPE="checkbox" NAME="antialias"  id="antialias" <?php if ($antialias) {  print "CHECKED";}  ?>><br><br>
-				<input type="submit" value="Open as PNG"  onclick="create_png();"><br><br>
+				<input type="button" value="Open as PNG"  onclick="create_png();"><br><br>
 				URL:&nbsp;<input type="text" size="30" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>">
 			</div>
 			<div id="controltab4" class="tabcontent">
