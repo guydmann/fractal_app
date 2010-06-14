@@ -203,7 +203,7 @@
 				</td>
 			</tr>
 		</table>
-		<textarea name="sys_out" id="sys_out" rows="8" cols="60"></textarea>
+		<textarea name="sys_out" id="sys_out" rows="8" cols="60" style="overflow-y: scroll;"></textarea>
 		<br><br><br>
 		<div>
 			<ul id="controltabs" class="modernbricksmenu2">

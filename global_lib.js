@@ -27,7 +27,9 @@
 		document.getElementById(field).value = "";	
 	}
 	document.getElementById(field).value += message;
-	//document.getElementById(field).scrollTop = document.getElementById(field).scrollHeight;
+	
+	document.getElementById(field).focus();
+	document.getElementById(field).scrollTop = document.getElementById(field).scrollHeight;
 	pause(1);
 }
 
