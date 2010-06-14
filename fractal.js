@@ -342,8 +342,8 @@ function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, alg
 		draw_region.putImageData(imgd,0,0);
 	}
 	curDate = new Date();
-	document.getElementById("sys_out").value += "Fractal Generation Complete\n";
-	document.getElementById("sys_out").value += (curDate -date)/1000 +" seconds\n";
+	print_with_pause("sys_out","Fractal Generation Complete\n", false);
+	print_with_pause("sys_out",(curDate -date)/1000 +" seconds\n", false);
 	return true;
 }
 
@@ -420,8 +420,8 @@ function ColorFractal( draw_region, width, height, precision, algorithm, color_s
 		}
 	}
 	curDate = new Date();
-	document.getElementById("sys_out").value += "Fractal Coloring sComplete\n";
-	document.getElementById("sys_out").value += (curDate -date)/1000 +" seconds\n";
+	print_with_pause("sys_out","Fractal Coloring Complete\n", false);
+	print_with_pause("sys_out",(curDate -date)/1000 +" seconds\n", false);
 	return true;
 }
 
