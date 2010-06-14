@@ -189,7 +189,7 @@
 		To zoom on a section of the fractal click and drag to highlight the region.  You can reload the page or click <a href="./">here</a><br>
 	</div>
 	<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
-	<div style="float:right; padding: 2em">
+	<div style="float:right; padding: 1em">
 
 		<table>
 			<tr>
@@ -204,7 +204,7 @@
 			</tr>
 		</table>
 		<textarea name="sys_out" id="sys_out" rows="8" cols="60"></textarea>
-		<br><br><br><br>
+		<br><br><br>
 		<div>
 			<ul id="controltabs" class="modernbricksmenu2">
 				<li><a href="#" rel="controltab1" class="selected">Algorithm</a></li>
@@ -213,7 +213,7 @@
 				<li><a href="#" rel="controltab4">Credits</a></li>
 			</ul>
 		</div>				
-		<div style="border:1px solid gray; width:350px; margin-bottom: 1em; padding: 10px">
+		<div style="border:1px solid gray; width:425px; margin-bottom: 1em; padding: 10px">
 			<form name="sampleForm" style="margin: 0px; padding: 0px;"> 
 			<div id="controltab1" class="tabcontent">
 				Algorithm:
@@ -348,6 +348,7 @@
 					<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>TEST 3d HSV 3</option> 
 					<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
 				</select> 
+				<br>
 				<input type="button" value="Recolor"  onclick="recolor();">
 			</div>
 			<div id="controltab3" class="tabcontent">

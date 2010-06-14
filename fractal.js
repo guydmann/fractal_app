@@ -26,6 +26,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 	print_with_pause("sys_out", "Creating color function\n", false);
 	var setColor_func_array = new Array ( createColorFunction(color_scheme) );
 	var fract_array = MultDimArray(width,height);
+	print_with_pause("sys_out", "Calculating fractal\n", false);
 	
 	var pixcount = 0;
         var x_inc = ( rx - lx ) / width;
@@ -347,6 +348,82 @@ function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, alg
 }
 
 
+function ColorFractal( draw_region, width, height, precision, algorithm, color_scheme, antialias) {
+	print_with_pause("sys_out", "Recoloring of Fractal\n", false);
+	var date = new Date();
+	var setColor_func_array = new Array ( createColorFunction(color_scheme) );
+	var pixcount = 0
+	if (antialias) {
+		if ((width*compression_factor)==fractal_array_global.length) {
+			var compression_func_array = new Array (compress_imagedata_avg);
+			compression_factor = 2;
+			imgd_tmp = draw_region.createImageData(parseFloat(width*compression_factor),parseFloat(height*compression_factor));
+			pix = imgd_tmp.data;
+		
+			print_with_pause("sys_out", "Coloring fractal at "+(width*compression_factor)+"x"+(height*compression_factor)+"\n", false);
+			decinal = (height*compression_factor)/10;
+			decinal_count = 0;
+			decinal_val = decinal;
+			for ( var k = 0; k < height*compression_factor ; k++) {
+				for ( var j = 0; j < width*compression_factor ; j++) {
+					pix = setColor_func_array[0]( pix, pixcount, fractal_array_global[j][k], width, height, precision, color_scheme);	
+					pixcount++;
+				}
+				if (k>=decinal_val) {
+					decinal_val += decinal;
+					decinal_count++;
+					print_with_pause("sys_out", decinal_count + "0%...", false);
+				}
+			}
+			decinal_val += decinal;
+			decinal_count++;
+			print_with_pause("sys_out", decinal_count + "0%\n", false);
+		
+			
+			print_with_pause("sys_out","Compressing image to "+width+"x"+height+"\n", false);
+			imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
+			imgd = compression_func_array[0](imgd, imgd_tmp, width, height, compression_factor);
+			draw_region.putImageData(imgd,0,0);
+		} else {
+			print_with_pause("sys_out", "Cannot recolor, redrawing\n", true);
+			pause(1000);
+			draw();
+		}
+	} else {
+		if (width==fractal_array_global.length) {
+			print_with_pause("sys_out","Coloring fractal at "+width+"x"+height+"\n", false);
+			imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
+			pix = imgd.data;
+			
+			decinal = height/10;
+			decinal_count = 0;
+			decinal_val = decinal;
+			for ( var k = 0; k < height ; k++) {
+				for ( var j = 0; j < width ; j++) {
+					pix = setColor_func_array[0]( pix, pixcount, fractal_array_global[j][k], width, height, precision, color_scheme);	
+					pixcount++;
+				}
+				if (k>=decinal_val) {
+					decinal_val += decinal;
+					decinal_count++;
+					print_with_pause("sys_out", decinal_count + "0%...", false);
+				}
+			}
+			decinal_val += decinal;
+			decinal_count++;
+			print_with_pause("sys_out", decinal_count + "0%\n", false);
+			draw_region.putImageData(imgd,0,0);
+		} else {
+			print_with_pause("sys_out", "Cannot recolor, redrawing\n", false);
+			pause(1000);
+			draw();
+		}
+	}
+	curDate = new Date();
+	document.getElementById("sys_out").value += "Fractal Coloring sComplete\n";
+	document.getElementById("sys_out").value += (curDate -date)/1000 +" seconds\n";
+	return true;
+}
 
 
 function draw(){
@@ -491,82 +568,7 @@ function draw(){
 }
 
 
-function ColorFractal( draw_region, width, height, precision, algorithm, color_scheme, antialias) {
-	print_with_pause("sys_out", "Recoloring of Fractal\n", false);
-	var date = new Date();
-	var setColor_func_array = new Array ( createColorFunction(color_scheme) );
-	var pixcount = 0
-	if (antialias) {
-		if ((width*compression_factor)==fractal_array_global.length) {
-			var compression_func_array = new Array (compress_imagedata_avg);
-			compression_factor = 2;
-			imgd_tmp = draw_region.createImageData(parseFloat(width*compression_factor),parseFloat(height*compression_factor));
-			pix = imgd_tmp.data;
-		
-			print_with_pause("sys_out", "Coloring fractal at "+(width*compression_factor)+"x"+(height*compression_factor)+"\n", false);
-			decinal = (height*compression_factor)/10;
-			decinal_count = 0;
-			decinal_val = decinal;
-			for ( var k = 0; k < height*compression_factor ; k++) {
-				for ( var j = 0; j < width*compression_factor ; j++) {
-					pix = setColor_func_array[0]( pix, pixcount, fractal_array_global[j][k], width, height, precision, color_scheme);	
-					pixcount++;
-				}
-				if (k>=decinal_val) {
-					decinal_val += decinal;
-					decinal_count++;
-					print_with_pause("sys_out", decinal_count + "0%...", false);
-				}
-			}
-			decinal_val += decinal;
-			decinal_count++;
-			print_with_pause("sys_out", decinal_count + "0%\n", false);
-		
-			
-			print_with_pause("sys_out","Compressing image to "+width+"x"+height+"\n", false);
-			imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
-			imgd = compression_func_array[0](imgd, imgd_tmp, width, height, compression_factor);
-			draw_region.putImageData(imgd,0,0);
-		} else {
-			print_with_pause("sys_out", "Cannot recolor, redrawing\n", true);
-			pause(1000);
-			draw();
-		}
-	} else {
-		if (width==fractal_array_global.length) {
-			print_with_pause("sys_out","Coloring fractal at "+width+"x"+height+"\n", false);
-			imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
-			pix = imgd.data;
-			
-			decinal = height/10;
-			decinal_count = 0;
-			decinal_val = decinal;
-			for ( var k = 0; k < height ; k++) {
-				for ( var j = 0; j < width ; j++) {
-					pix = setColor_func_array[0]( pix, pixcount, fractal_array_global[j][k], width, height, precision, color_scheme);	
-					pixcount++;
-				}
-				if (k>=decinal_val) {
-					decinal_val += decinal;
-					decinal_count++;
-					print_with_pause("sys_out", decinal_count + "0%...", false);
-				}
-			}
-			decinal_val += decinal;
-			decinal_count++;
-			print_with_pause("sys_out", decinal_count + "0%\n", false);
-			draw_region.putImageData(imgd,0,0);
-		} else {
-			print_with_pause("sys_out", "Cannot recolor, redrawing\n", false);
-			pause(1000);
-			draw();
-		}
-	}
-	curDate = new Date();
-	document.getElementById("sys_out").value += "Fractal Coloring sComplete\n";
-	document.getElementById("sys_out").value += (curDate -date)/1000 +" seconds\n";
-	return true;
-}
+
 
 function recolor(){
 	var width, height, ty, by, lx, rx, precision, algorithm, cr, ci, color_scheme;

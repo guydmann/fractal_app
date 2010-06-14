@@ -1,3 +1,8 @@
+// fractal_dwell.js
+//
+// this file contains the dwell functions for generating multiple fractals
+// each dwell function is passed a point in the plane and the function iterates the point
+
 ////////////////////////////////
 //
 // dwell_mandel
@@ -22,6 +27,28 @@ function dwell_mandel ( cx, cy, precision ) {
  
 }
  
+ /////////////////////////////////
+//
+// dwell_julia
+//
+function dwell_julia( cx, cy, precision, cr , ci) {
+	var itermax= precision;
+	var breakout=8;
+	var x=cx;
+	var y=cy;
+
+	var x2 = x*x;
+	var y2 = y*y;
+	for (var iter=0;iter<itermax && x2+y2<breakout;iter++) {
+
+		y=(2*x*y) + ci;
+		x=x2-y2+cr;
+		x2 = x*x;
+		y2 = y*y;
+	}
+	return [iter,x,y];
+}
+ 
 /////////////////////////////////
 //
 // dwal_burningship
@@ -41,8 +68,6 @@ function dwell_burningship( cx, cy, precision ) {
         }
         return [count,dx,dy];
 }
-
-
 
 /////////////////////////////////
 //
@@ -81,8 +106,6 @@ function dwell_star( cx, cy, precision ) {
         return [count,x,y];
 }
 
-
-
 /////////////////////////////////
 //
 // dwal_newton
@@ -117,29 +140,6 @@ function dwell_newton( cx, cy, precision ) {
         }
         return [count,dx,dy];
 }
-
-/////////////////////////////////
-//
-// dwell_julia
-//
-function dwell_julia( cx, cy, precision, cr , ci) {
-	var itermax= precision;
-	var breakout=8;
-	var x=cx;
-	var y=cy;
-
-	var x2 = x*x;
-	var y2 = y*y;
-	for (var iter=0;iter<itermax && x2+y2<breakout;iter++) {
-
-		y=(2*x*y) + ci;
-		x=x2-y2+cr;
-		x2 = x*x;
-		y2 = y*y;
-	}
-	return [iter,x,y];
-}
-
 
 //////////////////////////////////
 //
@@ -216,70 +216,6 @@ function dwell_phoenix_julia( cx, cy, precision, cr , ci) {
 
 	}
 	return [iter,x,y];
-}
-
-//////////////////////////////////////
-//
-// dwell_buddha
-//
-function dwell_buddha( cx, cy, precision , width, height, x_inc, y_inc, fract_array, lx, ty) {
-        var num = precision;
-        var breakout = 4;
-        var dx = cx;
-        var dy = cy;
-        var dx2 = dx * dx;
-        var dy2 = dy * dy;
-        //z <= z(n-1)^2 +c
-        for ( var count = 0; count < num && (dx2 + dy2) <= breakout; count++) {
-                dy = ( 2.0 * (dx * dy) ) + cy;
-                dx = dx2 - dy2 + cx;
-                dx2 = dx * dx;
-                dy2 = dy * dy;
-		
-		j_t = Math.floor((dx-lx)/x_inc);
-		k_t = Math.floor((ty-dy)/y_inc);
-		if (j_t>=0 && j_t<width && k_t>=0 && k_t<height) {
-			if(fract_array[j_t][k_t][0]==precision){ 
-				fract_array[j_t][k_t][0] = 1;
-			} else { 
-				fract_array[j_t][k_t][0] += 1;
-			}
-		}
-        }
-	return fract_array;
-}
-
-
-//////////////////////////////////////
-//
-// dwell_buddha_julia
-//
-function dwell_buddha_julia( cx, cy, precision , width, height, x_inc, y_inc, fract_array, lx, ty, cr, ci) {
-	var itermax= precision;
-	var breakout=8;
-	var x=cx;
-	var y=cy;
-
-	var x2 = x*x;
-	var y2 = y*y;
-	for (var iter=0;iter<itermax && x2+y2<breakout;iter++) {
-
-		y=(2*x*y) + ci;
-		x=x2-y2+cr;
-		x2 = x*x;
-		y2 = y*y;
-		
-		j_t = Math.floor((x-lx)/x_inc);
-		k_t = Math.floor((ty-y)/y_inc);
-		if (j_t>=0 && j_t<width && k_t>=0 && k_t<height) {
-			if(fract_array[j_t][k_t][0]==precision){ 
-				fract_array[j_t][k_t][0] = 1;
-			} else { 
-				fract_array[j_t][k_t][0] += 1;
-			}
-		}
-	}
-	return fract_array;
 }
 
 //////////////////////////////////////
@@ -472,4 +408,68 @@ function dwell_julia_quartic( cx, cy, precision, cr, ci ) {
 		dy2 = dy * dy;
         }
         return [count,dx,dy];
+}
+
+//////////////////////////////////////
+//
+// dwell_buddha
+//
+function dwell_buddha( cx, cy, precision , width, height, x_inc, y_inc, fract_array, lx, ty) {
+        var num = precision;
+        var breakout = 4;
+        var dx = cx;
+        var dy = cy;
+        var dx2 = dx * dx;
+        var dy2 = dy * dy;
+        //z <= z(n-1)^2 +c
+        for ( var count = 0; count < num && (dx2 + dy2) <= breakout; count++) {
+                dy = ( 2.0 * (dx * dy) ) + cy;
+                dx = dx2 - dy2 + cx;
+                dx2 = dx * dx;
+                dy2 = dy * dy;
+		
+		j_t = Math.floor((dx-lx)/x_inc);
+		k_t = Math.floor((ty-dy)/y_inc);
+		if (j_t>=0 && j_t<width && k_t>=0 && k_t<height) {
+			if(fract_array[j_t][k_t][0]==precision){ 
+				fract_array[j_t][k_t][0] = 1;
+			} else { 
+				fract_array[j_t][k_t][0] += 1;
+			}
+		}
+        }
+	return fract_array;
+}
+
+
+//////////////////////////////////////
+//
+// dwell_buddha_julia
+//
+function dwell_buddha_julia( cx, cy, precision , width, height, x_inc, y_inc, fract_array, lx, ty, cr, ci) {
+	var itermax= precision;
+	var breakout=8;
+	var x=cx;
+	var y=cy;
+
+	var x2 = x*x;
+	var y2 = y*y;
+	for (var iter=0;iter<itermax && x2+y2<breakout;iter++) {
+
+		y=(2*x*y) + ci;
+		x=x2-y2+cr;
+		x2 = x*x;
+		y2 = y*y;
+		
+		j_t = Math.floor((x-lx)/x_inc);
+		k_t = Math.floor((ty-y)/y_inc);
+		if (j_t>=0 && j_t<width && k_t>=0 && k_t<height) {
+			if(fract_array[j_t][k_t][0]==precision){ 
+				fract_array[j_t][k_t][0] = 1;
+			} else { 
+				fract_array[j_t][k_t][0] += 1;
+			}
+		}
+	}
+	return fract_array;
 }
