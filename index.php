@@ -6,6 +6,7 @@
 <?php include("../../topbar.phtml"); //this is style information for my webpage, not needed for depoloyment elsewhere ?><br>
 <?php 
 	if (!isset($_GET['algorithm']) || $_GET['algorithm'] <= "") { $algorithm = 0; } else { $algorithm = $_GET['algorithm']; }
+	if (!isset($_GET['precision']) || $_GET['precision'] <= "") { $precision = 360; } else { $precision = $_GET['precision']; }
 	if (!isset($_GET['lx']) || $_GET['lx'] <= "") { 
 		if ($algorithm == 0) {
 			$lx = -2;
@@ -91,9 +92,18 @@
                 }
         } else { $ci = $_GET['ci']; }
 	if (!isset($_GET['colorscheme']) || $_GET['colorscheme'] <= "") { $colorscheme= 0; } else { $colorscheme = $_GET['colorscheme']; }
+	if (!isset($_GET['colorscheme_script']) || $_GET['colorscheme_script'] <= "") { 
+		$colorscheme_script = "precision*.03 RGBA:255,0,0,255\n";
+		$colorscheme_script  .= "precision*.05 RGBA:255,255,0,255\n";
+		$colorscheme_script  .= "precision*.1 RGBA:0,255,0,255\n";
+		$colorscheme_script  .= "precision*.2 RGBA:0,255,255,255\n";
+		$colorscheme_script  .= "precision RGBA:0,0,255,255\n";
+		$colorscheme_script  .= "else RGBA:0,0,0,255";
+	} else { $colorscheme_script =  urldecode ( str_replace(";","\n", $_GET['colorscheme_script'])); }
+	//} else { $colorscheme_script = str_replace("%20"," ",str_replace(";","\n", $_GET['colorscheme_script'])); }
 	if (!isset($_GET['antialias']) || $_GET['antialias'] <= "") { $antialias= 0; } else { $antialias = $_GET['antialias']; }
 	if (!isset($_GET['width']) || $_GET['width'] <= "") { 	
-		$width= 500;
+		$width= 300;
 	} else { $width = $_GET['width']; }
 	
 	?>
@@ -144,14 +154,99 @@
 		}
 	}
 
-	function redraw(){
-		//this will need to check if the width in the width field is different from that of the canvas. 
-		//if they are different it should reload the page pass the propoer variables to redraw the image at the larger width on a larger canvas
-		var canvas = document.getElementById("theCanvas");
+	function setColorText(colorscheme_selector) {
+		var color_scheme = colorscheme_selector.value;
+		var color_txt = "";
+		if (color_scheme == 0) {
+		//simple
+			color_txt = "precision*.03 RGBA:255,0,0,255\n";
+			color_txt += "precision*.05 RGBA:255,255,0,255\n";
+			color_txt += "precision*.1 RGBA:0,255,0,255\n";
+			color_txt += "precision*.2 RGBA:0,255,255,255\n";
+			color_txt += "precision RGBA:0,0,255,255\n";
+			color_txt += "else RGBA:0,0,0,255";
+		} else if (color_scheme == 1) {
+			// 5 color cyclic
+			color_txt = "precision RGB_cycle:5,27,52,94\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 2) {
+			// 5 color cyclic
+			color_txt = "precision RGB_cycle:5,187,90,69\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 3) {
+			// 12 color cyclic
+			color_txt = "precision RGB_cycle:12,27,52,94\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 4) {
+			// 36 color cyclic
+			color_txt = "precision RGB_cycle:36,27,52,94\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 5 ) {
+			// HSV 0-360
+			color_txt = "precision H_range:0,360\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 6) {
+			// HSV 360-0
+			color_txt   = "precision H_range:360,0\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 7) {
+			color_txt   = "precision/80 H_range:0,120\n";
+			color_txt += "precision/20 H_range:120,280\n";
+			color_txt += "precision/10 H_range:280,20\n";
+			color_txt += "precision/5 H_range:20,180\n";
+			color_txt += "precision H_range:180,360\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 8) {
+			color_txt   = "precision*.1 H_range:0,120\n";
+			color_txt += "precision*.3 H_range:120,280\n";
+			color_txt += "precision*.5 H_range:280,20\n";
+			color_txt += "precision*.7 H_range:20,180\n";
+			color_txt += "precision H_range:180,360\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 9) {
+			color_txt   = "precision*.03 H_range:0,120\n";
+			color_txt += "precision*.05 H_range:120,280\n";
+			color_txt += "precision*.1 H_range:280,20\n";
+			color_txt += "precision*.7 H_range:20,180\n";
+			color_txt += "precision H_range:180,360\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 10) {
+			color_txt = "precision*.03 HSV_range:0,120,DX*100,DY*100\n";
+			color_txt += "precision*.05 HSV_range:120,280,DX*100,DY*100\n";
+			color_txt += "precision*.1 HSV_range:280,20,DX*100,DY*100\n";
+			color_txt += "precision*.7 HSV_range:20,180,DX*100,DY*100\n";
+			color_txt += "precision HSV_range:180,360,DX*100,DY*100\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 11) {
+			color_txt = "precision*.03 HSV_range:0,120,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
+			color_txt += "precision*.05 HSV_range:120,280,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
+			color_txt += "precision*.1 HSV_range:280,20,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
+			color_txt += "precision*.7 HSV_range:20,180,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
+			color_txt += "precision HSV_range:180,360,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
+			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 12) {
+			color_txt = "precision*.03 HSV_range:0,120,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
+			color_txt += "precision*.05 HSV_range:120,280,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
+			color_txt += "precision*.1 HSV_range:280,20,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
+			color_txt += "precision*.7 HSV_range:20,180,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
+			color_txt += "precision HSV_range:180,360,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
+			color_txt += "else RGB:0,0,0";	
+		} else {
+			color_txt = "precision RGBA:255,255,255,255\n";
+			color_txt += "else RGBA:0,0,0,255";
+		}
+		document.getElementById("colorscheme_script").value = color_txt;
+		//redirectURL = getredirectURL();
+		//document.getElementById("URL").value  = redirectURL;
+	}
+
+	function getredirectURL(){
 		redirectURL = "http://guydmann.no-ip.org/code/fractal_app/index.php";
 		redirectURL += "?algorithm=" + document.getElementById("algorithm").value + "&";
 		redirectURL += "colorscheme=" + document.getElementById("colorscheme").value + "&";
+		redirectURL += "colorscheme_script=" + escape(document.getElementById("colorscheme_script").value.replace("\n",";"))  + "&";
 		redirectURL += "width=" + document.getElementById("width").value + "&";
+		redirectURL += "precision=" + document.getElementById("precision").value + "&";
 		redirectURL += "antialias=" 
 		if  (document.getElementById("antialias").checked) {
 			redirectURL += "1&";
@@ -166,7 +261,26 @@
 		redirectURL += "rx=" + document.getElementById("rx").value + "&";
 		redirectURL += "ty=" + document.getElementById("ty").value + "&";
 		redirectURL += "by=" + document.getElementById("by").value;
+		return redirectURL;
+	}
+
+	function recolor(){
+		//this will need to check if the width in the width field is different from that of the canvas. 
+		//if they are different it should reload the page pass the propoer variables to redraw the image at the larger width on a larger canvas
+		var canvas = document.getElementById("theCanvas");
 		//hack to get around popups for the pause in chrome. not sure if it helps in other browsers
+		redirectURL = getredirectURL();
+		document.getElementById("URL").value  = redirectURL;
+		color();
+
+	}
+
+	function redraw(){
+		//this will need to check if the width in the width field is different from that of the canvas. 
+		//if they are different it should reload the page pass the propoer variables to redraw the image at the larger width on a larger canvas
+		var canvas = document.getElementById("theCanvas");
+		//hack to get around popups for the pause in chrome. not sure if it helps in other browsers
+		redirectURL = getredirectURL();
 		if (canvas.width != document.getElementById("width").value ) {
 			window.location = redirectURL;
 		} else {
@@ -210,12 +324,13 @@
 				<li><a href="#" rel="controltab1" class="selected">Algorithm</a></li>
 				<li><a href="#" rel="controltab2">Coloring</a></li>
 				<li><a href="#" rel="controltab3">Image</a></li>
-				<li><a href="#" rel="controltab4">Credits</a></li>
+				<li><a href="#" rel="controltab4">Coords</a></li>
+				<li><a href="#" rel="controltab5">Credits</a></li>
 			</ul>
 		</div>				
 		<div style="border:1px solid gray; width:425px; margin-bottom: 1em; padding: 10px">
 			<form name="sampleForm" style="margin: 0px; padding: 0px;"> 
-			<div id="controltab1" class="tabcontent">
+			<div name="ALGORITHM"  id="controltab1" class="tabcontent">
 				Algorithm:
 					<select name="algorithm" id="algorithm" onchange="resetcoords();"> 
 						<option <?php if ($algorithm == 0) {  print "selected ";} ?> value=0>Mandelbrot (Quadratic)</option> 
@@ -237,16 +352,7 @@
 						<option <?php if ($algorithm == 16) {  print "selected ";} ?> value=16>Buddhabrot Random Traversal with inverse</option> 
 						<option <?php if ($algorithm == 99) {  print "selected ";} ?> value=99>Blank</option> 
 					</select> <br><br>
-					<table cellpadding="0" cellspacing="3"> 
-						<tr> 
-							<td>Left X:&nbsp;</td><td><input type="text" size="4" name="lx" id="lx" value="<?php echo $lx; ?>"></td>
-							<td>Right X:&nbsp;</td><td><input type="text" size="4" name="rx" id="rx" value="<?php echo $rx; ?>"></td>
-						</tr>
-						<tr>
-							<td>Top Y:&nbsp;</td><td><input type="text" size="4" name="ty" id="ty" value="<?php echo $ty; ?>"></td>
-							<td>Bottom Y:&nbsp;</td><td><input type="text" size="4" name="by" id="by" value="<?php echo $by; ?>"></td>
-						</tr>
-					</table>
+					<table><tr><td>Precision:&nbsp;</td><td><input type="text" size="4" name="precision" id="precision" value="<?php echo $precision; ?>"></td></tr></table>
 					<div id="Julia_args" 
 						<?php
 						if ($algorithm == 1 or $algorithm == 5 or $algorithm == 9 or $algorithm == 10 or $algorithm == 11 or $algorithm == 14) {
@@ -330,34 +436,48 @@
 						
 					</div>
 			</div>
-			<div id="controltab2" class="tabcontent">
-				Color Scheme:&nbsp;
-				<select name="colorscheme" id="colorscheme"> 
-					<option <? if ($colorscheme == 0) {  print "selected ";} ?> value=0>Simple</option> 
+			<div name="COLORING" id="controltab2" class="tabcontent">
+				<table><tr><td><input type="button" value="Recolor"  onclick="recolor();">&nbsp;&nbsp;&nbsp;</td><td>Color Scheme:&nbsp;</td><td>
+				<select name="colorscheme" id="colorscheme" onchange="setColorText(this);"> 
+					<option <? if ($colorscheme == 0) {  print "selected ";} ?> value=0>Simple 5 Color</option> 
 					<option <? if ($colorscheme == 1) {  print "selected ";} ?> value=1> 5 Color Cyclic 1</option> 
 					<option <? if ($colorscheme == 2) {  print "selected ";} ?> value=2>5 Color Cyclic 2</option> 
-					<option <? if ($colorscheme == 3) {  print "selected ";} ?> value=3>12 Color Cyclic 1</option> 
+					<option <? if ($colorscheme == 3) {  print "selected ";} ?> value=3>12 Color Cyclic</option> 
 					<option <? if ($colorscheme == 4) {  print "selected ";} ?> value=4>36 Color Cyclic</option> 
 					<option <? if ($colorscheme == 5) {  print "selected ";} ?> value=5>HSV 0-360</option> 
 					<option <? if ($colorscheme == 6) {  print "selected ";} ?> value=6>HSV 360-0</option> 
-					<option <? if ($colorscheme == 7) {  print "selected ";} ?> value=7>HSV with static modulus</option> 
-					<option <? if ($colorscheme == 8) {  print "selected ";} ?> value=8>HSV with percentage modulus</option> 
-					<option <? if ($colorscheme == 9) {  print "selected ";} ?> value=9>HSV with percentage modulus 2</option> 
-					<option <? if ($colorscheme == 10) {  print "selected ";} ?> value=10>TEST 3d HSV</option> 
-					<option <? if ($colorscheme == 11) {  print "selected ";} ?> value=11>TEST 3d HSV 2</option> 
-					<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>TEST 3d HSV 3</option> 
+					<option <? if ($colorscheme == 7) {  print "selected ";} ?> value=7>HSV multi 1</option> 
+					<option <? if ($colorscheme == 8) {  print "selected ";} ?> value=8>HSV multi 2</option> 
+					<option <? if ($colorscheme == 9) {  print "selected ";} ?> value=9>HSV multi 3</option> 
+					<option <? if ($colorscheme == 10) {  print "selected ";} ?> value=10>3d HSV</option> 
+					<option <? if ($colorscheme == 11) {  print "selected ";} ?> value=11>3d HSV 2</option> 
+					<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>3d HSV 3</option> 
 					<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
 				</select> 
+				</td></tr></table>
+				<textarea name="colorscheme_script" id="colorscheme_script" rows="10" cols="50"><?php echo $colorscheme_script; ?></textarea>
 				<br>
-				<input type="button" value="Recolor"  onclick="recolor();">
+				
 			</div>
-			<div id="controltab3" class="tabcontent">
+			<div name="IMAGE" id="controltab3" class="tabcontent">
 				Canvas Width:&nbsp;<input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"><br>
 				Anti-Aliasing:&nbsp;<INPUT TYPE="checkbox" NAME="antialias"  id="antialias" <?php if ($antialias) {  print "CHECKED";}  ?>><br><br>
 				<input type="button" value="Open as PNG"  onclick="create_png();"><br><br>
-				URL:&nbsp;<input type="text" size="30" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>">
+				URL:&nbsp;<input type="text" size="50" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>">
 			</div>
-			<div id="controltab4" class="tabcontent">
+			<div name="COORDS" id="controltab4" class="tabcontent">
+				<table cellpadding="0" cellspacing="3"> 
+					<tr> 
+						<td>Left X:&nbsp;</td><td><input type="text" size="4" name="lx" id="lx" value="<?php echo $lx; ?>"></td>
+						<td>Right X:&nbsp;</td><td><input type="text" size="4" name="rx" id="rx" value="<?php echo $rx; ?>"></td>
+					</tr>
+					<tr>
+						<td>Top Y:&nbsp;</td><td><input type="text" size="4" name="ty" id="ty" value="<?php echo $ty; ?>"></td>
+						<td>Bottom Y:&nbsp;</td><td><input type="text" size="4" name="by" id="by" value="<?php echo $by; ?>"></td>
+					</tr>
+				</table>
+			</div>
+			<div name="CREDITS" id="controltab5" class="tabcontent">
 				Coding: Guy Mann<br><br>
 				special thanks to Yeiguer Contreras, BoingBoing and Cai
 			</div>

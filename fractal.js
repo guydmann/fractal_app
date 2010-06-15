@@ -25,9 +25,9 @@ function MultDimArray(iRows,iCols) {
 //	create_fractal
 //	returns the pix array set with the appropriate fractal and coloring
 //
-function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx, by, precision, algorithm, cr, ci) {
+function create_fractal(pix, width, height, precision, color_scheme_script, lx, ty, rx, by, precision, algorithm, cr, ci) {
 	print_with_pause("sys_out", "Creating color function\n", false);
-	var setColor_func_array = new Array ( createColorFunction(color_scheme) );
+	var setColor_func_array = new Array ( createColorFunction(color_scheme_script) );
 	var fract_array = MultDimArray(width,height);
 	print_with_pause("sys_out", "Calculating fractal\n", false);
 	
@@ -163,7 +163,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 			decinal_val = decinal;
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
+					pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k], width, height, precision);	
 					pixcount++;
 				}
 				if (k>=decinal_val) {
@@ -201,9 +201,9 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
 					if (escapes_array[j][k][0]==0) {
-						pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
+						pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k], width, height, precision);	
 					} else {
-						pix = setColor_func_array[0]( pix, pixcount, [precision,0,0], width, height, precision, color_scheme);	
+						pix = setColor_func_array[0]( pix, pixcount, [precision,0,0], width, height, precision);	
 					}
 					pixcount++;
 				}
@@ -246,7 +246,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
 					fract_array[j][k] = dwell_func_array [algorithm]( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision );
-					pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
+					pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k], width, height, precision);	
 					pixcount++;
 				}
 				if (k>=decinal_val) {
@@ -263,7 +263,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
 					fract_array[j][k] = dwell_func_array [algorithm]( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, cr, ci );
-					pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k], width, height, precision, color_scheme);	
+					pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k], width, height, precision);	
 					pixcount++;
 				}
 				if (k>=decinal_val) {
@@ -284,7 +284,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 		decinal_val = decinal;
 		for ( var k = 0; k < height ; k++) {
 			for ( var j = 0; j < width ; j++) {
-				pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k] = [0,0,0], width, height, precision, color_scheme);	
+				pix = setColor_func_array[0]( pix, pixcount, fract_array[j][k] = [0,0,0], width, height, precision);	
 				pixcount++;
 			}
 			if (k>=decinal_val) {
@@ -303,7 +303,7 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 
 
 
-function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme, antialias ) {
+function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme_script, antialias ) {
 	print_with_pause("sys_out", "Beginning Fractal Generation\n", true);
 	var date = new Date();
 	if (antialias) {
@@ -315,7 +315,7 @@ function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, alg
 	
 		//create fractal at width*compression_factor
 		print_with_pause("sys_out", "Creating fractal at "+(width*compression_factor)+"x"+(height*compression_factor)+"\n", false);
-		pix = create_fractal(pix, width*compression_factor, height*compression_factor, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
+		pix = create_fractal(pix, width*compression_factor, height*compression_factor, precision, color_scheme_script, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
 		
 		//compress image to canvas width
 		print_with_pause("sys_out","Compressing image to "+width+"x"+height+"\n", false);
@@ -331,7 +331,7 @@ function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, alg
 		imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
 		pix = imgd.data;
 		//create fractal at width
-		pix = create_fractal(pix, width, height, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
+		pix = create_fractal(pix, width, height, precision, color_scheme_script, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
 		//put image to draw region
 		draw_region.putImageData(imgd,0,0);
 	}
@@ -342,10 +342,10 @@ function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, alg
 }
 
 
-function ColorFractal( draw_region, width, height, precision, algorithm, color_scheme, antialias) {
+function ColorFractal( draw_region, width, height, precision, algorithm, color_scheme_script, antialias) {
 	print_with_pause("sys_out", "Recoloring of Fractal\n", false);
 	var date = new Date();
-	var setColor_func_array = new Array ( createColorFunction(color_scheme) );
+	var setColor_func_array = new Array ( createColorFunction(color_scheme_script) );
 	var pixcount = 0
 	if (antialias) {
 		if ((width*compression_factor)==fractal_array_global.length) {
@@ -362,7 +362,7 @@ function ColorFractal( draw_region, width, height, precision, algorithm, color_s
 			decinal_val = decinal;
 			for ( var k = 0; k < height*compression_factor ; k++) {
 				for ( var j = 0; j < width*compression_factor ; j++) {
-					pix = setColor_func_array[0]( pix, pixcount, fractal_array_global[j][k], width, height, precision, color_scheme);	
+					pix = setColor_func_array[0]( pix, pixcount, fractal_array_global[j][k], width, height, precision);	
 					pixcount++;
 				}
 				if (k>=decinal_val) {
@@ -398,7 +398,7 @@ function ColorFractal( draw_region, width, height, precision, algorithm, color_s
 			decinal_val = decinal;
 			for ( var k = 0; k < height ; k++) {
 				for ( var j = 0; j < width ; j++) {
-					pix = setColor_func_array[0]( pix, pixcount, fractal_array_global[j][k], width, height, precision, color_scheme);	
+					pix = setColor_func_array[0]( pix, pixcount, fractal_array_global[j][k], width, height, precision);	
 					pixcount++;
 				}
 				if (k>=decinal_val) {
@@ -436,8 +436,8 @@ function draw(){
 				width = document.getElementById("width").value;
 				height = document.getElementById("width").value;
 			} else {
-				width = 500;
-				height = 500;
+				width = 300;
+				height = 300;
 				document.getElementById("width").value = width;
 			}
 			if(document.getElementById("algorithm").value.length>0) {
@@ -449,8 +449,19 @@ function draw(){
 			if(document.getElementById("colorscheme").value.length>0) {
 				color_scheme = document.getElementById("colorscheme").value;
 			} else {
-				color_scheme = 0;
+				color_scheme =0;
 				document.getElementById("colorscheme").value = color_scheme;
+			}
+			if(document.getElementById("colorscheme_script").value.length>0) {
+				color_scheme_script = document.getElementById("colorscheme_script").value;
+			} else {
+				color_scheme_script = "precision*.03 RGBA:255,0,0,255\n";
+				color_scheme_script += "precision*.05 RGBA:255,255,0,255\n";
+				color_scheme_script += "precision*.1 RGBA:0,255,0,255\n";
+				color_scheme_script += "precision*.2 RGBA:0,255,255,255\n";
+				color_scheme_script += "precision RGBA:0,0,255,255\n";
+				color_scheme_script += "else RGBA:0,0,0,255";
+				document.getElementById("colorscheme_script").value = color_scheme_script;
 			}
 
 			if(document.getElementById("lx").value.length>0) {
@@ -526,13 +537,11 @@ function draw(){
 				document.getElementById("by").value = by;
 			}
 
-
-		                //if (algorithm ==12 || algorithm ==13) {
-		                //        precision = 300;
-				//} else {
-					//precision = 360;
-					precision = 500;
-				//}
+			if(document.getElementById("precision").value.length>0) {
+				precision = document.getElementById("precision").value;
+			} else {
+				precision = 360;
+			}
 
 
 			if(document.getElementById("cr").value.length>0) {
@@ -561,7 +570,7 @@ function draw(){
 				antialias = 0;
 				document.getElementById("antialias").value = antialias;
 			}
-			var success = DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme, antialias);
+			var success = DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, algorithm, cr, ci, color_scheme_script, antialias);
                 }
         }
 }
@@ -569,7 +578,7 @@ function draw(){
 
 
 
-function recolor(){
+function color(){
 	var width, height, ty, by, lx, rx, precision, algorithm, cr, ci, color_scheme;
         var canvas = document.getElementById("theCanvas");
 
@@ -581,8 +590,8 @@ function recolor(){
 				width = document.getElementById("width").value;
 				height = document.getElementById("width").value;
 			} else {
-				width = 500;
-				height = 500;
+				width = 300;
+				height = 300;
 				document.getElementById("width").value = width;
 			}
 			if(document.getElementById("algorithm").value.length>0) {
@@ -596,6 +605,12 @@ function recolor(){
 			} else {
 				color_scheme = 0;
 				document.getElementById("colorscheme").value = color_scheme;
+			}
+			if(document.getElementById("colorscheme_script").value.length>0) {
+				color_scheme_script = document.getElementById("colorscheme_script").value;
+			} else {
+				color_scheme_script = "precision RGBA:255,255,255,255\nelse RGBA:0,0,0,255";
+				document.getElementById("colorscheme_script").value = color_scheme_script;
 			}
 
 			if(document.getElementById("lx").value.length>0) {
@@ -670,13 +685,11 @@ function recolor(){
 		                }
 				document.getElementById("by").value = by;
 			}
-
-
-		                //if (algorithm ==12 || algorithm ==13) {
-		                //        precision = 300;
-				//} else {
-					precision = 360;
-				//}
+			if(document.getElementById("precision").value.length>0) {
+				precision = document.getElementById("precision").value;
+			} else {
+				precision = 360;
+			}
 
 
 			if(document.getElementById("cr").value.length>0) {
@@ -705,7 +718,7 @@ function recolor(){
 				antialias = 0;
 				document.getElementById("antialias").value = antialias;
 			}
-			var success = ColorFractal( draw_region, width, height, precision, algorithm, color_scheme, antialias);
+			var success = ColorFractal( draw_region, width, height, precision, algorithm, color_scheme_script, antialias);
                 }
         }
 }
@@ -731,7 +744,8 @@ function init () {
 	canvas.addEventListener('mousemove', tool.mousemove, false);
 	canvas.addEventListener('mousedown', tool.mousedown, false);
 	canvas.addEventListener('mouseup',   tool.mouseup, false);
-
+	
+	//setColorText(document.getElementById("colorscheme").value);
 	draw();
 }
 

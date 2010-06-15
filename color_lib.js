@@ -81,87 +81,7 @@ function hsvToRgb(h, s, v) {
 //
 // createColorFunction
 //
-function createColorFunction( color_scheme) {
-	var color_txt = "";
-	var color_func_txt = "";
-	if (color_scheme == 0) {
-	//simple
-		color_txt = "precision*.03 RGBA:255,0,0,255\n";
-		color_txt += "precision*.05 RGBA:255,255,0,255\n";
-		color_txt += "precision*.1 RGBA:0,255,0,255\n";
-		color_txt += "precision*.2 RGBA:0,255,255,255\n";
-		color_txt += "precision RGBA:0,0,255,255\n";
-		color_txt += "else RGBA:0,0,0,255";
-	} else if (color_scheme == 1) {
-		// 5 color cyclic
-		color_txt = "precision RGB_cycle:5,27,52,94\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 2) {
-		// 5 color cyclic
-		color_txt = "precision RGB_cycle:5,187,90,69\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 3) {
-		// 12 color cyclic
-		color_txt = "precision RGB_cycle:12,27,52,94\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 4) {
-		// 36 color cyclic
-		color_txt = "precision RGB_cycle:36,27,52,94\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 5 ) {
-		// HSV 0-360
-		color_txt = "precision H_range:0,360\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 6) {
-		// HSV 360-0
-		color_txt   = "precision H_range:360,0\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 7) {
-		color_txt   = "precision/80 H_range:0,120\n";
-		color_txt += "precision/20 H_range:120,280\n";
-		color_txt += "precision/10 H_range:280,20\n";
-		color_txt += "precision/5 H_range:20,180\n";
-		color_txt += "precision H_range:180,360\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 8) {
-		color_txt   = "precision*.1 H_range:0,120\n";
-		color_txt += "precision*.3 H_range:120,280\n";
-		color_txt += "precision*.5 H_range:280,20\n";
-		color_txt += "precision*.7 H_range:20,180\n";
-		color_txt += "precision H_range:180,360\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 9) {
-		color_txt   = "precision*.03 H_range:0,120\n";
-		color_txt += "precision*.05 H_range:120,280\n";
-		color_txt += "precision*.1 H_range:280,20\n";
-		color_txt += "precision*.7 H_range:20,180\n";
-		color_txt += "precision H_range:180,360\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 10) {
-		color_txt = "precision*.03 HSV_range:0,120,DX*100,DY*100\n";
-		color_txt += "precision*.05 HSV_range:120,280,DX*100,DY*100\n";
-		color_txt += "precision*.1 HSV_range:280,20,DX*100,DY*100\n";
-		color_txt += "precision*.7 HSV_range:20,180,DX*100,DY*100\n";
-		color_txt += "precision HSV_range:180,360,DX*100,DY*100\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 11) {
-		color_txt = "precision*.03 HSV_range:0,120,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
-		color_txt += "precision*.05 HSV_range:120,280,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
-		color_txt += "precision*.1 HSV_range:280,20,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
-		color_txt += "precision*.7 HSV_range:20,180,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
-		color_txt += "precision HSV_range:180,360,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
-		color_txt += "else RGB:0,0,0";
-	} else if (color_scheme == 12) {
-		color_txt = "precision*.03 HSV_range:0,120,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
-		color_txt += "precision*.05 HSV_range:120,280,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
-		color_txt += "precision*.1 HSV_range:280,20,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
-		color_txt += "precision*.7 HSV_range:20,180,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
-		color_txt += "precision HSV_range:180,360,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
-		color_txt += "else RGB:0,0,0";	
-	} else {
-		color_txt = "precision RGBA:255,255,255,255\n";
-		color_txt += "else RGBA:0,0,0,255";
-	}
+function createColorFunction( color_txt) {
 	var color_func_txt = "";	
 	var line_array = color_txt.split("\n");
 	var color_count_array = line_array [0].split("=");
@@ -254,7 +174,7 @@ function createColorFunction( color_scheme) {
 	}
 	
 	color_func_txt += "return pix;";
-	print_with_pause("sys_out", color_func_txt +"\n" , false) ;
-	var setColorFunction = new Function("pix", "pix_count", "fract_array, width", "height", "precision", "color_scheme", color_func_txt);
+	//print_with_pause("sys_out", color_func_txt +"\n" , false) ;
+	var setColorFunction = new Function("pix", "pix_count", "fract_array, width", "height", "precision", color_func_txt);
 	return setColorFunction;
 }
