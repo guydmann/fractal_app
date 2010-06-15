@@ -183,61 +183,65 @@
 			color_txt += "else RGB:0,0,0";
 		} else if (color_scheme == 5 ) {
 			// HSV 0-360
-			color_txt = "precision H_range:0,360\n";
+			color_txt = "precision H_range:0,360,ITER\n";
 			color_txt += "else RGB:0,0,0";
 		} else if (color_scheme == 6) {
 			// HSV 360-0
-			color_txt   = "precision H_range:360,0\n";
+			color_txt   = "precision H_range:360,0,ITER\n";
 			color_txt += "else RGB:0,0,0";
 		} else if (color_scheme == 7) {
-			color_txt   = "precision/80 H_range:0,120\n";
-			color_txt += "precision/20 H_range:120,280\n";
-			color_txt += "precision/10 H_range:280,20\n";
-			color_txt += "precision/5 H_range:20,180\n";
-			color_txt += "precision H_range:180,360\n";
+			color_txt   = "precision/80 H_range:0,120,ITER\n";
+			color_txt += "precision/20 H_range:120,280,ITER\n";
+			color_txt += "precision/10 H_range:280,20,ITER\n";
+			color_txt += "precision/5 H_range:20,180,ITER\n";
+			color_txt += "precision H_range:180,360,ITER\n";
 			color_txt += "else RGB:0,0,0";
 		} else if (color_scheme == 8) {
-			color_txt   = "precision*.1 H_range:0,120\n";
-			color_txt += "precision*.3 H_range:120,280\n";
-			color_txt += "precision*.5 H_range:280,20\n";
-			color_txt += "precision*.7 H_range:20,180\n";
-			color_txt += "precision H_range:180,360\n";
+			color_txt   = "precision*.1 H_range:0,120,ITER\n";
+			color_txt += "precision*.3 H_range:120,280,ITER\n";
+			color_txt += "precision*.5 H_range:280,20,ITER\n";
+			color_txt += "precision*.7 H_range:20,180,ITER\n";
+			color_txt += "precision H_range:180,360,ITER\n";
 			color_txt += "else RGB:0,0,0";
 		} else if (color_scheme == 9) {
-			color_txt   = "precision*.03 H_range:0,120\n";
-			color_txt += "precision*.05 H_range:120,280\n";
-			color_txt += "precision*.1 H_range:280,20\n";
-			color_txt += "precision*.7 H_range:20,180\n";
-			color_txt += "precision H_range:180,360\n";
+			color_txt   = "precision*.03 H_range:0,120,ITER\n";
+			color_txt += "precision*.05 H_range:120,280,ITER\n";
+			color_txt += "precision*.1 H_range:280,20,ITER\n";
+			color_txt += "precision*.7 H_range:20,180,ITER\n";
+			color_txt += "precision H_range:180,360,ITER\n";
 			color_txt += "else RGB:0,0,0";
 		} else if (color_scheme == 10) {
-			color_txt = "precision*.03 HSV_range:0,120,DX*100,DY*100\n";
-			color_txt += "precision*.05 HSV_range:120,280,DX*100,DY*100\n";
-			color_txt += "precision*.1 HSV_range:280,20,DX*100,DY*100\n";
-			color_txt += "precision*.7 HSV_range:20,180,DX*100,DY*100\n";
-			color_txt += "precision HSV_range:180,360,DX*100,DY*100\n";
+			color_txt = "precision*.03 HSV_range:0,120,ITER,DX*100,DY*100\n";
+			color_txt += "precision*.05 HSV_range:120,280,ITER,DX*100,DY*100\n";
+			color_txt += "precision*.1 HSV_range:280,20,ITER,DX*100,DY*100\n";
+			color_txt += "precision*.7 HSV_range:20,180,ITER,DX*100,DY*100\n";
+			color_txt += "precision HSV_range:180,360,ITER,DX*100,DY*100\n";
 			color_txt += "else RGB:0,0,0";
 		} else if (color_scheme == 11) {
-			color_txt = "precision*.03 HSV_range:0,120,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
-			color_txt += "precision*.05 HSV_range:120,280,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
-			color_txt += "precision*.1 HSV_range:280,20,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
-			color_txt += "precision*.7 HSV_range:20,180,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
-			color_txt += "precision HSV_range:180,360,Math.atan(DX/DY)*100,Math.sqrt(DY^2+DX^2)*100\n";
+			color_txt = "precision*.03 HSV_range:0,120,ITER,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100,Math.sqrt(DY^2+DX^2)*100\n";
+			color_txt += "precision*.05 HSV_range:120,280,ITER,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100,Math.sqrt(DY^2+DX^2)*100\n";
+			color_txt += "precision*.1 HSV_range:280,20,ITER,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100,Math.sqrt(DY^2+DX^2)*100\n";
+			color_txt += "precision*.7 HSV_range:20,180,ITER,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100,Math.sqrt(DY^2+DX^2)*100\n";
+			color_txt += "precision HSV_range:180,360,ITER,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100,Math.sqrt(DY^2+DX^2)*100\n";
 			color_txt += "else RGB:0,0,0";
 		} else if (color_scheme == 12) {
-			color_txt = "precision*.03 HSV_range:0,120,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
-			color_txt += "precision*.05 HSV_range:120,280,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
-			color_txt += "precision*.1 HSV_range:280,20,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
-			color_txt += "precision*.7 HSV_range:20,180,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
-			color_txt += "precision HSV_range:180,360,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
+			color_txt = "precision*.03 HSV_range:0,120,ITER,Math.sqrt(DY^2+DX^2)*100,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
+			color_txt += "precision*.05 HSV_range:120,280,ITER,Math.sqrt(DY^2+DX^2)*100,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
+			color_txt += "precision*.1 HSV_range:280,20,ITER,Math.sqrt(DY^2+DX^2)*100,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
+			color_txt += "precision*.7 HSV_range:20,180,ITER,Math.sqrt(DY^2+DX^2)*100,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
+			color_txt += "precision HSV_range:180,360,ITER,Math.sqrt(DY^2+DX^2)*100,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
 			color_txt += "else RGB:0,0,0";	
 		} else if (color_scheme == 13) {
-			color_txt = "precision*.01 HSV_range:0,120,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
-			color_txt += "precision*.03 H_range:120,280\n";
+			color_txt = "precision*.01 HSV_range:0,120,ITER,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
+			color_txt += "precision*.03 H_range:120,280,ITER\n";
 			color_txt += "precision*.05 RGB_cycle:3,86,150,230\n";
-			color_txt += "precision*.1 HSV_range:20,180,DX*100,DY*100\n";
+			color_txt += "precision*.1 HSV_range:20,180,ITERv,DX*100,DY*100\n";
 			color_txt += "precision RGBA:255,255,255,255\n";
 			color_txt += "else RGB:0,0,0";	
+			
+		} else if (color_scheme == 14) {
+			color_txt = "precision H_range:20,180,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
+			color_txt += "else RGB:0,0,0";
 		} else {
 			color_txt = "precision RGBA:255,255,255,255\n";
 			color_txt += "else RGBA:0,0,0,255";
@@ -306,11 +310,14 @@
 
 	<div style="padding: 3em">
 	<div style="text-align: center">
-		<h2>Welcome to the Fractal Zoomer HTML5 Canvas Edition</h2>
-		This version uses Javascript to render the images to the new canvas element available in HTML5.<br>
+		<h2>Welcome to the Fractal App Canvas Edition</h2>
+		To zoom on a section of the fractal click and drag to highlight the region.<br>
+		Other controls can be found in the control panel<br>
+		You can reload the page or click <a href="./">here</a><br><br>
+		This program uses Javascript to render the images to the new canvas element available in HTML5.<br>
 		This page has been tested with Firefox 3.6, Opera 10.5 and Chrome.<br>
 		The source repository can be found at <a href="http://github.com/guydmann/fractal_app">http://github.com/guydmann/fractal_app</a><br><br>
-		To zoom on a section of the fractal click and drag to highlight the region.  You can reload the page or click <a href="./">here</a><br>
+		
 	</div>
 	<canvas id="theCanvas" width="<?php echo $width; ?>" height="<?php echo ($width); ?>">Fallback content, in case the browser does not support Canvas.</canvas>
 	<div style="float:right; padding: 1em">
@@ -454,15 +461,16 @@
 					<option <? if ($colorscheme == 2) {  print "selected ";} ?> value=2>5 Color Cyclic 2</option> 
 					<option <? if ($colorscheme == 3) {  print "selected ";} ?> value=3>12 Color Cyclic</option> 
 					<option <? if ($colorscheme == 4) {  print "selected ";} ?> value=4>36 Color Cyclic</option> 
-					<option <? if ($colorscheme == 5) {  print "selected ";} ?> value=5>HSV 0-360</option> 
-					<option <? if ($colorscheme == 6) {  print "selected ";} ?> value=6>HSV 360-0</option> 
-					<option <? if ($colorscheme == 7) {  print "selected ";} ?> value=7>HSV multi 1</option> 
-					<option <? if ($colorscheme == 8) {  print "selected ";} ?> value=8>HSV multi 2</option> 
-					<option <? if ($colorscheme == 9) {  print "selected ";} ?> value=9>HSV multi 3</option> 
-					<option <? if ($colorscheme == 10) {  print "selected ";} ?> value=10>3d HSV</option> 
-					<option <? if ($colorscheme == 11) {  print "selected ";} ?> value=11>3d HSV 2</option> 
-					<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>3d HSV 3</option> 
+					<option <? if ($colorscheme == 5) {  print "selected ";} ?> value=5>H 0-360</option> 
+					<option <? if ($colorscheme == 6) {  print "selected ";} ?> value=6>H 360-0</option> 
+					<option <? if ($colorscheme == 7) {  print "selected ";} ?> value=7>H(sv) multi 1</option> 
+					<option <? if ($colorscheme == 8) {  print "selected ";} ?> value=8>H(sv) multi 2</option> 
+					<option <? if ($colorscheme == 9) {  print "selected ";} ?> value=9>H(sv) multi 3</option> 
+					<option <? if ($colorscheme == 10) {  print "selected ";} ?> value=10>HSV 1</option> 
+					<option <? if ($colorscheme == 11) {  print "selected ";} ?> value=11>HSV 2</option> 
+					<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>HSV 3</option> 
 					<option <? if ($colorscheme == 13) {  print "selected ";} ?> value=13>Mixed Example Case</option> 
+					<option <? if ($colorscheme == 14) {  print "selected ";} ?> value=14>H(sv) new</option> 
 					<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
 				</select> 
 				</td></tr></table>
@@ -511,8 +519,12 @@
 		controls.init()
 	</script>
 	</form>
+	<br>
+	<br>
+	<br>
+	<br>
 	</div>
-		
+	
 </body>
 </html>
 

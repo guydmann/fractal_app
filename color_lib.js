@@ -138,25 +138,37 @@ function createColorFunction( color_txt) {
 				color_func_txt += "pix[(pix_count*4)+2]=(modcolor*" + RGBcycle_array[3] + ")%255;\n";
 				color_func_txt += "pix[(pix_count*4)+3]=255;\n";
 			} else if (color_array[0]=="H_range") {
-				var HRange_array = color_array[1].split(",",2);
+				var HRange_array = color_array[1].split(",",3);
 				color_func_txt += "var c1 = " + HRange_array[0] + ";\n";
 				color_func_txt += "var c2 = " + HRange_array[1] + ";\n";
-				color_func_txt += "var h = Math.round((fract_array[0] /(" + data_array[0] +"))*(c2-c1))+c1;\n";
+				
+				var hval_tmp1 = HRange_array[2].replace("ITER","fract_array[0]");
+				var hval_tmp2 = hval_tmp1.replace("DX","fract_array[1]");
+				var hval = hval_tmp2.replace("DY","fract_array[2]");
+				
+				//color_func_txt += "var h = Math.round((" + hval + " /(" + data_array[0] +"))*(c2-c1))+c1;\n";
+				color_func_txt += "var h = Math.round((" + hval + "/precision)*(c2-c1))+c1;\n";
 				color_func_txt += "var RGB = hsvToRgb(h, 100, 100);\n";
 				color_func_txt += "pix[(pix_count*4)]=RGB[0];\n";	//red
 				color_func_txt += "pix[(pix_count*4)+1]=RGB[1];\n";	//green
 				color_func_txt += "pix[(pix_count*4)+2]=RGB[2];\n";	//blue
 				color_func_txt += "pix[(pix_count*4)+3]=255;\n";	//alpha
 			} else if (color_array[0]=="HSV_range") {
-				var HSVRange_array = color_array[1].split(",",4);
-				var s_tmp = HSVRange_array[2].replace("DX","fract_array[1]");
-				var s = s_tmp.replace("DY","fract_array[2]");
-				var v_tmp = HSVRange_array[3].replace("DX","fract_array[1]");
-				var v = v_tmp.replace("DY","fract_array[2]");
+				var HSVRange_array = color_array[1].split(",",5);
+				var h_tmp = HSVRange_array[2].replace("DX","fract_array[1]");
+				var h_tmp1 = h_tmp.replace("ITER","fract_array[0]");
+				var h = h_tmp1.replace("DY","fract_array[2]");
+				var s_tmp = HSVRange_array[3].replace("DX","fract_array[1]");
+				var s_tmp1 = s_tmp.replace("ITER","fract_array[0]");
+				var s = s_tmp1.replace("DY","fract_array[2]");
+				var v_tmp = HSVRange_array[4].replace("DX","fract_array[1]");
+				var v_tmp1 = v_tmp.replace("ITER","fract_array[0]");
+				var v = v_tmp1.replace("DY","fract_array[2]");
 				
 				color_func_txt += "var c1 = " + HSVRange_array[0] + ";\n";
 				color_func_txt += "var c2 = " + HSVRange_array[1] + ";\n";
-				color_func_txt += "var h = Math.round((fract_array[0] /(" + data_array[0] +"))*(c2-c1))+c1;\n";
+				//color_func_txt += "var h = Math.round((" + h + " /(" + data_array[0] +"))*(c2-c1))+c1;\n";
+				color_func_txt += "var h = Math.round((" + h + " /precision)*(c2-c1))+c1;\n";
 				color_func_txt += "var s = Math.abs(Math.round((" + s + ")%100));\n";
 				color_func_txt += "var v = Math.abs(Math.round((" + v + ")%100));\n";
 				color_func_txt += "var RGB = hsvToRgb(h, s, v);\n";
