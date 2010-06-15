@@ -174,7 +174,7 @@ function createColorFunction( color_txt) {
 	}
 	
 	color_func_txt += "return pix;";
-	//print_with_pause("sys_out", color_func_txt +"\n" , false) ;
+	print_with_pause("sys_out", color_func_txt +"\n" , false) ;
 	var setColorFunction = new Function("pix", "pix_count", "fract_array, width", "height", "precision", color_func_txt);
 	return setColorFunction;
 }

@@ -231,6 +231,13 @@
 			color_txt += "precision*.7 HSV_range:20,180,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
 			color_txt += "precision HSV_range:180,360,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
 			color_txt += "else RGB:0,0,0";	
+		} else if (color_scheme == 13) {
+			color_txt = "precision*.01 HSV_range:0,120,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
+			color_txt += "precision*.03 H_range:120,280\n";
+			color_txt += "precision*.05 RGB_cycle:36,27,52,94\n";
+			color_txt += "precision*.1 HSV_range:20,180,DX*100,DY*100\n";
+			color_txt += "precision RGBA:0,255,255,255\n";
+			color_txt += "else RGB:0,0,0";	
 		} else {
 			color_txt = "precision RGBA:255,255,255,255\n";
 			color_txt += "else RGBA:0,0,0,255";
@@ -452,6 +459,7 @@
 					<option <? if ($colorscheme == 10) {  print "selected ";} ?> value=10>3d HSV</option> 
 					<option <? if ($colorscheme == 11) {  print "selected ";} ?> value=11>3d HSV 2</option> 
 					<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>3d HSV 3</option> 
+					<option <? if ($colorscheme == 13) {  print "selected ";} ?> value=13>Mixed Example Case</option> 
 					<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
 				</select> 
 				</td></tr></table>
