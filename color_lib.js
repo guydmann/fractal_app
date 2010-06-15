@@ -83,14 +83,12 @@ function hsvToRgb(h, s, v) {
 //
 function createColorFunction( color_txt) {
 	var color_func_txt = "";	
-	var line_array = color_txt.split("\n");
-	var color_count_array = line_array [0].split("=");
-	var color_count = color_count_array[1];
-
-
+	var line_array = color_txt.split(/\n/);
+//.replace(/\s/g,"")
 	for ( var k = 0; k < line_array.length ; k++) {
-		var data_array = line_array[k].split(" ",2);
-		var color_array = data_array[1].split(":",2);
+		var data_array = line_array[k].split(/\s+/,2);
+		var color_tmp = data_array[1].replace(/\s/g,"");
+		var color_array = color_tmp.split(":",2);
 		if (data_array[0]== "else") {
 			color_func_txt += "} else {\n";
 			if (color_array[0]=="RGBA") {
