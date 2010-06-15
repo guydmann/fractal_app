@@ -99,7 +99,7 @@
 		$colorscheme_script  .= "precision*.2 RGBA:0,255,255,255\n";
 		$colorscheme_script  .= "precision RGBA:0,0,255,255\n";
 		$colorscheme_script  .= "else RGBA:0,0,0,255";
-	} else { $colorscheme_script =  urldecode ( str_replace(";","\n", $_GET['colorscheme_script'])); }
+	} else { $colorscheme_script =  str_replace("PLUS","+",str_replace(";","\n", $_GET['colorscheme_script'])); }
 	//} else { $colorscheme_script = str_replace("%20"," ",str_replace(";","\n", $_GET['colorscheme_script'])); }
 	if (!isset($_GET['antialias']) || $_GET['antialias'] <= "") { $antialias= 0; } else { $antialias = $_GET['antialias']; }
 	if (!isset($_GET['width']) || $_GET['width'] <= "") { 	
@@ -251,7 +251,10 @@
 		redirectURL = "http://guydmann.no-ip.org/code/fractal_app/index.php";
 		redirectURL += "?algorithm=" + document.getElementById("algorithm").value + "&";
 		redirectURL += "colorscheme=" + document.getElementById("colorscheme").value + "&";
-		redirectURL += "colorscheme_script=" + escape(document.getElementById("colorscheme_script").value.replace("\n",";"))  + "&";
+		cs_text  = document.getElementById("colorscheme_script").value.replace(/\n/g,";");
+		cs_text = cs_text.replace(/\+/g,"PLUS");
+		cs_text = escape(cs_text) ;
+		redirectURL += "colorscheme_script=" + cs_text + "&";
 		redirectURL += "width=" + document.getElementById("width").value + "&";
 		redirectURL += "precision=" + document.getElementById("precision").value + "&";
 		redirectURL += "antialias=" 
@@ -468,10 +471,20 @@
 				
 			</div>
 			<div name="IMAGE" id="controltab3" class="tabcontent">
-				Canvas Width:&nbsp;<input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>"><br>
-				Anti-Aliasing:&nbsp;<INPUT TYPE="checkbox" NAME="antialias"  id="antialias" <?php if ($antialias) {  print "CHECKED";}  ?>><br><br>
-				<input type="button" value="Open as PNG"  onclick="create_png();"><br><br>
-				URL:&nbsp;<input type="text" size="50" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>">
+				<table>
+					<tr>
+						<td >Canvas Width:&nbsp;</td><td ><input type="text" size="2" name="width" id="width" value="<?php echo $width; ?>">&nbsp;&nbsp;&nbsp;</td>
+						<td >Anti-Aliasing:&nbsp;</td><td><INPUT TYPE="checkbox" NAME="antialias"  id="antialias" <?php if ($antialias) {  print "CHECKED";}  ?>></td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td>URL:&nbsp;</td><td ><input type="text" size="45" name="URL" id="URL" value="<?php echo $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>"></td>
+					</tr>
+				</table>
+				<br><br>
+				<input type="button" value="Open as PNG"  onclick="create_png();">
+				
 			</div>
 			<div name="COORDS" id="controltab4" class="tabcontent">
 				<table cellpadding="0" cellspacing="3"> 
@@ -487,7 +500,7 @@
 			</div>
 			<div name="CREDITS" id="controltab5" class="tabcontent">
 				Coding: Guy Mann<br><br>
-				special thanks to Yeiguer Contreras, BoingBoing and Cai
+				special thanks to Yeiguer Contreras for a little extra javascript wizardry, BoingBoing for inspiration to move forward and Cai for putting up with me showing him all my incremental updates.
 			</div>
 		</div>
 	</div>
