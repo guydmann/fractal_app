@@ -20,9 +20,12 @@ function MultDimArray(iRows,iCols) {
 	return(a); 
 } 
 
-
+////////////////////////
+//
+//	create_fractal
+//	returns the pix array set with the appropriate fractal and coloring
+//
 function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx, by, precision, algorithm, cr, ci) {
-	//var setColor_func_array = new Array (setColor, createColorFunction(color_scheme) );
 	print_with_pause("sys_out", "Creating color function\n", false);
 	var setColor_func_array = new Array ( createColorFunction(color_scheme) );
 	var fract_array = MultDimArray(width,height);
@@ -67,13 +70,9 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 				decinal_count = 0;
 				decinal_val = decinal;
 				for (q = 0;  q<escape_index; q++) {
-//					if (escapes_set[q] != "undefined") {
-						j = escapes_set[q][0];
-						k = escapes_set[q][1];
-						fract_array= dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
-//					} else {
-//						alert(escape_index + "\n");
-//					}
+					j = escapes_set[q][0];
+					k = escapes_set[q][1];
+					fract_array= dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
 					if (q>=decinal_val) {
 						decinal_val += decinal;
 						decinal_count++;
@@ -92,13 +91,9 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 				decinal_val = decinal;
 				for (q = 0;  q<iterations; q++) {
 					var rand_index = Math.floor(Math.random()*(escape_index))  ;
-//					if (escapes_set[rand_index] != "undefined") {
-						j = escapes_set[rand_index][0];
-						k = escapes_set[rand_index][1];
-						fract_array = dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
-//					} else {
-//						alert(escape_index + "\n");
-//					}
+					j = escapes_set[rand_index][0];
+					k = escapes_set[rand_index][1];
+					fract_array = dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
 					if (q>=decinal_val) {
 						decinal_val += decinal;
 						decinal_count++;
@@ -117,13 +112,9 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 				decinal_val = decinal;
 				for (q = 0;  q<iterations; q++) {
 					var rand_index = Math.floor(Math.random()*(escape_index))  ;
-//					if (escapes_set[rand_index] != "undefined") {
-						j = escapes_set[rand_index][0];
-						k = escapes_set[rand_index][1];
-						fract_array = dwell_buddha_julia( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty, cr, ci);
-//					} else {
-//						alert(escape_index + "\n");
-//					}
+					j = escapes_set[rand_index][0];
+					k = escapes_set[rand_index][1];
+					fract_array = dwell_buddha_julia( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty, cr, ci);
 					if (q>=decinal_val) {
 						decinal_val += decinal;
 						decinal_count++;
@@ -190,13 +181,9 @@ function create_fractal(pix, width, height, precision, color_scheme, lx, ty, rx,
 			decinal_val = decinal;
 			for (q = 0;  q<iterations; q++) {
 				var rand_index = Math.floor(Math.random()*(escape_index))  ;
-//				if (escapes_set[rand_index] != "undefined") {
-					j = escapes_set[rand_index][0];
-					k = escapes_set[rand_index][1];
-					fract_array = dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
-//				} else {
-//					alert(escape_index + "\n");
-//				}
+				j = escapes_set[rand_index][0];
+				k = escapes_set[rand_index][1];
+				fract_array = dwell_buddha( ( j * x_inc ) + lx ,  ty - ( k * y_inc ), precision, width, height, x_inc, y_inc, fract_array, lx, ty);
 				if (q>=decinal_val) {
 					decinal_val += decinal;
 					decinal_count++;
@@ -320,25 +307,32 @@ function DrawFractal( draw_region, width, height, lx, ty, rx, by, precision, alg
 	print_with_pause("sys_out", "Beginning Fractal Generation\n", true);
 	var date = new Date();
 	if (antialias) {
+		//initialize variables
 		var compression_func_array = new Array (compress_imagedata_avg);
 		compression_factor = 2;
 		imgd_tmp = draw_region.createImageData(parseFloat(width*compression_factor),parseFloat(height*compression_factor));
 		pix = imgd_tmp.data;
 	
+		//create fractal at width*compression_factor
 		print_with_pause("sys_out", "Creating fractal at "+(width*compression_factor)+"x"+(height*compression_factor)+"\n", false);
 		pix = create_fractal(pix, width*compression_factor, height*compression_factor, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
-	
 		
+		//compress image to canvas width
 		print_with_pause("sys_out","Compressing image to "+width+"x"+height+"\n", false);
 		imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
 		imgd = compression_func_array[0](imgd, imgd_tmp, width, height, compression_factor);
+
+		//put image to draw region
 		draw_region.putImageData(imgd,0,0);
 	
 	} else {
+		//initialize variables
 		print_with_pause("sys_out","Creating fractal at "+width+"x"+height+"\n", false);
 		imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
 		pix = imgd.data;
+		//create fractal at width
 		pix = create_fractal(pix, width, height, precision, color_scheme, parseFloat(lx), parseFloat(ty), parseFloat(rx), parseFloat(by), precision, algorithm, parseFloat(cr), parseFloat(ci));
+		//put image to draw region
 		draw_region.putImageData(imgd,0,0);
 	}
 	curDate = new Date();
@@ -355,11 +349,13 @@ function ColorFractal( draw_region, width, height, precision, algorithm, color_s
 	var pixcount = 0
 	if (antialias) {
 		if ((width*compression_factor)==fractal_array_global.length) {
+			//initialize variables
 			var compression_func_array = new Array (compress_imagedata_avg);
 			compression_factor = 2;
 			imgd_tmp = draw_region.createImageData(parseFloat(width*compression_factor),parseFloat(height*compression_factor));
 			pix = imgd_tmp.data;
-		
+			
+			//coloring image with the data stored in the fractal_array_global
 			print_with_pause("sys_out", "Coloring fractal at "+(width*compression_factor)+"x"+(height*compression_factor)+"\n", false);
 			decinal = (height*compression_factor)/10;
 			decinal_count = 0;
@@ -379,7 +375,7 @@ function ColorFractal( draw_region, width, height, precision, algorithm, color_s
 			decinal_count++;
 			print_with_pause("sys_out", decinal_count + "0%\n", false);
 		
-			
+			//compress image to canvas width
 			print_with_pause("sys_out","Compressing image to "+width+"x"+height+"\n", false);
 			imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
 			imgd = compression_func_array[0](imgd, imgd_tmp, width, height, compression_factor);
@@ -391,10 +387,12 @@ function ColorFractal( draw_region, width, height, precision, algorithm, color_s
 		}
 	} else {
 		if (width==fractal_array_global.length) {
+			//initialize variables
 			print_with_pause("sys_out","Coloring fractal at "+width+"x"+height+"\n", false);
 			imgd = draw_region.createImageData(parseFloat(width),parseFloat(height));
 			pix = imgd.data;
 			
+			//coloring image with the data stored in the fractal_array_global
 			decinal = height/10;
 			decinal_count = 0;
 			decinal_val = decinal;
@@ -532,7 +530,8 @@ function draw(){
 		                //if (algorithm ==12 || algorithm ==13) {
 		                //        precision = 300;
 				//} else {
-					precision = 360;
+					//precision = 360;
+					precision = 500;
 				//}
 
 
