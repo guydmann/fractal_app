@@ -236,7 +236,7 @@
 			color_txt += "precision*.03 H_range:120,280\n";
 			color_txt += "precision*.05 RGB_cycle:3,86,150,230\n";
 			color_txt += "precision*.1 HSV_range:20,180,DX*100,DY*100\n";
-			color_txt += "precision RGBA:0,255,255,255\n";
+			color_txt += "precision RGBA:255,255,255,255\n";
 			color_txt += "else RGB:0,0,0";	
 		} else {
 			color_txt = "precision RGBA:255,255,255,255\n";
