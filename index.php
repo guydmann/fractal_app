@@ -242,6 +242,13 @@
 		} else if (color_scheme == 14) {
 			color_txt = "precision H_range:20,180,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
 			color_txt += "else RGB:0,0,0";
+		} else if (color_scheme == 15) {
+			color_txt = "precision*.03 H_range:0,120,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
+			color_txt += "precision*.05 H_range:120,280,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
+			color_txt += "precision*.1 H_range:280,20,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
+			color_txt += "precision*.7 H_range:20,180,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
+			color_txt += "precision H_range:180,360,((Math.atan(DX/DY)+(Math.PI/2))/Math.PI)*100\n";
+			color_txt += "else RGB:0,0,0";
 		} else {
 			color_txt = "precision RGBA:255,255,255,255\n";
 			color_txt += "else RGBA:0,0,0,255";
@@ -471,6 +478,7 @@
 					<option <? if ($colorscheme == 12) {  print "selected ";} ?> value=12>HSV 3</option> 
 					<option <? if ($colorscheme == 13) {  print "selected ";} ?> value=13>Mixed Example Case</option> 
 					<option <? if ($colorscheme == 14) {  print "selected ";} ?> value=14>H(sv) new</option> 
+					<option <? if ($colorscheme == 15) {  print "selected ";} ?> value=15>H(sv) new multi</option> 
 					<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
 				</select> 
 				</td></tr></table>
