@@ -4,6 +4,7 @@
 * It uses a modal dialog.
 */ 
  function pause(numberMillis) { 
+	//setTimeout(function() {}, 0);
     var dialogScript =  
        'window.setTimeout(' + 
        ' function () { window.close(); }, ' + numberMillis + ');'; 

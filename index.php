@@ -235,7 +235,7 @@
 			color_txt = "precision*.01 HSV_range:0,120,ITER,Math.sqrt(DY^2+DX^2)*100,Math.atan(DX/DY)*100\n";
 			color_txt += "precision*.03 H_range:120,280,ITER\n";
 			color_txt += "precision*.05 RGB_cycle:3,86,150,230\n";
-			color_txt += "precision*.1 HSV_range:20,180,ITERv,DX*100,DY*100\n";
+			color_txt += "precision*.1 HSV_range:20,180,ITER,DX*100,DY*100\n";
 			color_txt += "precision RGBA:255,255,255,255\n";
 			color_txt += "else RGB:0,0,0";	
 			
