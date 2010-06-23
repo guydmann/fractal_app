@@ -34,7 +34,11 @@ function create_fractal(pix, width, height, precision, color_scheme_script, lx, 
 	var pixcount = 0;
         var x_inc = ( rx - lx ) / width;
         var y_inc = ( ty - by ) / height;
-	if  (algorithm  >= 12) {
+	if  (algorithm  == 17) {
+		//going to do some geometric fractals. not sure how the colors or precision or all that shit will work but lets give it a go
+		print_with_pause("sys_out", "Draw Sierpinski Fractal\n", false);
+		DrawSierpinski(pix, width, height);
+	} else if  (algorithm  >= 12) {
 		print_with_pause("sys_out", "Generating Mandelbrot escape set\n", false);
 		escape_index = 0;
 		var escapes_set = MultDimArray(width*height,2);

@@ -111,6 +111,7 @@
 	
 	<script type="text/javascript" src="fractal.js"></script>
 	<script type="text/javascript" src="fractal_dwell.js"></script>
+	<script type="text/javascript" src="fractal_geometric_draw.js"></script>
 	<script type="text/javascript" src="color_lib.js"></script>
 	<script type="text/javascript" src="tools_rec.js"></script>
 	<script type="text/javascript" src="global_lib.js"></script>
@@ -374,6 +375,7 @@
 						<option <?php if ($algorithm == 14) {  print "selected ";} ?> value=14>Buddhabrot Random Traversal Julia</option> 
 						<option <?php if ($algorithm == 15) {  print "selected ";} ?> value=15>Buddhabrot Random Traversal Julia experimental </option> 
 						<option <?php if ($algorithm == 16) {  print "selected ";} ?> value=16>Buddhabrot Random Traversal with inverse</option> 
+						<option <?php if ($algorithm == 17) {  print "selected ";} ?> value=17>Sierpinski Triangle</option> 
 						<option <?php if ($algorithm == 99) {  print "selected ";} ?> value=99>Blank</option> 
 					</select> <br><br>
 					<table><tr><td>Precision:&nbsp;</td><td><input type="text" size="4" name="precision" id="precision" value="<?php echo $precision; ?>"></td></tr></table>
