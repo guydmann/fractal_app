@@ -428,7 +428,7 @@
 							</table> 
 							<table cellpadding="0" cellspacing="3"> 
 							<tr> 
-								<td>C(imaginary):&nbsp;<input type="Text" name="ci" id="ci" style="border: 1px solid gray;width:40px; height:16px; font-size: 10px;" onchange="A_SLIDERS[0].f_setValue(this.value)"></td> 
+								<td>C(imaginary):&nbsp;<input type="Text" name="ci" id="ci" style="border: 1px solid gray;width:40px; height:16px; font-size: 10px;" onchange="A_SLIDERS[1].f_setValue(this.value)"></td> 
 								<td> 
 								<script language="JavaScript"> 
 									var A_TPL2h = {
