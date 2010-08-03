@@ -1,7 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-<?php include("../../header.html"); //this is style information for my webpage, not needed for depoloyment elsewhere ?>
+<?php include("header.php");
+//this is style information for my webpage, not needed for depoloyment elsewhere
+writeheader("Fractal Application - Javascript, HTML5","php, fractal, mandelbrot, julia, burning ship, newton, zoom","Fractal Application developed in Javascript using the HTML5 canvas element by Guy Mann");
+?>
+
 
 <?php include("../../topbar.phtml"); //this is style information for my webpage, not needed for depoloyment elsewhere ?><br>
 <?php 
