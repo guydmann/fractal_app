@@ -467,7 +467,8 @@ writeheader("Fractal Application - Javascript, HTML5","php, fractal, mandelbrot,
 					</div>
 			</div>
 			<div name="COLORING" id="controltab2" class="tabcontent">
-				<table><tr><td><input type="button" value="Recolor"  onclick="recolor();">&nbsp;&nbsp;&nbsp;</td><td>Color Scheme:&nbsp;</td><td>
+				<table><tr><td><input type="button" value="Recolor"  onclick="recolor();">&nbsp;&nbsp;&nbsp;</td><td>Color Scheme:&nbsp;</td>
+				<td>
 				<select name="colorscheme" id="colorscheme" onchange="setColorText(this);"> 
 					<option <? if ($colorscheme == 0) {  print "selected ";} ?> value=0>Simple 5 Color</option> 
 					<option <? if ($colorscheme == 1) {  print "selected ";} ?> value=1> 5 Color Cyclic 1</option> 
@@ -487,7 +488,11 @@ writeheader("Fractal Application - Javascript, HTML5","php, fractal, mandelbrot,
 					<option <? if ($colorscheme == 15) {  print "selected ";} ?> value=15>H(sv) new multi</option> 
 					<option <? if ($colorscheme == 99) {  print "selected ";} ?> value=99>2 Color Black and White</option> 
 				</select> 
-				</td></tr></table>
+				</td></tr>
+				<tr>
+					<td colspan=3>The color scheme below is edittable. For a reference on the commands, view the 'Mixed Example Case'. It contains examples of all available functionality.</td>
+				</tr>
+				</table>
 				<textarea name="colorscheme_script" id="colorscheme_script" rows="10" cols="50"><?php echo $colorscheme_script; ?></textarea>
 				<br>
 				
