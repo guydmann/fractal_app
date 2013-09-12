@@ -471,7 +471,7 @@ writeheader("Fractal Application - Javascript, HTML5","php, fractal, mandelbrot,
 				<td>
 				<select name="colorscheme" id="colorscheme" onchange="setColorText(this);"> 
 					<option <? if ($colorscheme == 0) {  print "selected ";} ?> value=0>Simple 5 Color</option> 
-					<option <? if ($colorscheme == 1) {  print "selected ";} ?> value=1> 5 Color Cyclic 1</option> 
+					<option <? if ($colorscmargin-bottomheme == 1) {  print "selected ";} ?> value=1> 5 Color Cyclic 1</option> 
 					<option <? if ($colorscheme == 2) {  print "selected ";} ?> value=2>5 Color Cyclic 2</option> 
 					<option <? if ($colorscheme == 3) {  print "selected ";} ?> value=3>12 Color Cyclic</option> 
 					<option <? if ($colorscheme == 4) {  print "selected ";} ?> value=4>36 Color Cyclic</option> 
